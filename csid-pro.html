@@ -1,0 +1,558 @@
+<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>APLIKASI CS.ID PRO - Data Samsat Nasional</title>
+    
+    <!-- PWA & Mobile Optimization -->
+    <meta name="theme-color" content="#000000">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="description" content="Aplikasi Cek Data Identitas Kendaraan Nasional CS.ID PRO">
+    <link rel="apple-touch-icon" href="https://img.icons8.com/color/192/000000/car-auth.png">
+    
+    <!-- Lucide Icons & Tailwind CSS -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+        :root {
+            --bg-dark: #000000;
+            --bg-light: #0a0a0a;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --accent-primary: #CD7F32; /* Bronze */
+            --accent-secondary: #A97142;
+            --danger: #ff3b30;
+            --success: #25D366; /* WhatsApp Green */
+            --border-color: #333333;
+            --border-radius: 16px;
+            --font-family: 'Poppins', sans-serif;
+        }
+
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+            -webkit-tap-highlight-color: transparent; 
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: #000000;
+            color: var(--text-primary);
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 420px;
+            background-color: var(--bg-dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            border-left: 1px solid var(--border-color);
+            border-right: 1px solid var(--border-color);
+        }
+
+        .hidden { display: none !important; }
+        .fade-in { animation: fadeIn 0.4s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Custom UI Elements */
+        .header {
+            background-color: #000;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .header h1 { font-size: 1.1em; font-weight: 900; color: var(--accent-primary); letter-spacing: 1px; text-transform: uppercase; }
+        
+        .content-area { flex-grow: 1; padding: 20px; padding-bottom: 120px; overflow-y: auto; }
+        .card { background-color: var(--bg-light); border-radius: var(--border-radius); padding: 24px; margin-bottom: 20px; border: 1px solid var(--border-color); }
+
+        .input-group { margin-bottom: 20px; }
+        .input-group label { display: block; margin-bottom: 8px; color: #fff; font-size: 0.7em; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+        .input-group input {
+            width: 100%;
+            padding: 16px;
+            background: #000;
+            border: 1px solid #444;
+            border-radius: 12px;
+            color: #fff;
+            font-size: 1em;
+            outline: none;
+        }
+        .input-group input:focus { border-color: var(--accent-primary); }
+
+        .plate-input-container {
+            background: #000;
+            border: 3px solid #fff;
+            padding: 10px;
+            border-radius: 14px;
+            margin-bottom: 30px;
+            box-shadow: 0 0 20px rgba(205, 127, 50, 0.1);
+        }
+        #plateInput {
+            width: 100%;
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 2.2em;
+            font-weight: 900;
+            text-align: center;
+            text-transform: uppercase;
+            outline: none;
+            letter-spacing: 2px;
+        }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 18px;
+            border-radius: 14px;
+            font-weight: 800;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-transform: uppercase;
+            font-size: 0.9em;
+        }
+        .btn:active { transform: scale(0.97); }
+        .btn-primary { background: #fff; color: #000; }
+        .btn-outline { background: transparent; border: 1px solid #fff; color: #fff; }
+        .btn-wa { background: #25D366; color: #fff; }
+
+        /* Result Styles */
+        .result-card { background-color: #000; border-radius: 20px; overflow: hidden; border: 1px solid #fff; padding-bottom: 20px; }
+        .res-banner { background: #fff; color: #000; padding: 18px; font-weight: 900; text-align: center; font-size: 1em; text-transform: uppercase; }
+        .res-body { padding: 25px; }
+        .res-section-title { color: #fff; font-size: 1em; font-weight: 900; margin: 30px 0 15px 0; border-bottom: 2px solid #222; padding-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+        .res-line { display: flex; margin-bottom: 10px; font-size: 0.85em; }
+        .res-label { width: 120px; color: #888; flex-shrink: 0; }
+        .res-val { color: #fff; font-weight: 700; flex: 1; }
+
+        .nav-bar {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            max-width: 420px;
+            background: #000;
+            display: flex;
+            padding: 15px 0 30px;
+            border-top: 1px solid var(--border-color);
+            z-index: 200;
+        }
+        .nav-item { flex: 1; text-align: center; color: #555; font-size: 0.7em; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 6px; font-weight: 700; }
+        .nav-item.active { color: #fff; }
+
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.95); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 25px; }
+        .loader { border: 4px solid #222; border-top: 4px solid var(--accent-primary); border-radius: 50%; width: 40px; height: 40px; animation: spin 0.8s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+
+    <!-- MODAL: ADMIN PIN -->
+    <div id="pinModal" class="modal-overlay">
+        <div class="card w-full max-w-xs text-center">
+            <i data-lucide="shield-lock" class="mx-auto mb-4 text-white" style="width: 48px; height: 48px;"></i>
+            <h3 class="text-white font-black text-xl mb-4 uppercase">Akses Admin</h3>
+            <input type="password" id="pinInput" placeholder="••••••" class="w-full p-4 bg-black border-2 border-white rounded-xl text-center text-3xl text-white tracking-widest outline-none mb-6">
+            <div class="flex gap-4">
+                <button class="btn btn-primary flex-1" onclick="validatePin()">MASUK</button>
+                <button class="btn btn-outline flex-1" onclick="closePinModal()">BATAL</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: ALERT -->
+    <div id="alertModal" class="modal-overlay">
+        <div class="card w-full max-w-xs text-center border-white">
+            <h3 id="alertTitle" class="text-white font-black text-lg mb-2 uppercase">Informasi</h3>
+            <p id="alertMsg" class="text-gray-400 text-sm mb-6 leading-relaxed"></p>
+            <button class="btn btn-primary" id="alertOkBtn">MENGERTI</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- HEADER -->
+        <div id="appHeader" class="header hidden">
+            <h1 class="font-black italic">APLIKASI CS.ID PRO</h1>
+            <div class="header-right flex items-center gap-4">
+                <div class="user-info flex flex-col items-end">
+                    <span id="headerName" class="text-[10px] font-bold">USER</span>
+                    <span id="headerExpiry" class="text-[9px] bg-white text-black px-1 rounded font-black">30H</span>
+                </div>
+                <i data-lucide="log-out" class="w-5 text-red-600 cursor-pointer" onclick="logout()"></i>
+            </div>
+        </div>
+
+        <div class="content-area">
+            <!-- LOGIN PAGE -->
+            <div id="loginPage" class="page">
+                <div class="text-center mt-12 mb-10">
+                    <h1 class="text-4xl font-black tracking-tighter uppercase" style="color: var(--accent-primary);">APLIKASI CS.ID PRO</h1>
+                    <p class="text-[10px] font-bold tracking-[0.4em] text-gray-500 mt-2">SAMSAT NASIONAL ONLINE</p>
+                </div>
+                <div class="card">
+                    <div class="input-group"><label>Username</label><input type="text" id="loginUser" placeholder="ID Akun"></div>
+                    <div class="input-group"><label>Password</label><input type="password" id="loginPass" placeholder="••••••••"></div>
+                    <button class="btn btn-primary mb-4" id="btnLogin" onclick="handleLogin()">Masuk Sistem</button>
+                    <button class="btn btn-outline mb-8" onclick="openPinModal()">Panel Admin</button>
+                    
+                    <div class="border-t border-zinc-800 pt-6">
+                        <p class="text-center text-[10px] text-gray-500 mb-4 font-bold uppercase tracking-widest">Aktivasi Akun Baru</p>
+                        <button class="btn btn-wa w-full" onclick="fastReg()">
+                            <i data-lucide="message-circle"></i> KLIK UNTUK MENDAFTAR
+                        </button>
+                    </div>
+
+                    <div class="text-center mt-6">
+                        <a href="#" onclick="showPage('regPage')" class="font-black underline underline-offset-4 text-[10px] uppercase text-gray-400">Formulir Pendaftaran Manual</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- REGISTRATION PAGE -->
+            <div id="regPage" class="page hidden">
+                <div class="flex items-center gap-4 mb-8">
+                    <i data-lucide="arrow-left" class="text-white cursor-pointer" onclick="showPage('loginPage')"></i>
+                    <h2 class="text-white font-black text-xl uppercase">Daftar Agen</h2>
+                </div>
+                <div class="card">
+                    <div class="input-group"><label>Nama Lengkap</label><input type="text" id="regName" placeholder="Sesuai Identitas"></div>
+                    <div class="input-group"><label>Username</label><input type="text" id="regUser" placeholder="Huruf kecil & angka"></div>
+                    <div class="input-group"><label>WhatsApp</label><input type="tel" id="regWa" placeholder="08XXXXXXXXXX"></div>
+                    <div class="input-group mb-8"><label>Password</label><input type="text" id="regPass" placeholder="Buat kata sandi"></div>
+                    <button class="btn btn-primary" id="btnSubmitReg" onclick="handleRegister()">Ajukan Aktivasi</button>
+                </div>
+            </div>
+
+            <!-- DASHBOARD PAGE -->
+            <div id="dashPage" class="page hidden">
+                <div class="text-center mb-6">
+                    <h3 class="text-white font-black text-sm tracking-widest uppercase italic">Pencarian Data Nasional</h3>
+                </div>
+                <div class="plate-input-container">
+                    <input type="text" id="plateInput" placeholder="B 1234 ABC" autocomplete="off">
+                </div>
+                <button class="btn btn-primary h-20 text-lg shadow-xl" onclick="fetchSamsat()">
+                    <i data-lucide="search"></i> Cari Data Sekarang
+                </button>
+                <div class="mt-8 text-center text-gray-600 text-[10px] px-8 uppercase font-bold tracking-tighter">
+                    Sistem otomatis mencari database Samsat berdasarkan nomor plat yang dimasukkan.
+                </div>
+            </div>
+
+            <!-- RESULT PAGE -->
+            <div id="resultPage" class="page hidden">
+                <div class="flex items-center gap-4 mb-6">
+                    <i data-lucide="arrow-left" class="text-white cursor-pointer" onclick="showPage('dashPage')"></i>
+                    <h2 class="text-white font-black uppercase">Hasil Analisa</h2>
+                </div>
+                <div id="resultContent"></div>
+                <div id="actionButtons" class="hidden grid grid-cols-2 gap-4 mt-8 pb-10">
+                    <button class="btn btn-outline" onclick="copyResult()">Salin Data</button>
+                    <button class="btn btn-wa" onclick="shareWa()"><i data-lucide="share-2"></i>Kirim WA</button>
+                </div>
+            </div>
+
+            <!-- ADMIN PAGE -->
+            <div id="adminPage" class="page hidden">
+                <div class="flex items-center gap-4 mb-6">
+                    <i data-lucide="arrow-left" class="text-white cursor-pointer" onclick="switchTab('search')"></i>
+                    <h2 class="text-white font-black uppercase">Panel Kontrol</h2>
+                </div>
+                <div id="adminStats" class="grid grid-cols-3 gap-3 mb-6"></div>
+                <div id="agentList" class="space-y-4"></div>
+            </div>
+        </div>
+
+        <!-- FOOTER NAVIGATION -->
+        <div id="footerNav" class="nav-bar hidden">
+            <div class="nav-item active" id="nav-search" onclick="switchTab('search')"><i data-lucide="search"></i>Cari</div>
+            <div class="nav-item" id="nav-history" onclick="switchTab('history')"><i data-lucide="history"></i>Riwayat</div>
+            <div class="nav-item hidden" id="nav-admin" onclick="switchTab('admin')">
+                <i data-lucide="shield-check"></i>Admin
+                <span id="adminBadge" class="absolute top-[-5px] right-[25%] bg-white text-black text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-black hidden">0</span>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc, collection, updateDoc, deleteDoc, query, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        const firebaseConfig = JSON.parse(__firebase_config);
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'samsat-pro-permanent';
+
+        const ADMIN_PIN = "280189";
+        const WA_ADMIN = "628136900872"; 
+        const API_KEY = "9611bbce88d6dbd96cdfd83619233efb";
+        const API_BASE = "https://elangninja.space/";
+        
+        let currentUser = null;
+        let isAdmin = false;
+        let lastResult = null;
+
+        const ensureAuth = async () => {
+            if (auth.currentUser) return auth.currentUser;
+            return new Promise((resolve) => {
+                onAuthStateChanged(auth, (user) => { if(user) resolve(user); });
+                (async () => {
+                    try {
+                        if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                            await signInWithCustomToken(auth, __initial_auth_token);
+                        } else {
+                            await signInAnonymously(auth);
+                        }
+                    } catch (e) { resolve(null); }
+                })();
+            });
+        };
+
+        window.showPage = (id) => {
+            document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
+            const target = document.getElementById(id);
+            if(target) target.classList.remove('hidden');
+            const isAuth = !['loginPage', 'regPage'].includes(id);
+            document.getElementById('appHeader').classList.toggle('hidden', !isAuth);
+            document.getElementById('footerNav').classList.toggle('hidden', !isAuth);
+            lucide.createIcons();
+        };
+
+        window.switchTab = (tab) => {
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            if(document.getElementById('nav-'+tab)) document.getElementById('nav-'+tab).classList.add('active');
+            if (tab === 'search') showPage('dashPage');
+            if (tab === 'admin') showPage('adminPage');
+        };
+
+        window.handleLogin = async () => {
+            const u = document.getElementById('loginUser').value.trim().toLowerCase();
+            const p = document.getElementById('loginPass').value;
+            if(!u || !p) return showAlert("INFO", "Masukkan ID dan Password.");
+            const btn = document.getElementById('btnLogin');
+            btn.disabled = true; btn.innerText = "MENGECEK...";
+            try {
+                await ensureAuth();
+                if (u === "bintang" && p === "Adamkinan") {
+                    currentUser = { name: "BINTANG", username: "bintang", role: "admin", status: "active" };
+                    isAdmin = true; loginSuccess(); return;
+                }
+                const snap = await getDoc(doc(db, 'artifacts', appId, 'public', 'data', 'agents', u));
+                if (snap.exists() && snap.data().password === p) {
+                    const data = snap.data();
+                    if (data.status === 'blocked') return showAlert("DITOLAK", "Akun ini telah dinonaktifkan.");
+                    if (data.status === 'pending') return showAlert("PENDING", "Akun sedang menunggu aktivasi admin.");
+                    currentUser = data; isAdmin = data.role === 'admin'; loginSuccess();
+                } else { showAlert("GAGAL", "Username atau Password salah."); }
+            } catch (e) { showAlert("ERROR", "Koneksi terganggu."); }
+            finally { btn.disabled = false; btn.innerText = "MASUK SISTEM"; }
+        };
+
+        const loginSuccess = () => {
+            localStorage.setItem('samsat_user_perm', JSON.stringify({u: currentUser.username}));
+            document.getElementById('headerName').innerText = currentUser.name.split(' ')[0];
+            document.getElementById('nav-admin').classList.toggle('hidden', !isAdmin);
+            if (isAdmin) startAdminListener();
+            if (currentUser.expiryDate) {
+                const days = Math.ceil((new Date(currentUser.expiryDate) - new Date()) / 86400000);
+                document.getElementById('headerExpiry').innerText = days > 0 ? days+'H' : 'EXP';
+            }
+            showPage('dashPage');
+        };
+
+        window.fastReg = () => {
+            const msg = "Halo cs.id pro saya mau daftar aplikasi mohon di bantu aktivasinya. Terima Kasih";
+            window.open(`https://wa.me/${WA_ADMIN}?text=${encodeURIComponent(msg)}`, '_blank');
+        };
+
+        window.handleRegister = async () => {
+            const name = document.getElementById('regName').value.trim();
+            const userID = document.getElementById('regUser').value.trim().toLowerCase();
+            const waNum = document.getElementById('regWa').value.trim();
+            const pass = document.getElementById('regPass').value;
+            if(!name || !userID || !waNum || !pass) return showAlert("INFO", "Lengkapi seluruh data.");
+            try {
+                await ensureAuth();
+                const ref = doc(db, 'artifacts', appId, 'public', 'data', 'agents', userID);
+                const snap = await getDoc(ref);
+                if (snap.exists()) return showAlert("GAGAL", "ID sudah terdaftar.");
+                await setDoc(ref, { name: name.toUpperCase(), username: userID, whatsapp: waNum, password: pass, status: 'pending', role: 'agent', createdAt: new Date().toISOString() });
+                const msg = `Halo cs.id pro saya mau daftar aplikasi mohon di bantu aktivasinya. Terima Kasih\n\n(ID: ${userID})`;
+                window.open(`https://wa.me/${WA_ADMIN}?text=${encodeURIComponent(msg)}`, '_blank');
+            } catch (e) { fastReg(); }
+        };
+
+        window.fetchSamsat = async () => {
+            const plate = document.getElementById('plateInput').value.trim().toUpperCase();
+            if(!plate) return showAlert("INFO", "Masukkan nomor plat.");
+            showPage('resultPage');
+            const container = document.getElementById('resultContent');
+            const actionBtns = document.getElementById('actionButtons');
+            actionBtns.classList.add('hidden');
+            container.innerHTML = `<div class="text-center py-20"><div class="loader mx-auto"></div><p class="text-white font-bold text-xs mt-4 uppercase">Sinkronisasi Data...</p></div>`;
+            try {
+                const res = await fetch(`${API_BASE}?key=${API_KEY}&s=${plate.replace(/\s/g,'')}`);
+                const data = await res.json();
+                if(data && data.length > 0) { 
+                    lastResult = data[0]; renderResult(data[0], plate); 
+                    actionBtns.classList.remove('hidden'); actionBtns.style.display = 'grid'; 
+                } else { container.innerHTML = `<div class="card text-center text-red-500 py-10 font-bold uppercase underline">Data Tidak Ditemukan</div>`; }
+            } catch (e) { container.innerHTML = `<div class="card text-center text-red-500 py-10 uppercase">Gagal Terhubung ke Server</div>`; }
+        };
+
+        const renderResult = (d, plate) => {
+            const p = `${d.plate_region||''} ${d.plate_number||''} ${d.plate_series||''}`.trim().toUpperCase() || plate;
+            document.getElementById('resultContent').innerHTML = `
+                <div class="result-card fade-in">
+                    <div class="res-banner">Sumber : APLIKASI CS.ID PRO</div>
+                    <div class="res-body">
+                        <div class="res-section-title">IDENTITAS PEMILIK : 🖋</div>
+                        <div class="res-line"><span class="res-label">No. Polisi</span><span class="res-val">: ${p}</span></div>
+                        <div class="res-line"><span class="res-label">Pemilik</span><span class="res-val">: ${d.owner_name || '-'}</span></div>
+                        <div class="res-line"><span class="res-label">Alamat</span><span class="res-val">: ${d.owner_address || '-'}</span></div>
+                        <div class="res-line"><span class="res-label">Nik</span><span class="res-val">: ${d.nik || '-'}</span></div>
+                        <div class="res-line"><span class="res-label">Pekerjaan</span><span class="res-val">: ${d.owner_job || '-'}</span></div>
+                        
+                        <div class="res-section-title">DATA KENDARAAN: 🖋</div>
+                        <div class="res-line"><span class="res-label">Merek</span><span class="res-val">: ${d.brand || '-'}</span></div>
+                        <div class="res-line"><span class="res-label">Tipe</span><span class="res-val">: ${d.vehicle_type || '-'}</span></div>
+                        <div class="res-line"><span class="res-label">Tahun</span><span class="res-val">: ${d.manufacture_year || '-'}</span></div>
+                        <div class="res-line"><span class="res-label">Warna</span><span class="res-val">: ${d.color || '-'}</span></div>
+                        <div class="res-line"><span class="res-label">Silinder</span><span class="res-val">: ${d.engine_capacity_cc || '-'} cc</span></div>
+                        <div class="res-line"><span class="res-label">Roda</span><span class="res-val">: ${d.wheel_count || '0'}</span></div>
+                        <div class="res-line"><span class="res-label">No. Rangka</span><span class="res-val">: ${d.chassis_number || '-'}</span></div>
+                        <div class="res-line"><span class="res-label">No. Mesin</span><span class="res-val">: ${d.engine_number || '-'}</span></div>
+                        
+                        <div class="res-section-title">DOKUMEN RESMI : 🖋</div>
+                        <div class="res-line"><span class="res-label">No. Bpkb</span><span class="res-val">: ${d.bpkb_number || ''}</span></div>
+                        <div class="res-line"><span class="res-label">No. Stnk</span><span class="res-val">: ${d.stnk_number || ''}</span></div>
+                        <div class="res-line"><span class="res-label">Tanggal Daftar</span><span class="res-val">: ${d.registration_date || '-'}</span></div>
+                        
+                        <div class="res-section-title">NOTE : ⚠️</div>
+                        <p class="text-[10px] text-white leading-relaxed mb-6 font-bold">ALAT DI BUAT UNTUK MENGAKSES IDENTITAS RESMI KEPEMILIKAN KENDARAAN YANG SAH SESUAI TNKB RESMI PADA KENDARAAN.</p>
+                        
+                        <div class="mt-6 pt-4 border-t border-zinc-800">
+                            <p class="text-[11px] font-black text-white uppercase">CP Link Aplikasi : APLIKASI CS.ID PRO 👥</p>
+                            <p class="text-[11px] text-white underline">https://wa.me/628136900872</p>
+                        </div>
+                    </div>
+                </div>`;
+        };
+
+        window.shareWa = () => {
+            if(!lastResult) return;
+            const container = document.getElementById('resultContent');
+            const msg = container.innerText;
+            window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
+        };
+
+        window.copyResult = () => {
+            const container = document.getElementById('resultContent');
+            const el = document.createElement('textarea');
+            el.value = container.innerText;
+            document.body.appendChild(el); el.select();
+            document.execCommand('copy'); document.body.removeChild(el);
+            showAlert("BERHASIL", "Data berhasil disalin.");
+        };
+
+        window.showAlert = (t, m) => { 
+            document.getElementById('alertTitle').innerText = t; 
+            document.getElementById('alertMsg').innerText = m; 
+            document.getElementById('alertModal').style.display = 'flex'; 
+        };
+        window.closeAlert = () => { document.getElementById('alertModal').style.display = 'none'; };
+        document.getElementById('alertOkBtn').onclick = closeAlert;
+
+        window.logout = () => { localStorage.removeItem('samsat_user_perm'); location.reload(); };
+        window.validatePin = () => { 
+            if (document.getElementById('pinInput').value === ADMIN_PIN) { 
+                document.getElementById('loginUser').value = "Bintang"; 
+                document.getElementById('loginPass').value = "Adamkinan"; 
+                closePinModal(); handleLogin(); 
+            } else { showAlert("GAGAL", "PIN Salah!"); } 
+        };
+        window.openPinModal = () => { 
+            document.getElementById('pinModal').style.display = 'flex'; 
+            document.getElementById('pinInput').value = ''; 
+            document.getElementById('pinInput').focus(); 
+        };
+        window.closePinModal = () => document.getElementById('pinModal').style.display = 'none';
+
+        const startAdminListener = () => {
+            const q = collection(db, 'artifacts', appId, 'public', 'data', 'agents');
+            onSnapshot(q, (snapshot) => {
+                const list = []; snapshot.forEach(d => list.push(d.data()));
+                renderAgents(list);
+                const p = list.filter(a => a.status === 'pending').length;
+                const b = document.getElementById('adminBadge');
+                if(b){ b.innerText = p; b.classList.toggle('hidden', p === 0); }
+            });
+        };
+
+        const renderAgents = (list) => {
+            const stats = { total: list.length, active: list.filter(a=>a.status==='active').length, pending: list.filter(a=>a.status==='pending').length };
+            const st = document.getElementById('adminStats');
+            if(st) st.innerHTML = `
+                <div class="card p-3 text-center border-white"><div class="text-[9px] text-gray-500">TOTAL</div><div class="font-black">${stats.total}</div></div>
+                <div class="card p-3 text-center border-green-900"><div class="text-[9px] text-green-500">AKTIF</div><div class="font-black text-green-500">${stats.active}</div></div>
+                <div class="card p-3 text-center border-yellow-900"><div class="text-[9px] text-yellow-500">PENDING</div><div class="font-black text-yellow-500">${stats.pending}</div></div>`;
+            const ls = document.getElementById('agentList');
+            if(ls) ls.innerHTML = list.sort((a,b) => a.status==='pending'?-1:1).map(a => `
+                <div class="card p-4 border-l-4 ${a.status==='active'?'border-l-green-500':'border-l-yellow-500'}">
+                    <div class="flex justify-between items-start">
+                        <div><div class="font-bold text-white">${a.name}</div><div class="text-xs text-gray-500">ID: ${a.username}</div></div>
+                        <span class="text-[9px] font-black uppercase bg-white text-black px-2 py-1 rounded">${a.status}</span>
+                    </div>
+                    <div class="flex gap-2 mt-4">
+                        ${a.status !== 'active' ? `<button class="btn btn-primary py-2 text-[10px] flex-1" onclick="updateAgent('${a.username}', 'active', true)">Aktifkan</button>` : ''}
+                        <button class="btn btn-outline py-2 text-[10px] flex-1" onclick="deleteAgent('${a.username}')">Hapus</button>
+                    </div>
+                </div>`).join('');
+        };
+
+        window.updateAgent = async (u, s, exp) => {
+            const data = { status: s };
+            if(exp){ let d = new Date(); d.setDate(d.getDate()+30); data.expiryDate = d.toISOString(); }
+            await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'agents', u), data);
+        };
+        window.deleteAgent = async (u) => { if(confirm('Hapus agen?')) await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'agents', u)); };
+
+        window.onload = async () => {
+            lucide.createIcons();
+            const saved = localStorage.getItem('samsat_user_perm');
+            if(saved) {
+                const u = JSON.parse(saved).u;
+                if(u === 'bintang'){ isAdmin=true; currentUser={name:'BINTANG',username:'bintang',status:'active'}; loginSuccess(); }
+                else {
+                    await ensureAuth();
+                    const snap = await getDoc(doc(db, 'artifacts', appId, 'public', 'data', 'agents', u));
+                    if(snap.exists()){ currentUser=snap.data(); loginSuccess(); } else showPage('loginPage');
+                }
+            } else showPage('loginPage');
+        };
+    </script>
+</body>
+</html>
