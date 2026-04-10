@@ -93,7 +93,6 @@
         }
         .input-group input:focus { border-color: var(--accent-primary); background: #050505; }
 
-        /* Plate Input Design */
         .plate-input-container {
             background: #000;
             border: 3px solid #fff;
@@ -164,11 +163,6 @@
         .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.98); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 25px; backdrop-filter: blur(10px); }
         .loader { border: 5px solid #111; border-top: 5px solid var(--accent-primary); border-radius: 50%; width: 55px; height: 55px; animation: spin 0.9s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
-        /* Admin Search Tool UI */
-        .admin-search-box { position: relative; margin-bottom: 20px; }
-        .admin-search-box input { width: 100%; padding: 16px 20px 16px 50px; background: #0c0c0c; border: 1px solid #333; border-radius: 20px; color: #fff; font-size: 0.9em; font-weight: 600; outline: none; }
-        .admin-search-box i { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--accent-primary); }
     </style>
 </head>
 <body>
@@ -177,7 +171,7 @@
     <div id="pinModal" class="modal-overlay">
         <div class="card w-full max-w-xs text-center border-bronze font-bold">
             <i data-lucide="shield-lock" class="mx-auto mb-6 text-white" style="width: 55px; height: 55px;"></i>
-            <h3 class="text-white font-black text-xl mb-6 uppercase tracking-widest text-center font-bold">Otorisasi Admin</h3>
+            <h3 class="text-white font-black text-xl mb-6 uppercase tracking-widest text-center font-bold">Akses Admin</h3>
             <input type="password" id="pinInput" placeholder="••••••" class="w-full p-5 bg-black border-2 border-white rounded-2xl text-center text-4xl text-white tracking-[15px] outline-none mb-8">
             <div class="flex gap-4">
                 <button class="btn btn-primary flex-1 font-bold" onclick="validatePin()">MASUK</button>
@@ -214,8 +208,8 @@
                 <h3 class="text-white font-black text-xl uppercase tracking-widest text-center flex-1 font-bold">Tambah User Baru</h3>
                 <i data-lucide="x" class="text-gray-500 cursor-pointer" onclick="closeAddUserModal()"></i>
             </div>
-            <div class="input-group"><label>ID Login</label><input type="text" id="adminRegUser" placeholder="Username Baru"></div>
-            <div class="input-group"><label>Password</label><input type="text" id="adminRegPass" placeholder="Password Baru"></div>
+            <div class="input-group"><label>ID Pengguna</label><input type="text" id="adminRegUser" placeholder="Username Login"></div>
+            <div class="input-group"><label>Password Akun</label><input type="text" id="adminRegPass" placeholder="Password Login"></div>
             <div class="flex gap-4 mt-6">
                 <button id="btnAdminSubmit" class="btn btn-primary flex-1 font-black font-bold" onclick="adminAddUser()">DAFTARKAN</button>
                 <button class="btn btn-outline flex-1 font-bold" onclick="closeAddUserModal()">BATAL</button>
@@ -230,7 +224,8 @@
             <div class="header-right flex items-center gap-5">
                 <div class="user-info flex flex-col items-end">
                     <span id="headerName" class="text-[10px] font-bold uppercase text-white tracking-widest opacity-80">USER</span>
-                    <span id="headerExpiry" class="text-[9px] px-1.5 py-0.5 rounded font-black text-center shadow-sm font-bold">AKTIF</span>
+                    <!-- FITUR: SISA MASA AKTIF DI HEADER USER -->
+                    <span id="headerExpiry" class="text-[9px] px-1.5 py-0.5 rounded font-black text-center shadow-sm font-bold bg-white text-black">AKTIF</span>
                 </div>
                 <i data-lucide="log-out" class="w-5 text-red-600 cursor-pointer" onclick="logout()"></i>
             </div>
@@ -241,7 +236,7 @@
             <div id="loginPage" class="page">
                 <div class="text-center mt-16 mb-12 font-bold">
                     <h1 class="text-4xl font-black tracking-tighter uppercase" style="color: var(--accent-primary); text-shadow: 0 0 25px rgba(205,127,50,0.4);">APLIKASI CS.ID PRO</h1>
-                    <p class="text-[10px] font-bold tracking-[0.5em] text-gray-500 mt-4 uppercase opacity-60">Samsat Nasional Online</p>
+                    <p class="text-[10px] font-bold tracking-[0.5em] text-gray-500 mt-4 uppercase opacity-60 italic">Samsat Nasional Online</p>
                 </div>
                 <div class="card">
                     <div class="input-group"><label>Identitas ID</label><input type="text" id="loginUser" placeholder="Username"></div>
@@ -261,7 +256,7 @@
                 </div>
             </div>
 
-            <!-- PAGE: DASHBOARD (FAST SEARCH) -->
+            <!-- PAGE: DASHBOARD -->
             <div id="dashPage" class="page hidden">
                 <div class="text-center mb-8 font-bold">
                     <h3 class="text-white font-black text-sm tracking-[5px] uppercase italic opacity-80">Sinkronisasi Samsat Nasional</h3>
@@ -273,7 +268,7 @@
                     <i data-lucide="zap" class="w-6 h-6 text-bronze fill-bronze"></i> AMBIL DATA TERCEPAT
                 </button>
                 <div class="mt-10 text-center text-gray-800 text-[10px] px-10 uppercase font-black tracking-[2px] opacity-50">
-                    Sistem pemindaian otomatis TNKB pusat versi 45.0 Ultimate.
+                    Sistem pemindaian otomatis TNKB pusat versi Stable.
                 </div>
             </div>
 
@@ -332,7 +327,7 @@
         import { getFirestore, doc, getDoc, setDoc, collection, updateDoc, deleteDoc, query, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // =========================================================================
-        // BARIS 268-274: KONFIGURASI FIREBASE & SECURITY RULES (WAJIB SESUAI)
+        // DATA FIREBASE & SECURITY RULES (WAJIB SESUAI)
         // FIRESTORE RULES: allow read, write: if request.auth != null;
         // =========================================================================
         const liveConfig = {
@@ -343,7 +338,6 @@
             messagingSenderId: "123456789",
             appId: "1:123456789:web:abcdef"
         };
-        // =========================================================================
         
         const firebaseConfig = (typeof __firebase_config !== 'undefined' && __firebase_config.length > 50) ? JSON.parse(__firebase_config) : liveConfig;
         const isNotConfigured = firebaseConfig.authDomain.includes("project-anda");
@@ -355,10 +349,10 @@
             app = initializeApp(firebaseConfig);
             auth = getAuth(app);
             db = getFirestore(app);
-        } catch (e) { console.error("Firebase fail"); }
+        } catch (e) { console.error("Firebase init failed"); }
 
-        // Gunakan ID Aplikasi dari environment jika tersedia untuk menjamin Izin (Permission)
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'csid-pro-universal-v50-stable';
+        // ID APLIKASI UNTUK PATH DATA - RULE 1
+        const appId = 'csid-pro-ultimate-mass-v1';
         const ADMIN_PIN = "280189";
         const WA_ADMIN = "628136900872"; 
         const API_KEY = "9611bbce88d6dbd96cdfd83619233efb";
@@ -367,25 +361,25 @@
         let currentAgents = [];
         let activeAdminTab = 'active';
 
+        const safeCreateIcons = () => {
+            if (window.lucide) window.lucide.createIcons();
+        };
+
         const getDeviceId = () => {
-            let id = localStorage.getItem('csid_v500_key');
+            let id = localStorage.getItem('csid_v10_key');
             if(!id) {
                 id = 'HP-' + Math.random().toString(36).substring(2, 12).toUpperCase();
-                localStorage.setItem('csid_v500_key', id);
+                localStorage.setItem('csid_v10_key', id);
             }
             return id;
         };
 
-        // RULE 3 - Ensure Auth Gate (WAJIB TUNGGU IZIN)
-        const ensureAuth = async () => {
-            if (!auth || isNotConfigured) return null;
-            if (auth.currentUser && isAuthReady) return auth.currentUser;
-            
+        // RULE 3 - Initialize Auth Gate
+        const initSecurityGate = () => {
             return new Promise((resolve) => {
-                const unsubscribe = onAuthStateChanged(auth, (user) => {
+                onAuthStateChanged(auth, (user) => {
                     if (user) { 
                         isAuthReady = true;
-                        unsubscribe(); 
                         resolve(user); 
                     }
                 });
@@ -396,10 +390,17 @@
                         } else {
                             await signInAnonymously(auth);
                         }
-                    } catch (e) { console.error("Auth Gate fail", e); }
+                    } catch (e) { 
+                        console.error("Auth gate error", e);
+                        resolve(null);
+                    }
                 })();
-                setTimeout(() => resolve(auth.currentUser), 10000); 
             });
+        };
+
+        const ensureAuth = async () => {
+            if (isAuthReady && auth.currentUser) return auth.currentUser;
+            return await initSecurityGate();
         };
 
         window.openConfirm = (msg, onYes) => {
@@ -423,7 +424,7 @@
             const isAuth = !['loginPage'].includes(id);
             document.getElementById('appHeader').classList.toggle('hidden', !isAuth);
             document.getElementById('footerNav').classList.toggle('hidden', !isAuth);
-            lucide.createIcons();
+            safeCreateIcons();
         };
 
         window.switchTab = (tab) => {
@@ -440,16 +441,16 @@
                 loginSuccess({username:'bintang'}, true); return;
             }
             if(!u || !p) return showAlert("KOSONG", "ID & Password wajib diisi.");
-            if(isNotConfigured) return showAlert("DATABASE ERROR", "Lengkapi baris 268 Config Firebase bos.");
+            if(isNotConfigured) return showAlert("DATABASE ERROR", "Lengkapi Config Firebase bos.");
 
             const btn = document.getElementById('btnLogin');
             btn.disabled = true; btn.innerText = "MENYAMBUNG...";
 
             try {
                 const userAuth = await ensureAuth();
-                if (!userAuth) throw new Error("Auth Gagal");
+                if (!userAuth) throw new Error("Auth Failed");
 
-                // RULE 1 - Gunakan Path artifacts yang benar sesuai perizinan
+                // RULE 1 - Gunakan Path artifacts
                 const snap = await getDoc(doc(db, 'artifacts', appId, 'public', 'data', 'agents', u));
                 if (snap.exists() && snap.data().password === p) {
                     const data = snap.data();
@@ -464,7 +465,7 @@
                     }
                     loginSuccess(data, false);
                 } else { showAlert("GAGAL MASUK", "ID atau Password salah."); }
-            } catch (e) { showAlert("DATABASE ERROR", "Gagal konek ke Firebase. Cek Internet/Config."); }
+            } catch (e) { showAlert("DATABASE ERROR", "Gagal konek ke Firebase."); }
             finally { btn.disabled = false; btn.innerText = "MASUK KE SISTEM"; }
         };
 
@@ -509,16 +510,14 @@
             if(!u || !p) return showAlert("LENGKAPI", "ID & Password wajib diisi!");
             
             const btn = document.getElementById('btnAdminSubmit');
-            btn.disabled = true; btn.innerText = "PROSES...";
+            btn.disabled = true; btn.innerText = "DAFTARKAN...";
 
             try {
-                // RULE 3 - Ensure Auth Gate before Write
                 const authRes = await ensureAuth();
-                if(!authRes) throw new Error("Keamanan Belum Siap");
+                if(!authRes) throw new Error("Database Belum Siap");
 
                 let d = new Date(); d.setDate(d.getDate()+30);
                 
-                // RULE 1 - Use Strict Path artifacts/{appId}/public/data/{collectionName}
                 const userRef = doc(db, 'artifacts', appId, 'public', 'data', 'agents', u);
                 await setDoc(userRef, {
                     username: u, password: p, status: 'active', role: 'agent', 
@@ -532,7 +531,7 @@
                 showAlert("BERHASIL", `User ${u} telah aktif.`);
             } catch (e) { 
                 console.error(e);
-                showAlert("GAGAL", "Gagal mendaftarkan user. Pastikan Rules di Console: allow read, write: if request.auth != null;"); 
+                showAlert("GAGAL", "Gagal menyimpan user."); 
             } finally { btn.disabled = false; btn.innerText = "DAFTARKAN"; }
         };
 
@@ -598,7 +597,6 @@
             window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
         };
 
-        window.goToAdminPanel = () => { switchTab('admin'); };
         window.logout = () => { localStorage.removeItem('samsat_user_v3'); location.reload(); };
         window.validatePin = () => { 
             if (document.getElementById('pinInput').value === ADMIN_PIN) { 
@@ -611,7 +609,6 @@
         const startAdminListener = async () => {
             const user = await ensureAuth();
             if (!user) return;
-            // RULE 1 - Fetch agents with strict path
             onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'agents'), (snapshot) => {
                 currentAgents = []; snapshot.forEach(d => currentAgents.push(d.data()));
                 renderAdminUI();
@@ -658,8 +655,9 @@
         };
 
         window.resetDevice = (u) => {
-            openConfirm(`Reset HP ID ${u}?`, async () => {
-                await ensureAuth();
+            openConfirm(`Reset gembok HP ID ${u}?`, async () => {
+                const authRes = await ensureAuth();
+                if (!authRes) return;
                 try {
                     await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'agents', u), { deviceId: null });
                     showAlert("BERHASIL", "Kunci HP user telah direset.");
@@ -669,27 +667,42 @@
 
         window.deleteAgent = (u) => {
             openConfirm(`Hapus user ${u} secara permanen?`, async () => {
-                await ensureAuth();
+                const authRes = await ensureAuth();
+                if (!authRes) return;
                 await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'agents', u));
             });
         };
 
         window.onload = async () => {
-            lucide.createIcons();
-            // RULE 3 - Initialize Auth Gate (Sangat Penting untuk HP Lain)
-            const user = await ensureAuth();
+            safeCreateIcons();
+            const user = await initSecurityGate();
             const saved = localStorage.getItem('samsat_user_v3');
             if(saved) {
                 const u = JSON.parse(saved).u;
                 if(u === 'bintang'){ loginSuccess({username:'bintang'}, true); }
                 else {
                     if (user) {
-                        const snap = await getDoc(doc(db, 'artifacts', appId, 'public', 'data', 'agents', u));
-                        if(snap?.exists()){ loginSuccess(snap.data(), false); } else showPage('loginPage');
+                        try {
+                            const snap = await getDoc(doc(db, 'artifacts', appId, 'public', 'data', 'agents', u));
+                            if(snap?.exists()){ loginSuccess(snap.data(), false); } else showPage('loginPage');
+                        } catch (e) { showPage('loginPage'); }
                     } else showPage('loginPage');
                 }
             } else showPage('loginPage');
         };
+        
+        window.adminAddUser = adminAddUser;
+        window.handleLogin = handleLogin;
+        window.validatePin = validatePin;
+        window.logout = logout;
+        window.closeAlert = closeAlert;
+        window.closeConfirm = closeConfirm;
+        window.switchAdminTab = switchAdminTab;
+        window.fetchSamsat = fetchSamsat;
+        window.copyResult = copyResult;
+        window.shareWa = shareWa;
+        window.resetDevice = resetDevice;
+        window.deleteAgent = deleteAgent;
     </script>
 </body>
 </html>
