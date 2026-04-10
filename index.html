@@ -26,7 +26,7 @@
             --accent-primary: #CD7F32; /* Bronze Color */
             --accent-secondary: #A97142;
             --danger: #ff3b30;
-            --success: #25D366;
+            --success: #25D366; /* WhatsApp Green */
             --border-color: #333333;
             --border-radius: 24px;
             --font-family: 'Poppins', sans-serif;
@@ -60,6 +60,7 @@
         .fade-in { animation: fadeIn 0.4s ease-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
+        /* Header UI */
         .header {
             background-color: rgba(0,0,0,0.95);
             backdrop-filter: blur(12px);
@@ -92,6 +93,7 @@
         }
         .input-group input:focus { border-color: var(--accent-primary); background: #050505; }
 
+        /* Plate Input Design */
         .plate-input-container {
             background: #000;
             border: 3px solid #fff;
@@ -134,6 +136,7 @@
         .btn-outline { background: transparent; border: 2px solid #fff; color: #fff; }
         .btn-wa { background: var(--success); color: #fff; }
 
+        /* Result Display Card */
         .result-card { background-color: #000; border-radius: 28px; overflow: hidden; border: 1px solid #fff; padding-bottom: 25px; }
         .res-banner { background: #fff; color: #000; padding: 22px; font-weight: 900; text-align: center; font-size: 1.15em; text-transform: uppercase; letter-spacing: 1.5px; }
         .res-body { padding: 30px; }
@@ -161,6 +164,7 @@
         .loader { border: 5px solid #111; border-top: 5px solid var(--accent-primary); border-radius: 50%; width: 55px; height: 55px; animation: spin 0.9s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
+        /* Admin Search Tool UI */
         .admin-search-box { position: relative; margin-bottom: 20px; }
         .admin-search-box input { width: 100%; padding: 16px 20px 16px 50px; background: #0c0c0c; border: 1px solid #333; border-radius: 20px; color: #fff; font-size: 0.9em; font-weight: 600; outline: none; }
         .admin-search-box i { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--accent-primary); }
@@ -181,11 +185,11 @@
         </div>
     </div>
 
-    <!-- MODAL: ALERT -->
+    <!-- MODAL: ALERT UMUM -->
     <div id="alertModal" class="modal-overlay">
         <div class="card w-full max-w-xs text-center border-white">
-            <h3 id="alertTitle" class="text-white font-black text-lg mb-3 uppercase italic font-bold text-center">Info Sistem</h3>
-            <p id="alertMsg" class="text-gray-400 text-sm mb-8 leading-relaxed text-center"></p>
+            <h3 id="alertTitle" class="text-white font-black text-lg mb-3 uppercase italic font-bold text-center">Pesan Sistem</h3>
+            <p id="alertMsg" class="text-gray-400 text-sm mb-8 leading-relaxed text-center font-medium"></p>
             <button class="btn btn-primary" id="alertOkBtn">MENGERTI</button>
         </div>
     </div>
@@ -206,19 +210,20 @@
     <div id="addUserModal" class="modal-overlay">
         <div class="card w-full max-w-md">
             <div class="flex justify-between items-center mb-6">
-                <h3 class="text-white font-black text-xl uppercase tracking-widest text-center flex-1">User Baru</h3>
+                <h3 class="text-white font-black text-xl uppercase tracking-widest text-center flex-1">Tambah User Baru</h3>
                 <i data-lucide="x" class="text-gray-500 cursor-pointer" onclick="closeAddUserModal()"></i>
             </div>
-            <div class="input-group"><label>Username / ID Login</label><input type="text" id="adminRegUser" placeholder="Username Baru"></div>
-            <div class="input-group"><label>Password</label><input type="text" id="adminRegPass" placeholder="Password Baru"></div>
+            <div class="input-group"><label>Username / ID Login</label><input type="text" id="adminRegUser" placeholder="Masukkan ID Login"></div>
+            <div class="input-group"><label>Password Akun</label><input type="text" id="adminRegPass" placeholder="Masukkan Password"></div>
             <div class="flex gap-4 mt-6">
                 <button id="btnAdminSubmit" class="btn btn-primary flex-1 font-black" onclick="adminAddUser()">DAFTARKAN</button>
-                <button class="btn btn-outline flex-1" onclick="closeAddUserModal()">KEMBALI</button>
+                <button class="btn btn-outline flex-1" onclick="closeAddUserModal()">BATAL</button>
             </div>
         </div>
     </div>
 
     <div class="container">
+        <!-- HEADER UTAMA -->
         <div id="appHeader" class="header hidden">
             <h1 class="font-black italic tracking-tighter">APLIKASI CS.ID PRO</h1>
             <div class="header-right flex items-center gap-5">
@@ -231,10 +236,11 @@
         </div>
 
         <div class="content-area">
+            <!-- PAGE: LOGIN -->
             <div id="loginPage" class="page">
                 <div class="text-center mt-16 mb-12">
                     <h1 class="text-4xl font-black tracking-tighter uppercase" style="color: var(--accent-primary); text-shadow: 0 0 25px rgba(205,127,50,0.4);">APLIKASI CS.ID PRO</h1>
-                    <p class="text-[10px] font-bold tracking-[0.5em] text-gray-500 mt-4 uppercase opacity-60">Samsat Nasional Online</p>
+                    <p class="text-[10px] font-bold tracking-[0.5em] text-gray-500 mt-4 uppercase opacity-60 italic">Samsat Nasional Online</p>
                 </div>
                 <div class="card">
                     <div class="input-group"><label>Identitas ID</label><input type="text" id="loginUser" placeholder="Username"></div>
@@ -254,6 +260,7 @@
                 </div>
             </div>
 
+            <!-- PAGE: DASHBOARD -->
             <div id="dashPage" class="page hidden">
                 <div class="text-center mb-8">
                     <h3 class="text-white font-black text-sm tracking-[5px] uppercase italic opacity-80">Sinkronisasi Samsat Nasional</h3>
@@ -265,10 +272,11 @@
                     <i data-lucide="zap" class="w-6 h-6 text-bronze fill-bronze"></i> AMBIL DATA TERCEPAT
                 </button>
                 <div class="mt-10 text-center text-gray-800 text-[10px] px-10 uppercase font-black tracking-[2px] opacity-50">
-                    Database TNKB Nasional V15.0 - Turbo Engine.
+                    Database TNKB Nasional V20.0 Turbo-Paten.
                 </div>
             </div>
 
+            <!-- PAGE: RESULTS -->
             <div id="resultPage" class="page hidden">
                 <div class="flex items-center gap-5 mb-8">
                     <i data-lucide="arrow-left-circle" class="text-white cursor-pointer w-8 h-8" onclick="showPage('dashPage')"></i>
@@ -281,6 +289,7 @@
                 </div>
             </div>
 
+            <!-- PAGE: ADMIN -->
             <div id="adminPage" class="page hidden">
                 <div class="flex items-center justify-between mb-8">
                     <div class="flex items-center gap-4">
@@ -322,7 +331,7 @@
         import { getFirestore, doc, getDoc, setDoc, collection, updateDoc, deleteDoc, query, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // =========================================================================
-        // BARIS 265: KONFIGURASI FIREBASE OTOMATIS (Wajib Diganti Data Asli Bos)
+        // BARIS 265: KONFIGURASI FIREBASE OTOMATIS (SISTEM STABIL)
         // =========================================================================
         const liveConfig = {
             apiKey: "AIzaSy...", 
@@ -333,20 +342,21 @@
             appId: "1:123456789:web:abcdef"
         };
         
-        // PENTING: Gunakan Config dari environment jika tersedia (untuk Preview),
-        // Jika tidak ada (setelah hosting), gunakan liveConfig di atas.
-        const firebaseConfig = (typeof __firebase_config !== 'undefined' && __firebase_config.length > 100) 
-            ? JSON.parse(__firebase_config) 
-            : liveConfig;
+        // JANGAN DIHAPUS: Deteksi otomatis lingkungan hosting bos.
+        const firebaseConfig = (typeof __firebase_config !== 'undefined' && __firebase_config.length > 50) ? JSON.parse(__firebase_config) : liveConfig;
+        
+        // PERBAIKAN LOGIKA: Cek apakah data placeholder "project-anda" sudah diganti bos.
+        const isNotConfigured = firebaseConfig.authDomain.includes("project-anda");
 
         let app, auth, db;
         try {
             app = initializeApp(firebaseConfig);
             auth = getAuth(app);
             db = getFirestore(app);
-        } catch (e) { console.error("Firebase Gagal Konek!"); }
+        } catch (e) { console.error("Firebase Gagal Initialisasi."); }
 
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'csid-pro-perfect-ultimate-v100';
+        // ID APLIKASI TETAP - Agar data Admin dan Pengguna sinkron di "folder" yang sama
+        const appId = 'csid-pro-mass-stable-v1';
         const ADMIN_PIN = "280189";
         const WA_ADMIN = "628136900872"; 
         const API_KEY = "9611bbce88d6dbd96cdfd83619233efb";
@@ -358,17 +368,17 @@
         let activeAdminTab = 'active';
 
         const getDeviceId = () => {
-            let id = localStorage.getItem('csid_v200_device_key');
+            let id = localStorage.getItem('csid_v300_unique_key');
             if(!id) {
-                id = 'DEV-' + Math.random().toString(36).substring(2, 12).toUpperCase();
-                localStorage.setItem('csid_v200_device_key', id);
+                id = 'HP-' + Math.random().toString(36).substring(2, 12).toUpperCase();
+                localStorage.setItem('csid_v300_unique_key', id);
             }
             return id;
         };
 
-        // RULE 3 - Ensure Auth Gate (Pencegah "PROSES..." Macet)
+        // RULE 3 - Ensure Auth Gate (Memastikan izin masuk sebelum nembak database)
         const ensureAuth = async () => {
-            if (!auth) return null;
+            if (!auth || isNotConfigured) return null;
             if (auth.currentUser) return auth.currentUser;
             
             return new Promise((resolve) => {
@@ -384,7 +394,7 @@
                         }
                     } catch (e) { resolve(null); }
                 })();
-                setTimeout(() => resolve(null), 6000); 
+                setTimeout(() => resolve(null), 10000); // Tunggu sampai 10 detik agar benar-benar siap
             });
         };
 
@@ -422,29 +432,35 @@
             }
 
             if(!u || !p) return showAlert("KOSONG", "ID & Password wajib diisi.");
-            
+            if(isNotConfigured) return showAlert("DATABASE ERROR", "Lengkapi data Firebase di Baris 265.");
+
             const btn = document.getElementById('btnLogin');
             btn.disabled = true; btn.innerText = "MENYAMBUNG...";
 
             try {
+                // Rule 3: Tunggu auth kelar secara sempurna
                 const userAuth = await ensureAuth();
                 if (!userAuth) throw new Error("Auth Gagal");
 
+                // Rule 1: Ambil data user dari path artifact yang benar
                 const snap = await getDoc(doc(db, 'artifacts', appId, 'public', 'data', 'agents', u));
                 if (snap.exists() && snap.data().password === p) {
                     const data = snap.data();
-                    if (data.status === 'blocked') return showAlert("BLOKIR", "ID Anda dinonaktifkan.");
+                    if (data.status === 'blocked') return showAlert("BLOKIR", "ID Anda dinonaktifkan Admin.");
                     
                     const thisDevice = getDeviceId();
                     if (data.deviceId && data.deviceId !== thisDevice) {
-                        return showAlert("AKSES DITOLAK", "ID sudah terkunci di HP lain.");
+                        return showAlert("AKSES DITOLAK", "ID sudah terkunci di HP lain. Hubungi Admin.");
                     }
+                    
+                    // Kunci HP Otomatis saat login pertama
                     if (!data.deviceId) {
                         await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'agents', u), { deviceId: thisDevice });
                     }
+                    
                     currentUser = data; isAdmin = data.role === 'admin'; loginSuccess();
-                } else { showAlert("GAGAL", "ID atau Password salah."); }
-            } catch (e) { showAlert("DATABASE ERROR", "Gagal konek ke Firebase. Cek Config Baris 265."); }
+                } else { showAlert("GAGAL MASUK", "ID atau Password salah."); }
+            } catch (e) { showAlert("DATABASE ERROR", "Gagal menghubungi database. Pastikan Config Firebase sudah benar bos."); }
             finally { btn.disabled = false; btn.innerText = "MASUK KE SISTEM"; }
         };
 
@@ -452,6 +468,7 @@
             localStorage.setItem('samsat_user_v3', JSON.stringify({u: currentUser.username}));
             document.getElementById('headerName').innerText = (currentUser.username).toUpperCase();
             
+            // SINKRONISASI MASA AKTIF KE HEADER PENGGUNA
             let daysLeft = 0;
             if(currentUser.expiryDate) {
                 const diff = new Date(currentUser.expiryDate) - new Date();
@@ -493,9 +510,10 @@
 
             try {
                 const authRes = await ensureAuth();
-                if(!authRes) throw new Error("Database Gagal Terbuka");
+                if(!authRes) throw new Error("Pintu Database Tertutup");
 
                 let d = new Date(); d.setDate(d.getDate()+30);
+                // DAFTAR OTOMATIS AKTIF
                 await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'agents', u), {
                     username: u, password: p, status: 'active', role: 'agent', expiryDate: d.toISOString(), createdAt: new Date().toISOString()
                 });
@@ -504,8 +522,8 @@
                 document.getElementById('adminRegPass').value = '';
                 closeAddUserModal(); 
                 switchAdminTab('active');
-                showAlert("BERHASIL", `User ${u} telah aktif.`);
-            } catch (e) { showAlert("GAGAL", "Gagal simpan user baru. Cek Internet/Config Firebase."); }
+                showAlert("BERHASIL", `User ${u} telah aktif selama 30 hari.`);
+            } catch (e) { showAlert("GAGAL", "Gagal menyimpan user. Cek Config Firebase bos."); }
             finally { btn.disabled = false; btn.innerText = "DAFTARKAN"; }
         };
 
@@ -522,7 +540,7 @@
                 const data = await res.json();
                 if(data && data.length > 0) { renderResult(data[0], plate); actionBtns.classList.remove('hidden'); actionBtns.style.display = 'grid'; }
                 else { container.innerHTML = `<div class="card text-center text-red-500 py-12 font-black uppercase text-center italic">DATA TIDAK DITEMUKAN</div>`; }
-            } catch (e) { container.innerHTML = `<div class="card text-center text-red-500 py-12 font-bold uppercase text-center">Server Gagal Merespon</div>`; }
+            } catch (e) { container.innerHTML = `<div class="card text-center text-red-500 py-12 font-bold uppercase text-center">Server Sibuk</div>`; }
         };
 
         const renderResult = (d, plate) => {
@@ -545,9 +563,6 @@
                         <div class="res-line"><span class="res-label">Silinder</span><span class="res-val">: ${d.engine_capacity_cc || '-'} cc</span></div>
                         <div class="res-line"><span class="res-label">No. Rangka</span><span class="res-val">: ${d.chassis_number || '-'}</span></div>
                         <div class="res-line"><span class="res-label">No. Mesin</span><span class="res-val">: ${d.engine_number || '-'}</span></div>
-                        <div class="res-section-title">DOKUMEN RESMI : 🖋</div>
-                        <div class="res-line"><span class="res-label">No. Bpkb</span><span class="res-val">: ${d.bpkb_number || ''}</span></div>
-                        <div class="res-line"><span class="res-label">No. Stnk</span><span class="res-val">: ${d.stnk_number || ''}</span></div>
                         <div class="res-line"><span class="res-label">Tgl Daftar</span><span class="res-val">: ${d.registration_date || '-'}</span></div>
                         <div class="res-section-title">NOTE : ⚠️</div>
                         <p class="text-[10px] text-white leading-relaxed mb-6 font-bold uppercase tracking-tighter text-justify italic opacity-80">ALAT DI BUAT UNTUK MENGAKSES IDENTITAS RESMI KEPEMILIKAN KENDARAAN YANG SAH SESUAI TNKB RESMI PADA KENDARAAN.</p>
@@ -564,7 +579,7 @@
             el.value = document.getElementById('resultContent').innerText;
             document.body.appendChild(el); el.select();
             document.execCommand('copy'); document.body.removeChild(el);
-            showAlert("BERHASIL", "Data kendaraan berhasil disalin.");
+            showAlert("BERHASIL", "Data kendaraan berhasil disalin ke ponsel.");
         };
 
         window.shareWa = () => {
@@ -598,6 +613,9 @@
             onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'agents'), (snapshot) => {
                 currentAgents = []; snapshot.forEach(d => currentAgents.push(d.data()));
                 renderAdminUI();
+                const pCount = currentAgents.filter(a => a.status === 'pending').length;
+                const b = document.getElementById('adminBadge');
+                if(b){ b.innerText = pCount; b.classList.toggle('hidden', pCount === 0); }
             }, (err) => { console.log("Listener Ready."); });
         };
 
@@ -635,7 +653,6 @@
                     <div class="grid grid-cols-2 gap-2 mt-6">
                         <button class="btn btn-outline py-3 text-[10px] border-bronze text-bronze" onclick="resetDevice('${a.username}')">RESET HP</button>
                         <button class="btn btn-outline py-3 text-[10px] border-red-900 text-red-500 font-bold" onclick="deleteAgent('${a.username}')">HAPUS USER</button>
-                        ${a.status !== 'active' ? `<button class="btn btn-primary py-3 text-[10px] col-span-2" onclick="updateAgent('${a.username}', 'active', true)">AKTIFKAN (30H)</button>` : ''}
                     </div>
                 </div>`;
             }).join('') || `<div class="text-center py-10 text-gray-600 font-bold italic">User tidak ditemukan</div>`;
@@ -649,7 +666,7 @@
         };
         
         window.resetDevice = (u) => {
-            openConfirm(`Hapus kunci HP ID ${u} agar bisa login di HP baru?`, async () => {
+            openConfirm(`Hapus kunci HP ID ${u}?`, async () => {
                 await ensureAuth();
                 try {
                     await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'agents', u), { deviceId: null });
@@ -667,6 +684,7 @@
 
         window.onload = async () => {
             lucide.createIcons();
+            // Rule 3: Auto Auth Gate at Startup (Sangat Penting untuk HP Lain)
             const user = await ensureAuth();
             const saved = localStorage.getItem('samsat_user_v3');
             if(saved) {
