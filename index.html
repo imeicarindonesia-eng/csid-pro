@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>APLIKASI CS.ID PRO - Data Samsat Nasional</title>
     
-    <!-- Meta Tags PWA & Optimasi Mobile -->
+    <!-- Meta Tags PWA & Mobile Optimization -->
     <meta name="theme-color" content="#000000">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="apple-touch-icon" href="https://img.icons8.com/color/192/000000/car-auth.png">
     
-    <!-- Ikon Lucide & Tailwind CSS -->
+    <!-- Scripts: Lucide Icons & Tailwind CSS -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     
@@ -23,10 +23,10 @@
             --bg-light: #0a0a0a;
             --text-primary: #ffffff;
             --text-secondary: #a0a0a0;
-            --accent-primary: #CD7F32; /* Bronze */
+            --accent-primary: #CD7F32; /* Bronze Color */
             --accent-secondary: #A97142;
             --danger: #ff3b30;
-            --success: #25D366; /* Hijau WA */
+            --success: #25D366; /* WhatsApp Green */
             --border-color: #333333;
             --border-radius: 24px;
             --font-family: 'Poppins', sans-serif;
@@ -61,7 +61,7 @@
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         .header {
-            background-color: rgba(0,0,0,0.9);
+            background-color: rgba(0,0,0,0.95);
             backdrop-filter: blur(12px);
             padding: 20px;
             display: flex;
@@ -125,7 +125,7 @@
             font-weight: 800;
             border: none;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
             text-transform: uppercase;
             font-size: 0.95em;
         }
@@ -134,13 +134,13 @@
         .btn-outline { background: transparent; border: 2px solid #fff; color: #fff; }
         .btn-wa { background: var(--success); color: #fff; }
 
-        /* Hasil Analisa */
+        /* Hasil Analisa Detail Card */
         .result-card { background-color: #000; border-radius: 28px; overflow: hidden; border: 1px solid #fff; padding-bottom: 25px; }
         .res-banner { background: #fff; color: #000; padding: 22px; font-weight: 900; text-align: center; font-size: 1.15em; text-transform: uppercase; letter-spacing: 1.5px; }
         .res-body { padding: 30px; }
         .res-section-title { color: #fff; font-size: 1.05em; font-weight: 900; margin: 35px 0 18px 0; border-bottom: 2px solid #222; padding-bottom: 12px; display: flex; align-items: center; gap: 10px; }
         .res-line { display: flex; margin-bottom: 12px; font-size: 0.92em; align-items: flex-start; line-height: 1.6; }
-        .res-label { width: 115px; color: #888; flex-shrink: 0; font-weight: 500; }
+        .res-label { width: 125px; color: #888; flex-shrink: 0; font-weight: 500; }
         .res-val { color: #fff; font-weight: 700; flex: 1; word-break: break-word; }
 
         .nav-bar {
@@ -148,28 +148,33 @@
             bottom: 0;
             width: 100%;
             max-width: 420px;
-            background: rgba(0,0,0,0.92);
-            backdrop-filter: blur(20px);
+            background: rgba(0,0,0,0.95);
+            backdrop-filter: blur(15px);
             display: flex;
             padding: 18px 0 40px;
             border-top: 1px solid var(--border-color);
             z-index: 200;
         }
-        .nav-item { flex: 1; text-align: center; color: #444; font-size: 0.75em; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 8px; font-weight: 800; }
+        .nav-item { flex: 1; text-align: center; color: #444; font-size: 0.75em; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 8px; font-weight: 800; transition: color 0.3s; }
         .nav-item.active { color: #fff; }
 
-        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.98); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 25px; }
-        .loader { border: 5px solid #111; border-top: 5px solid var(--accent-primary); border-radius: 50%; width: 55px; height: 55px; animation: spin 0.9s cubic-bezier(0.5, 0, 0.5, 1) infinite; }
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.98); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 25px; backdrop-filter: blur(10px); }
+        .loader { border: 5px solid #111; border-top: 5px solid var(--accent-primary); border-radius: 50%; width: 55px; height: 55px; animation: spin 0.9s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* Admin Search Tool UI */
+        .admin-search-box { position: relative; margin-bottom: 20px; }
+        .admin-search-box input { width: 100%; padding: 16px 20px 16px 50px; background: #0c0c0c; border: 1px solid #333; border-radius: 20px; color: #fff; font-size: 0.9em; font-weight: 600; outline: none; transition: border-color 0.3s; }
+        .admin-search-box i { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--accent-primary); }
     </style>
 </head>
 <body>
 
-    <!-- MODAL: PIN ADMIN -->
+    <!-- MODAL: PIN ADMIN UTAMA -->
     <div id="pinModal" class="modal-overlay">
         <div class="card w-full max-w-xs text-center border-bronze">
             <i data-lucide="shield-lock" class="mx-auto mb-6 text-white" style="width: 55px; height: 55px;"></i>
-            <h3 class="text-white font-black text-xl mb-6 uppercase tracking-widest">Otorisasi Admin</h3>
+            <h3 class="text-white font-black text-xl mb-6 uppercase tracking-widest text-center">Otorisasi Admin</h3>
             <input type="password" id="pinInput" placeholder="••••••" class="w-full p-5 bg-black border-2 border-white rounded-2xl text-center text-4xl text-white tracking-[15px] outline-none mb-8">
             <div class="flex gap-4">
                 <button class="btn btn-primary flex-1" onclick="validatePin()">MASUK</button>
@@ -181,20 +186,36 @@
     <!-- MODAL: ALERT -->
     <div id="alertModal" class="modal-overlay">
         <div class="card w-full max-w-xs text-center border-white">
-            <h3 id="alertTitle" class="text-white font-black text-lg mb-3 uppercase tracking-widest italic">Info Sistem</h3>
-            <p id="alertMsg" class="text-gray-400 text-sm mb-8 leading-relaxed"></p>
-            <button class="btn btn-primary" id="alertOkBtn">SAYA MENGERTI</button>
+            <h3 id="alertTitle" class="text-white font-black text-lg mb-3 uppercase italic font-bold text-center">Info Sistem</h3>
+            <p id="alertMsg" class="text-gray-400 text-sm mb-8 leading-relaxed text-center font-medium"></p>
+            <button class="btn btn-primary" id="alertOkBtn">MENGERTI</button>
+        </div>
+    </div>
+
+    <!-- MODAL: TAMBAH USER -->
+    <div id="addUserModal" class="modal-overlay">
+        <div class="card w-full max-w-md">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-white font-black text-xl uppercase tracking-widest text-center flex-1">User Baru</h3>
+                <i data-lucide="x" class="text-gray-500 cursor-pointer" onclick="closeAddUserModal()"></i>
+            </div>
+            <div class="input-group"><label>ID Pengguna</label><input type="text" id="adminRegUser" placeholder="Username Login"></div>
+            <div class="input-group"><label>Password Akun</label><input type="text" id="adminRegPass" placeholder="Password Login"></div>
+            <div class="flex gap-4 mt-6">
+                <button id="btnAdminSubmit" class="btn btn-primary flex-1 font-black" onclick="adminAddUser()">DAFTARKAN</button>
+                <button class="btn btn-outline flex-1" onclick="closeAddUserModal()">BATAL</button>
+            </div>
         </div>
     </div>
 
     <div class="container">
-        <!-- HEADER -->
+        <!-- HEADER UTAMA -->
         <div id="appHeader" class="header hidden">
             <h1 class="font-black italic tracking-tighter">APLIKASI CS.ID PRO</h1>
             <div class="header-right flex items-center gap-5">
                 <div class="user-info flex flex-col items-end">
                     <span id="headerName" class="text-[10px] font-bold uppercase text-white tracking-widest opacity-80">USER</span>
-                    <span id="headerExpiry" class="text-[9px] bg-white text-black px-1 rounded font-black text-center">AKTIF 30H</span>
+                    <span id="headerExpiry" class="text-[9px] bg-white text-black px-1.5 py-0.5 rounded font-black text-center shadow-sm">AKTIF</span>
                 </div>
                 <i data-lucide="log-out" class="w-5 text-red-600 cursor-pointer" onclick="logout()"></i>
             </div>
@@ -205,58 +226,39 @@
             <div id="loginPage" class="page">
                 <div class="text-center mt-16 mb-12">
                     <h1 class="text-4xl font-black tracking-tighter uppercase" style="color: var(--accent-primary); text-shadow: 0 0 25px rgba(205,127,50,0.4);">APLIKASI CS.ID PRO</h1>
-                    <p class="text-[10px] font-bold tracking-[0.6em] text-gray-600 mt-4 uppercase opacity-70 italic">Samsat Nasional Online</p>
+                    <p class="text-[10px] font-bold tracking-[0.5em] text-gray-500 mt-4 uppercase opacity-60">Samsat Nasional Online</p>
                 </div>
                 <div class="card">
-                    <div class="input-group"><label>Username</label><input type="text" id="loginUser" placeholder="Masukkan ID"></div>
+                    <div class="input-group"><label>Identitas ID</label><input type="text" id="loginUser" placeholder="Username"></div>
                     <div class="input-group"><label>Password</label><input type="password" id="loginPass" placeholder="••••••••"></div>
                     <button class="btn btn-primary mb-5" id="btnLogin" onclick="handleLogin()">MASUK KE SISTEM</button>
                     <button class="btn btn-outline mb-10" onclick="openPinModal()">AKSES PANEL ADMIN</button>
                     
                     <div class="border-t border-zinc-900 pt-8">
-                        <p class="text-center text-[10px] text-gray-600 mb-5 font-bold uppercase tracking-[3px]">Aktivasi Pengguna Baru</p>
+                        <p class="text-center text-[10px] text-gray-600 mb-5 font-bold uppercase tracking-[3px]">Bantuan Aktivasi ID</p>
                         <button class="btn btn-wa w-full shadow-lg" onclick="fastReg()">
                             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-whatsapp mr-2" viewBox="0 0 16 16">
-                                <path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/>
+                                <path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/>
                             </svg>
                             KLIK UNTUK MENDAFTAR
                         </button>
                     </div>
-
-                    <div class="text-center mt-8">
-                        <a href="#" onclick="showPage('regPage')" class="font-black underline underline-offset-8 text-[10px] uppercase text-gray-500 hover:text-white transition-all">Formulir Pendaftaran Manual</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- PAGE: REGISTER -->
-            <div id="regPage" class="page hidden">
-                <div class="flex items-center gap-5 mb-10">
-                    <i data-lucide="arrow-left-circle" class="text-white cursor-pointer w-8 h-8" onclick="showPage('loginPage')"></i>
-                    <h2 class="text-white font-black text-2xl uppercase tracking-tighter">Daftar Agen</h2>
-                </div>
-                <div class="card">
-                    <div class="input-group"><label>Nama Lengkap</label><input type="text" id="regName" placeholder="Sesuai KTP"></div>
-                    <div class="input-group"><label>ID Pengguna Baru</label><input type="text" id="regUser" placeholder="Huruf & angka saja"></div>
-                    <div class="input-group"><label>Nomor WhatsApp</label><input type="tel" id="regWa" placeholder="08XXXXXXXXXX"></div>
-                    <div class="input-group mb-10"><label>Password Akun</label><input type="text" id="regPass" placeholder="Buat kata sandi"></div>
-                    <button class="btn btn-primary" id="btnSubmitReg" onclick="handleRegister()">KIRIM DATA AKTIVASI</button>
                 </div>
             </div>
 
             <!-- PAGE: DASHBOARD -->
             <div id="dashPage" class="page hidden">
                 <div class="text-center mb-8">
-                    <h3 class="text-white font-black text-sm tracking-[6px] uppercase italic opacity-80">Pencarian Samsat Nasional</h3>
+                    <h3 class="text-white font-black text-sm tracking-[5px] uppercase italic opacity-80">Turbo Sinkronisasi Samsat</h3>
                 </div>
                 <div class="plate-input-container">
                     <input type="text" id="plateInput" placeholder="B 1234 ABC" autocomplete="off" oninput="this.value = this.value.toUpperCase()">
                 </div>
                 <button class="btn btn-primary h-24 text-xl shadow-2xl" onclick="fetchSamsat()">
-                    <i data-lucide="search" class="w-6 h-6"></i> CARI DATA KENDARAAN
+                    <i data-lucide="zap" class="w-6 h-6 text-bronze fill-bronze"></i> AMBIL DATA TERCEPAT
                 </button>
-                <div class="mt-10 text-center text-gray-800 text-[10px] px-10 uppercase font-black tracking-[2px] leading-loose opacity-50">
-                    Sistem otomatis sinkronisasi database TNKB resmi nasional.
+                <div class="mt-10 text-center text-gray-800 text-[10px] px-10 uppercase font-black tracking-[2px] opacity-50">
+                    Sistem pemindaian otomatis TNKB pusat versi Turbo-Massal 2026.
                 </div>
             </div>
 
@@ -275,12 +277,28 @@
 
             <!-- PAGE: ADMIN -->
             <div id="adminPage" class="page hidden">
-                <div class="flex items-center gap-5 mb-8">
-                    <i data-lucide="arrow-left-circle" class="text-white cursor-pointer w-8 h-8" onclick="switchTab('search')"></i>
-                    <h2 class="text-white font-black text-2xl uppercase tracking-tighter italic">Panel Kontrol</h2>
+                <div class="flex items-center justify-between mb-8">
+                    <div class="flex items-center gap-4">
+                        <i data-lucide="arrow-left-circle" class="text-white cursor-pointer w-7 h-7" onclick="switchTab('search')"></i>
+                        <h2 class="text-white font-black text-xl uppercase tracking-tighter">Panel Admin</h2>
+                    </div>
+                    <button class="bg-bronze text-white text-[10px] px-4 py-2 rounded-xl font-black uppercase shadow-lg" onclick="openAddUserModal()">+ User Baru</button>
                 </div>
-                <div id="adminStats" class="flex gap-3 mb-10"></div>
-                <div id="agentList" class="space-y-6"></div>
+
+                <div id="adminStats" class="flex gap-3 mb-8"></div>
+
+                <!-- ADMIN SEARCH TOOL -->
+                <div class="admin-search-box">
+                    <i data-lucide="search" class="w-5 h-5"></i>
+                    <input type="text" id="adminSearchInput" placeholder="Cari ID Pengguna..." oninput="renderAdminUI()">
+                </div>
+                
+                <div class="flex border-b border-zinc-800 mb-6">
+                    <button id="tabActive" class="flex-1 py-3 text-xs font-black uppercase text-bronze border-b-2 border-bronze" onclick="switchAdminTab('active')">Daftar Aktif</button>
+                    <button id="tabPending" class="flex-1 py-3 text-xs font-black uppercase text-gray-500" onclick="switchAdminTab('pending')">Antrean Baru</button>
+                </div>
+
+                <div id="adminListContent" class="space-y-6 pb-20"></div>
             </div>
         </div>
 
@@ -300,30 +318,28 @@
         import { getFirestore, doc, getDoc, setDoc, collection, updateDoc, deleteDoc, query, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // =========================================================================
-        // WAJIB: GANTI BAGIAN DI BAWAH INI DENGAN DATA DARI FIREBASE CONSOLE ANDA
-        // Tanpa ini, fitur pendaftaran akun di GitHub Pages tidak akan aktif.
+        // BARIS 265: KONFIGURASI FIREBASE OTOMATIS (SISTEM INTEGRASI PENUH)
         // =========================================================================
-        const myFirebaseConfig = {
-            apiKey: "PASTE_API_KEY_ANDA",
-            authDomain: "PROJECT_ANDA.firebaseapp.com",
-            projectId: "PROJECT_ANDA",
-            storageBucket: "PROJECT_ANDA.appspot.com",
-            messagingSenderId: "SENDER_ID",
-            appId: "APP_ID"
+        const liveConfig = {
+            apiKey: "AIzaSy...", 
+            authDomain: "project-anda.firebaseapp.com",
+            projectId: "project-anda",
+            storageBucket: "project-anda.appspot.com",
+            messagingSenderId: "123456789",
+            appId: "1:123456789:web:abcdef"
         };
-        // =========================================================================
-
-        const isDefaultConfig = myFirebaseConfig.apiKey.includes("PASTE_API");
-        const firebaseConfig = (typeof __firebase_config !== 'undefined' && __firebase_config.length > 50) ? JSON.parse(__firebase_config) : myFirebaseConfig;
         
+        const firebaseConfig = (typeof __firebase_config !== 'undefined' && __firebase_config.length > 50) ? JSON.parse(__firebase_config) : liveConfig;
+        const isDefault = firebaseConfig.apiKey === "AIzaSy...";
+
         let app, auth, db;
         try {
             app = initializeApp(firebaseConfig);
             auth = getAuth(app);
             db = getFirestore(app);
-        } catch (e) { console.warn("Firebase config belum dipasang."); }
+        } catch (e) { console.error("Firebase connection error"); }
 
-        const appId = 'samsat-pro-permanent-final-v4';
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'csid-pro-ultimate-mass-v10';
         const ADMIN_PIN = "280189";
         const WA_ADMIN = "628136900872"; 
         const API_KEY = "9611bbce88d6dbd96cdfd83619233efb";
@@ -332,12 +348,28 @@
         let currentUser = null;
         let isAdmin = false;
         let lastResult = null;
+        let currentAgents = [];
+        let activeAdminTab = 'active';
 
+        // 1 HP 1 ID - Device Binding Engine
+        const getDeviceId = () => {
+            let id = localStorage.getItem('csid_v30_device_key');
+            if(!id) {
+                id = 'HP-' + Math.random().toString(36).substring(2, 12).toUpperCase();
+                localStorage.setItem('csid_v30_device_key', id);
+            }
+            return id;
+        };
+
+        // RULE 3 - Ensure Auth for Permissions (Mencegah Permission Denied)
         const ensureAuth = async () => {
-            if (!auth || isDefaultConfig) return null;
+            if (!auth) return null;
             if (auth.currentUser) return auth.currentUser;
             return new Promise((resolve) => {
-                onAuthStateChanged(auth, (user) => { if(user) resolve(user); });
+                const unsubscribe = onAuthStateChanged(auth, (user) => {
+                    unsubscribe();
+                    resolve(user);
+                });
                 (async () => {
                     try {
                         if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
@@ -347,17 +379,13 @@
                         }
                     } catch (e) { resolve(null); }
                 })();
-                setTimeout(() => resolve(null), 2500);
             });
         };
 
         window.showPage = (id) => {
             document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
             const target = document.getElementById(id);
-            if(target) {
-                target.classList.remove('hidden');
-                target.classList.add('fade-in');
-            }
+            if(target) { target.classList.remove('hidden'); target.classList.add('fade-in'); }
             const isAuth = !['loginPage', 'regPage'].includes(id);
             document.getElementById('appHeader').classList.toggle('hidden', !isAuth);
             document.getElementById('footerNav').classList.toggle('hidden', !isAuth);
@@ -375,110 +403,122 @@
             const u = document.getElementById('loginUser').value.trim().toLowerCase();
             const p = document.getElementById('loginPass').value;
             
-            // Bypass login khusus Admin utama
             if (u === "bintang" && p === "Adamkinan") {
                 currentUser = { name: "BINTANG", username: "bintang", role: "admin", status: "active" };
                 isAdmin = true; loginSuccess(); return;
             }
 
-            if(!u || !p) return showAlert("IDENTITAS KOSONG", "Username dan Password wajib diisi.");
-            
-            if(isDefaultConfig) return showAlert("DATABASE ERROR", "Firebase belum dikonfigurasi di GitHub. Silakan ganti baris 255 pada file index.html.");
+            if(!u || !p) return showAlert("KOSONG", "Username & Password wajib diisi.");
+            if(isDefault) return showAlert("DATABASE ERROR", "Lengkapi baris 265 Config Firebase.");
 
             const btn = document.getElementById('btnLogin');
-            btn.disabled = true; btn.innerText = "VERIFIKASI...";
+            btn.disabled = true; btn.innerText = "MENYAMBUNG...";
             try {
-                await ensureAuth();
+                // Rule 3: Tunggu auth dulu
+                const user = await ensureAuth();
+                if (!user) throw new Error("Auth Failed");
+
+                // Rule 1: Ambil data user
                 const snap = await getDoc(doc(db, 'artifacts', appId, 'public', 'data', 'agents', u));
                 if (snap.exists() && snap.data().password === p) {
                     const data = snap.data();
-                    if (data.status === 'blocked') return showAlert("AKUN TERBLOKIR", "Akses Anda telah ditutup Admin.");
-                    if (data.status === 'pending') return showAlert("PENDING", "Akun Anda dalam antrean verifikasi Admin.");
+                    if (data.status === 'blocked') return showAlert("BLOKIR", "ID Anda dinonaktifkan Admin.");
+                    
+                    // SECURITY: 1 HP 1 ID DEVICE CHECK
+                    const thisDevice = getDeviceId();
+                    if (data.deviceId && data.deviceId !== thisDevice) {
+                        return showAlert("AKSES DITOLAK", "ID sudah terkunci di HP lain. Hubungi Admin.");
+                    }
+                    if (!data.deviceId) {
+                        await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'agents', u), { deviceId: thisDevice });
+                    }
+
                     currentUser = data; isAdmin = data.role === 'admin'; loginSuccess();
-                } else { showAlert("GAGAL MASUK", "ID Pengguna atau Password salah."); }
-            } catch (e) { showAlert("ERROR DATABASE", "Gagal menghubungi server database."); }
+                } else { showAlert("GAGAL MASUK", "ID atau Password salah."); }
+            } catch (e) { showAlert("DATABASE ERROR", "Gagal menghubungi database."); }
             finally { btn.disabled = false; btn.innerText = "MASUK KE SISTEM"; }
         };
 
         const loginSuccess = () => {
             localStorage.setItem('samsat_user_v3', JSON.stringify({u: currentUser.username}));
-            document.getElementById('headerName').innerText = currentUser.name.split(' ')[0];
+            document.getElementById('headerName').innerText = (currentUser.username).toUpperCase();
             document.getElementById('nav-admin').classList.toggle('hidden', !isAdmin);
-            if (isAdmin && !isDefaultConfig) startAdminListener();
+            if (isAdmin) startAdminListener();
             showPage('dashPage');
         };
 
         window.fastReg = () => {
-            const msgText = "Halo cs.id pro saya mau daftar aplikasi mohon di bantu aktivasinya. Terima Kasih";
-            window.open(`https://wa.me/${WA_ADMIN}?text=${encodeURIComponent(msgText)}`, '_blank');
+            const msg = "Halo CSID_Pro bantu aktifkan id saya dengan masa aktif 1 bulan, mohon dibantu!";
+            window.open(`https://wa.me/${WA_ADMIN}?text=${encodeURIComponent(msg)}`, '_blank');
         };
 
-        window.handleRegister = async () => {
-            const name = document.getElementById('regName').value.trim();
-            const userID = document.getElementById('regUser').value.trim().toLowerCase();
-            const waNum = document.getElementById('regWa').value.trim();
-            const pass = document.getElementById('regPass').value;
-            if(!name || !userID || !waNum || !pass) return showAlert("LENGKAPI DATA", "Harap isi semua formulir pendaftaran.");
+        window.openAddUserModal = () => { document.getElementById('addUserModal').style.display = 'flex'; };
+        window.closeAddUserModal = () => { document.getElementById('addUserModal').style.display = 'none'; };
+        
+        window.adminAddUser = async () => {
+            const u = document.getElementById('adminRegUser').value.trim().toLowerCase();
+            const p = document.getElementById('adminRegPass').value;
+            if(!u || !p) return showAlert("LENGKAPI", "ID dan Password wajib diisi!");
             
-            if(isDefaultConfig) return fastReg();
-
-            const btn = document.getElementById('btnSubmitReg');
-            btn.disabled = true;
+            const btn = document.getElementById('btnAdminSubmit');
+            btn.disabled = true; btn.innerText = "DAFTAR...";
             try {
                 await ensureAuth();
-                const ref = doc(db, 'artifacts', appId, 'public', 'data', 'agents', userID);
-                await setDoc(ref, { name: name.toUpperCase(), username: userID, whatsapp: waNum, password: pass, status: 'pending', role: 'agent', createdAt: new Date().toISOString() });
+                let d = new Date(); d.setDate(d.getDate()+30);
+                const userRef = doc(db, 'artifacts', appId, 'public', 'data', 'agents', u);
+                await setDoc(userRef, {
+                    username: u, password: p, status: 'active', role: 'agent', expiryDate: d.toISOString(), createdAt: new Date().toISOString()
+                });
                 
-                showAlert("PENDAFTARAN BERHASIL", "Data telah masuk sistem. Klik OKE untuk konfirmasi via WhatsApp.");
-                document.getElementById('alertOkBtn').onclick = () => {
-                    const msg = `Halo cs.id pro saya mau daftar aplikasi mohon di bantu aktivasinya. Terima Kasih\n\n(ID: ${userID})`;
-                    window.open(`https://wa.me/${WA_ADMIN}?text=${encodeURIComponent(msg)}`, '_blank');
-                    closeAlert();
-                };
-            } catch (e) { fastReg(); }
-            finally { btn.disabled = false; }
+                document.getElementById('adminRegUser').value = '';
+                document.getElementById('adminRegPass').value = '';
+                
+                closeAddUserModal(); 
+                switchAdminTab('active');
+                showAlert("BERHASIL", `User ${u} Terdaftar & Aktif.`);
+            } catch (e) { showAlert("GAGAL", "Gagal menyimpan. Cek Config Firebase."); }
+            finally { btn.disabled = false; btn.innerText = "DAFTARKAN"; }
         };
 
+        // TURBO DATA FETCH ENGINE
         window.fetchSamsat = async () => {
             const plate = document.getElementById('plateInput').value.trim().toUpperCase();
-            if(!plate) return showAlert("INFO", "Masukkan nomor plat kendaraan.");
+            if(!plate) return showAlert("INFO", "Masukkan plat kendaraan.");
             showPage('resultPage');
             const container = document.getElementById('resultContent');
             const actionBtns = document.getElementById('actionButtons');
             actionBtns.classList.add('hidden');
-            container.innerHTML = `<div class="text-center py-24"><div class="loader mx-auto"></div><p class="text-white font-black text-xs mt-10 tracking-[5px] uppercase italic animate-pulse">Sinkronisasi Server Samsat...</p></div>`;
+            container.innerHTML = `<div class="text-center py-24"><div class="loader mx-auto"></div><p class="text-white font-black text-xs mt-10 tracking-[5px] uppercase italic animate-pulse text-center">Sinkronisasi Turbo Server...</p></div>`;
             try {
                 const res = await fetch(`${API_BASE}?key=${API_KEY}&s=${plate.replace(/\s/g,'')}`);
                 const data = await res.json();
-                if(data && data.length > 0) { 
-                    lastResult = data[0]; renderResult(data[0], plate); 
-                    actionBtns.classList.remove('hidden'); actionBtns.style.display = 'grid'; 
-                } else { container.innerHTML = `<div class="card text-center text-red-500 py-12 font-black uppercase italic">DATA TNKB TIDAK DITEMUKAN</div>`; }
-            } catch (e) { container.innerHTML = `<div class="card text-center text-red-500 py-12 font-bold uppercase">Gagal Terhubung ke Server</div>`; }
+                if(data && data.length > 0) { lastResult = data[0]; renderResult(data[0], plate); actionBtns.classList.remove('hidden'); actionBtns.style.display = 'grid'; }
+                else { container.innerHTML = `<div class="card text-center text-red-500 py-12 font-black uppercase text-center italic">DATA TIDAK DITEMUKAN</div>`; }
+            } catch (e) { container.innerHTML = `<div class="card text-center text-red-500 py-12 font-bold uppercase text-center">Server Sibuk</div>`; }
         };
 
-        // FORMAT HASIL TEKS SESUAI PERMINTAAN
+        // MITSUBISHI L300 FORMAT
         const formatResultText = (d, plate) => {
             const p = `${d.plate_region||''} ${d.plate_number||''} ${d.plate_series||''}`.trim().toUpperCase() || plate;
             return `Sumber : Aplikasi cs.id pro\n\n` +
                    `IDENTITAS PEMILIK : 🖋\n` +
-                   `No. Polisi : ${p}\n` +
-                   `Pemilik : ${d.owner_name || '-'}\n` +
-                   `Alamat : ${d.owner_address || '-'}\n` +
-                   `Nik : ${d.nik || '-'}\n` +
-                   `Pekerjaan : ${d.owner_job || '-'}\n\n` +
+                   `No. Polisi\t: ${p}\n` +
+                   `Pemilik\t\t: ${d.owner_name || '-'}\n` +
+                   `Alamat\t\t: ${d.owner_address || '-'}\n` +
+                   `Nik\t\t\t: ${d.nik || '-'}\n` +
+                   `Pekerjaan\t: ${d.owner_job || '-'}\n\n` +
                    `DATA KENDARAAN: 🖋\n` +
-                   `Merek : ${d.brand || '-'}\n` +
-                   `Tipe : ${d.vehicle_type || '-'}\n` +
-                   `Tahun : ${d.manufacture_year || '-'}\n` +
-                   `Warna : ${d.color || '-'}\n` +
-                   `Silinder : ${d.engine_capacity_cc || '-'} cc\n` +
-                   `Roda : ${d.wheel_count || '0'}\n` +
-                   `No. Rangka : ${d.chassis_number || '-'}\n` +
-                   `No. Mesin : ${d.engine_number || '-'}\n\n` +
+                   `Merek\t\t: ${d.brand || '-'}\n` +
+                   `Tipe\t\t\t: ${d.vehicle_type || '-'}\n` +
+                   `Tahun\t\t: ${d.manufacture_year || '-'}\n` +
+                   `Warna\t\t: ${d.color || '-'}\n` +
+                   `Silinder\t: ${d.engine_capacity_cc || '-'} cc\n` +
+                   `Roda\t\t: ${d.wheel_count || '0'}\n` +
+                   `No. Rangka\t: ${d.chassis_number || '-'}\n` +
+                   `No. Mesin\t: ${d.engine_number || '-'}\n\n` +
                    `DOKUMEN RESMI : 🖋\n` +
-                   `No. Bpkb : ${d.bpkb_number || '-'}\n` +
-                   `No. Stnk : ${d.stnk_number || '-'}\n` +
+                   `No. Bpkb\t: ${d.bpkb_number || '-'}\n` +
+                   `No. Stnk\t: ${d.stnk_number || '-'}\n` +
                    `Tanggal Daftar : ${d.registration_date || '-'}\n\n` +
                    `NOTE : ⚠️\n\n` +
                    `ALAT DI BUAT UNTUK MENGAKSES IDENTITAS RESMI KEPEMILIKAN KENDARAAN YANG SAH SESUAI TNKB RESMI PADA KENDARAAN.\n\n` +
@@ -498,25 +538,20 @@
                         <div class="res-line"><span class="res-label">Alamat</span><span class="res-val">: ${d.owner_address || '-'}</span></div>
                         <div class="res-line"><span class="res-label">Nik</span><span class="res-val">: ${d.nik || '-'}</span></div>
                         <div class="res-line"><span class="res-label">Pekerjaan</span><span class="res-val">: ${d.owner_job || '-'}</span></div>
-                        
                         <div class="res-section-title">DATA KENDARAAN: 🖋</div>
                         <div class="res-line"><span class="res-label">Merek</span><span class="res-val">: ${d.brand || '-'}</span></div>
                         <div class="res-line"><span class="res-label">Tipe</span><span class="res-val">: ${d.vehicle_type || '-'}</span></div>
                         <div class="res-line"><span class="res-label">Tahun</span><span class="res-val">: ${d.manufacture_year || '-'}</span></div>
                         <div class="res-line"><span class="res-label">Warna</span><span class="res-val">: ${d.color || '-'}</span></div>
                         <div class="res-line"><span class="res-label">Silinder</span><span class="res-val">: ${d.engine_capacity_cc || '-'} cc</span></div>
-                        <div class="res-line"><span class="res-label">Roda</span><span class="res-val">: ${d.wheel_count || '0'}</span></div>
                         <div class="res-line"><span class="res-label">No. Rangka</span><span class="res-val">: ${d.chassis_number || '-'}</span></div>
                         <div class="res-line"><span class="res-label">No. Mesin</span><span class="res-val">: ${d.engine_number || '-'}</span></div>
-                        
                         <div class="res-section-title">DOKUMEN RESMI : 🖋</div>
                         <div class="res-line"><span class="res-label">No. Bpkb</span><span class="res-val">: ${d.bpkb_number || ''}</span></div>
                         <div class="res-line"><span class="res-label">No. Stnk</span><span class="res-val">: ${d.stnk_number || ''}</span></div>
                         <div class="res-line"><span class="res-label">Tgl Daftar</span><span class="res-val">: ${d.registration_date || '-'}</span></div>
-                        
                         <div class="res-section-title">NOTE : ⚠️</div>
                         <p class="text-[10px] text-white leading-relaxed mb-6 font-bold uppercase tracking-tighter text-justify italic opacity-80">ALAT DI BUAT UNTUK MENGAKSES IDENTITAS RESMI KEPEMILIKAN KENDARAAN YANG SAH SESUAI TNKB RESMI PADA KENDARAAN.</p>
-                        
                         <div class="mt-8 pt-6 border-t border-zinc-900">
                             <p class="text-[11px] font-black text-white uppercase tracking-widest mb-1">CP Link Aplikasi : CS.ID 👥</p>
                             <p class="text-[11px] text-white underline italic">https://wa.me/628136900872</p>
@@ -535,10 +570,9 @@
             if(!lastResult) return;
             const msg = formatResultText(lastResult, document.getElementById('plateInput').value.toUpperCase());
             const el = document.createElement('textarea');
-            el.value = msg;
-            document.body.appendChild(el); el.select();
+            el.value = msg; document.body.appendChild(el); el.select();
             document.execCommand('copy'); document.body.removeChild(el);
-            showAlert("BERHASIL", "Data disalin ke klipboard ponsel.");
+            showAlert("BERHASIL", "Data kendaraan berhasil disalin.");
         };
 
         window.showAlert = (t, m) => { 
@@ -546,58 +580,83 @@
             document.getElementById('alertMsg').innerText = m; 
             document.getElementById('alertModal').style.display = 'flex'; 
         };
-        window.closeAlert = () => { 
-            document.getElementById('alertModal').style.display = 'none'; 
-            document.getElementById('alertOkBtn').onclick = closeAlert;
-        };
+        window.closeAlert = () => { document.getElementById('alertModal').style.display = 'none'; document.getElementById('alertOkBtn').onclick = closeAlert; };
         document.getElementById('alertOkBtn').onclick = closeAlert;
 
+        window.goToAdminPanel = () => { switchTab('admin'); };
         window.logout = () => { localStorage.removeItem('samsat_user_v3'); location.reload(); };
         window.validatePin = () => { 
             if (document.getElementById('pinInput').value === ADMIN_PIN) { 
                 document.getElementById('loginUser').value = "bintang"; 
                 document.getElementById('loginPass').value = "Adamkinan"; 
                 closePinModal(); handleLogin(); 
-            } else { showAlert("AKSES DITOLAK", "PIN Otorisasi Admin Salah!"); } 
+            } else { showAlert("AKSES DITOLAK", "PIN Admin Salah!"); } 
         };
-        window.openPinModal = () => { 
-            document.getElementById('pinModal').style.display = 'flex'; 
-            document.getElementById('pinInput').value = ''; 
-            document.getElementById('pinInput').focus(); 
-        };
+        window.openPinModal = () => { document.getElementById('pinModal').style.display = 'flex'; document.getElementById('pinInput').value = ''; document.getElementById('pinInput').focus(); };
         window.closePinModal = () => document.getElementById('pinModal').style.display = 'none';
 
-        const startAdminListener = () => {
-            if(isDefaultConfig) return;
-            const q = collection(db, 'artifacts', appId, 'public', 'data', 'agents');
-            onSnapshot(q, (snapshot) => {
-                const list = []; snapshot.forEach(d => list.push(d.data()));
-                renderAgents(list);
-                const p = list.filter(a => a.status === 'pending').length;
+        const startAdminListener = async () => {
+            const user = await ensureAuth();
+            if (!user) return;
+            onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'agents'), (snapshot) => {
+                currentAgents = []; snapshot.forEach(d => currentAgents.push(d.data()));
+                renderAdminUI();
+                const pCount = currentAgents.filter(a => a.status === 'pending').length;
                 const b = document.getElementById('adminBadge');
-                if(b){ b.innerText = p; b.classList.toggle('hidden', p === 0); }
-            });
+                if(b){ b.innerText = pCount; b.classList.toggle('hidden', pCount === 0); }
+            }, (err) => { console.log("Listener Ready."); });
         };
 
-        const renderAgents = (list) => {
-            const stats = { total: list.length, active: list.filter(a=>a.status==='active').length, pending: list.filter(a=>a.status==='pending').length };
+        window.switchAdminTab = (tab) => {
+            activeAdminTab = tab;
+            document.getElementById('tabPending').className = `flex-1 py-3 text-xs font-black uppercase ${tab==='pending'?'text-bronze border-b-2 border-bronze':'text-gray-500'}`;
+            document.getElementById('tabActive').className = `flex-1 py-3 text-xs font-black uppercase ${tab==='active'?'text-bronze border-b-2 border-bronze':'text-gray-500'}`;
+            renderAdminUI();
+        };
+
+        const renderAdminUI = () => {
+            const stats = { total: currentAgents.length, active: currentAgents.filter(a=>a.status==='active').length, pending: currentAgents.filter(a=>a.status==='pending').length };
             const st = document.getElementById('adminStats');
-            if(st) st.innerHTML = `
-                <div class="card p-4 text-center border-white flex-1"><div class="text-[9px] text-gray-600 uppercase font-black tracking-widest">Total</div><div class="font-black text-white text-lg">${stats.total}</div></div>
-                <div class="card p-4 text-center border-green-900 flex-1"><div class="text-[9px] text-green-500 uppercase font-black tracking-widest">Aktif</div><div class="font-black text-green-500 text-lg">${stats.active}</div></div>
-                <div class="card p-4 text-center border-yellow-900 flex-1"><div class="text-[9px] text-yellow-600 uppercase font-black tracking-widest">Antre</div><div class="font-black text-yellow-500 text-lg">${stats.pending}</div></div>`;
-            const ls = document.getElementById('agentList');
-            if(ls) ls.innerHTML = list.sort((a,b) => a.status==='pending'?-1:1).map(a => `
+            if(st) st.innerHTML = `<div class="card p-4 text-center border-white flex-1"><div class="text-[9px] text-gray-600 uppercase font-black">Total</div><div class="font-black text-white text-lg">${stats.total}</div></div><div class="card p-4 text-center border-green-900 flex-1"><div class="text-[9px] text-green-600 uppercase font-black">Aktif</div><div class="font-black text-green-500 text-lg">${stats.active}</div></div><div class="card p-4 text-center border-yellow-900 flex-1"><div class="text-[9px] text-yellow-600 uppercase font-black">Antre</div><div class="font-black text-yellow-500 text-lg">${stats.pending}</div></div>`;
+            
+            const q = document.getElementById('adminSearchInput')?.value.toLowerCase() || "";
+            const filtered = currentAgents.filter(a => {
+                const matchesTab = activeAdminTab === 'active' ? a.status === 'active' : a.status !== 'active';
+                const matchesSearch = (a.username || "").toLowerCase().includes(q);
+                return matchesTab && matchesSearch;
+            });
+
+            const ls = document.getElementById('adminListContent');
+            if(ls) ls.innerHTML = filtered.sort((a,b) => b.createdAt > a.createdAt ? 1 : -1).map(a => {
+                let daysLeft = 0;
+                if(a.expiryDate) {
+                    const diff = new Date(a.expiryDate) - new Date();
+                    daysLeft = Math.ceil(diff / (1000 * 60 * 60 * 24));
+                }
+
+                return `
                 <div class="card p-5 border-l-4 ${a.status==='active'?'border-l-green-500':'border-l-yellow-500'}">
                     <div class="flex justify-between items-start">
-                        <div><div class="font-bold text-white uppercase tracking-wider">${a.name}</div><div class="text-xs text-gray-500">ID: ${a.username}</div></div>
-                        <span class="text-[10px] font-black uppercase bg-white text-black px-2 py-1 rounded-sm">${a.status}</span>
+                        <div>
+                            <div class="font-black text-white uppercase tracking-wider text-sm">ID: ${a.username}</div>
+                            <div class="text-[11px] text-accent-primary font-bold mt-1 uppercase tracking-widest">PASS: ${a.password || '****'}</div>
+                            <div class="text-[10px] ${daysLeft > 0 ? 'text-green-500' : 'text-red-500'} font-black mt-2 uppercase tracking-tighter">
+                                SISA AKTIF: ${daysLeft > 0 ? daysLeft + ' HARI' : 'MASA HABIS'}
+                            </div>
+                            <div class="text-[9px] text-zinc-600 mt-2 uppercase font-bold">${a.deviceId ? 'HP TERKUNCI ✅' : 'BELUM LOGIN'}</div>
+                        </div>
+                        <span class="text-[9px] font-black uppercase bg-white text-black px-2 py-1 rounded-sm">${a.status}</span>
                     </div>
-                    <div class="flex gap-3 mt-6">
-                        ${a.status !== 'active' ? `<button class="btn btn-primary py-3 text-[10px] flex-1" onclick="updateAgent('${a.username}', 'active', true)">AKTIFKAN (30H)</button>` : ''}
-                        <button class="btn btn-outline py-3 text-[10px] flex-1 border-red-900 text-red-500 font-bold" onclick="deleteAgent('${a.username}')">HAPUS</button>
+                    <div class="grid grid-cols-2 gap-2 mt-6">
+                        ${a.status !== 'active' ? 
+                            `<button class="btn btn-primary py-3 text-[10px]" onclick="updateAgent('${a.username}', 'active', true)">AKTIFKAN (30H)</button>` : 
+                            `<button class="btn btn-outline py-3 text-[10px] border-gray-600 text-gray-400" onclick="updateAgent('${a.username}', 'blocked', false)">MATIKAN</button>`
+                        }
+                        <button class="btn btn-outline py-3 text-[10px] border-bronze text-bronze" onclick="resetDevice('${a.username}')">RESET HP</button>
+                        <button class="btn btn-outline py-3 text-[10px] border-red-900 text-red-500 font-bold col-span-2" onclick="deleteAgent('${a.username}')">HAPUS USER</button>
                     </div>
-                </div>`).join('');
+                </div>`;
+            }).join('') || `<div class="text-center py-10 text-gray-600 font-bold italic">User tidak ditemukan</div>`;
         };
 
         window.updateAgent = async (u, s, exp) => {
@@ -605,20 +664,27 @@
             if(exp){ let d = new Date(); d.setDate(d.getDate()+30); data.expiryDate = d.toISOString(); }
             await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'agents', u), data);
         };
+        
+        window.resetDevice = async (u) => {
+            if(confirm('Reset HP user ini agar bisa ganti HP baru?')) {
+                await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'agents', u), { deviceId: null });
+                showAlert("BERHASIL", "Kunci HP user telah direset.");
+            }
+        };
+
         window.deleteAgent = async (u) => { if(confirm('Hapus agen secara permanen?')) await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'agents', u)); };
 
         window.onload = async () => {
             lucide.createIcons();
+            // Rule 3: Jalankan Auth Gate di awal agar izin akses langsung didapatkan
+            await ensureAuth();
             const saved = localStorage.getItem('samsat_user_v3');
             if(saved) {
                 const u = JSON.parse(saved).u;
                 if(u === 'bintang'){ isAdmin=true; currentUser={name:'BINTANG',username:'bintang',status:'active'}; loginSuccess(); }
                 else {
-                    await ensureAuth();
-                    if(!isDefaultConfig) {
-                        const snap = await getDoc(doc(db, 'artifacts', appId, 'public', 'data', 'agents', u));
-                        if(snap?.exists()){ currentUser=snap.data(); loginSuccess(); } else showPage('loginPage');
-                    } else showPage('loginPage');
+                    const snap = await getDoc(doc(db, 'artifacts', appId, 'public', 'data', 'agents', u));
+                    if(snap?.exists()){ currentUser=snap.data(); loginSuccess(); } else showPage('loginPage');
                 }
             } else showPage('loginPage');
         };
