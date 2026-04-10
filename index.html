@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -27,7 +26,7 @@
             --accent-primary: #CD7F32; /* Bronze Color */
             --accent-secondary: #A97142;
             --danger: #ff3b30;
-            --success: #25D366; /* WhatsApp Green */
+            --success: #25D366;
             --border-color: #333333;
             --border-radius: 24px;
             --font-family: 'Poppins', sans-serif;
@@ -61,7 +60,6 @@
         .fade-in { animation: fadeIn 0.4s ease-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Header UI */
         .header {
             background-color: rgba(0,0,0,0.95);
             backdrop-filter: blur(12px);
@@ -136,7 +134,6 @@
         .btn-outline { background: transparent; border: 2px solid #fff; color: #fff; }
         .btn-wa { background: var(--success); color: #fff; }
 
-        /* Result Display Card */
         .result-card { background-color: #000; border-radius: 28px; overflow: hidden; border: 1px solid #fff; padding-bottom: 25px; }
         .res-banner { background: #fff; color: #000; padding: 22px; font-weight: 900; text-align: center; font-size: 1.15em; text-transform: uppercase; letter-spacing: 1.5px; }
         .res-body { padding: 30px; }
@@ -175,7 +172,7 @@
     <div id="pinModal" class="modal-overlay">
         <div class="card w-full max-w-xs text-center border-bronze">
             <i data-lucide="shield-lock" class="mx-auto mb-6 text-white" style="width: 55px; height: 55px;"></i>
-            <h3 class="text-white font-black text-xl mb-6 uppercase tracking-widest text-center">Otorisasi Admin</h3>
+            <h3 class="text-white font-black text-xl mb-6 uppercase tracking-widest text-center">Akses Admin</h3>
             <input type="password" id="pinInput" placeholder="••••••" class="w-full p-5 bg-black border-2 border-white rounded-2xl text-center text-4xl text-white tracking-[15px] outline-none mb-8">
             <div class="flex gap-4">
                 <button class="btn btn-primary flex-1" onclick="validatePin()">MASUK</button>
@@ -188,7 +185,7 @@
     <div id="alertModal" class="modal-overlay">
         <div class="card w-full max-w-xs text-center border-white">
             <h3 id="alertTitle" class="text-white font-black text-lg mb-3 uppercase italic font-bold text-center">Info Sistem</h3>
-            <p id="alertMsg" class="text-gray-400 text-sm mb-8 leading-relaxed text-center font-medium"></p>
+            <p id="alertMsg" class="text-gray-400 text-sm mb-8 leading-relaxed text-center"></p>
             <button class="btn btn-primary" id="alertOkBtn">MENGERTI</button>
         </div>
     </div>
@@ -212,8 +209,8 @@
                 <h3 class="text-white font-black text-xl uppercase tracking-widest text-center flex-1">User Baru</h3>
                 <i data-lucide="x" class="text-gray-500 cursor-pointer" onclick="closeAddUserModal()"></i>
             </div>
-            <div class="input-group"><label>Username / ID Login</label><input type="text" id="adminRegUser" placeholder="Username Login"></div>
-            <div class="input-group"><label>Password</label><input type="text" id="adminRegPass" placeholder="Password Login"></div>
+            <div class="input-group"><label>Username / ID Login</label><input type="text" id="adminRegUser" placeholder="Username Baru"></div>
+            <div class="input-group"><label>Password</label><input type="text" id="adminRegPass" placeholder="Password Baru"></div>
             <div class="flex gap-4 mt-6">
                 <button id="btnAdminSubmit" class="btn btn-primary flex-1 font-black" onclick="adminAddUser()">DAFTARKAN</button>
                 <button class="btn btn-outline flex-1" onclick="closeAddUserModal()">KEMBALI</button>
@@ -227,7 +224,6 @@
             <div class="header-right flex items-center gap-5">
                 <div class="user-info flex flex-col items-end">
                     <span id="headerName" class="text-[10px] font-bold uppercase text-white tracking-widest opacity-80">USER</span>
-                    <!-- FITUR BARU: SISA MASA AKTIF DI HEADER PENGGUNA -->
                     <span id="headerExpiry" class="text-[9px] px-1.5 py-0.5 rounded font-black text-center shadow-sm">AKTIF</span>
                 </div>
                 <i data-lucide="log-out" class="w-5 text-red-600 cursor-pointer" onclick="logout()"></i>
@@ -269,7 +265,7 @@
                     <i data-lucide="zap" class="w-6 h-6 text-bronze fill-bronze"></i> AMBIL DATA TERCEPAT
                 </button>
                 <div class="mt-10 text-center text-gray-800 text-[10px] px-10 uppercase font-black tracking-[2px] opacity-50">
-                    Sistem pemindaian otomatis database Samsat Nasional V11.0.
+                    Database TNKB Nasional V15.0 - Turbo Engine.
                 </div>
             </div>
 
@@ -326,7 +322,7 @@
         import { getFirestore, doc, getDoc, setDoc, collection, updateDoc, deleteDoc, query, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // =========================================================================
-        // BARIS 265: DATA FIREBASE (PASTIKAN SUDAH SESUAI)
+        // BARIS 265: KONFIGURASI FIREBASE OTOMATIS (Wajib Diganti Data Asli Bos)
         // =========================================================================
         const liveConfig = {
             apiKey: "AIzaSy...", 
@@ -337,16 +333,20 @@
             appId: "1:123456789:web:abcdef"
         };
         
-        const firebaseConfig = (typeof __firebase_config !== 'undefined' && __firebase_config.length > 50) ? JSON.parse(__firebase_config) : liveConfig;
+        // PENTING: Gunakan Config dari environment jika tersedia (untuk Preview),
+        // Jika tidak ada (setelah hosting), gunakan liveConfig di atas.
+        const firebaseConfig = (typeof __firebase_config !== 'undefined' && __firebase_config.length > 100) 
+            ? JSON.parse(__firebase_config) 
+            : liveConfig;
 
         let app, auth, db;
         try {
             app = initializeApp(firebaseConfig);
             auth = getAuth(app);
             db = getFirestore(app);
-        } catch (e) { console.error("Firebase Initialization Fail"); }
+        } catch (e) { console.error("Firebase Gagal Konek!"); }
 
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'csid-pro-final-perfected-v1200';
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'csid-pro-perfect-ultimate-v100';
         const ADMIN_PIN = "280189";
         const WA_ADMIN = "628136900872"; 
         const API_KEY = "9611bbce88d6dbd96cdfd83619233efb";
@@ -358,17 +358,19 @@
         let activeAdminTab = 'active';
 
         const getDeviceId = () => {
-            let id = localStorage.getItem('csid_v120_device_key');
+            let id = localStorage.getItem('csid_v200_device_key');
             if(!id) {
                 id = 'DEV-' + Math.random().toString(36).substring(2, 12).toUpperCase();
-                localStorage.setItem('csid_v120_device_key', id);
+                localStorage.setItem('csid_v200_device_key', id);
             }
             return id;
         };
 
+        // RULE 3 - Ensure Auth Gate (Pencegah "PROSES..." Macet)
         const ensureAuth = async () => {
             if (!auth) return null;
             if (auth.currentUser) return auth.currentUser;
+            
             return new Promise((resolve) => {
                 const unsubscribe = onAuthStateChanged(auth, (user) => {
                     if (user) { unsubscribe(); resolve(user); }
@@ -382,17 +384,14 @@
                         }
                     } catch (e) { resolve(null); }
                 })();
-                setTimeout(() => resolve(null), 5000); 
+                setTimeout(() => resolve(null), 6000); 
             });
         };
 
         window.openConfirm = (msg, onYes) => {
             document.getElementById('confirmMsg').innerText = msg;
             document.getElementById('confirmModal').style.display = 'flex';
-            document.getElementById('confirmYesBtn').onclick = () => {
-                onYes();
-                closeConfirm();
-            };
+            document.getElementById('confirmYesBtn').onclick = () => { onYes(); closeConfirm(); };
         };
         window.closeConfirm = () => document.getElementById('confirmModal').style.display = 'none';
 
@@ -416,20 +415,26 @@
         window.handleLogin = async () => {
             const u = document.getElementById('loginUser').value.trim().toLowerCase();
             const p = document.getElementById('loginPass').value;
+            
             if (u === "bintang" && p === "Adamkinan") {
                 currentUser = { name: "BINTANG", username: "bintang", role: "admin", status: "active" };
                 isAdmin = true; loginSuccess(); return;
             }
-            if(!u || !p) return showAlert("KOSONG", "Username & Password wajib diisi.");
+
+            if(!u || !p) return showAlert("KOSONG", "ID & Password wajib diisi.");
+            
             const btn = document.getElementById('btnLogin');
             btn.disabled = true; btn.innerText = "MENYAMBUNG...";
+
             try {
-                const user = await ensureAuth();
-                if (!user) throw new Error("Auth Failed");
+                const userAuth = await ensureAuth();
+                if (!userAuth) throw new Error("Auth Gagal");
+
                 const snap = await getDoc(doc(db, 'artifacts', appId, 'public', 'data', 'agents', u));
                 if (snap.exists() && snap.data().password === p) {
                     const data = snap.data();
                     if (data.status === 'blocked') return showAlert("BLOKIR", "ID Anda dinonaktifkan.");
+                    
                     const thisDevice = getDeviceId();
                     if (data.deviceId && data.deviceId !== thisDevice) {
                         return showAlert("AKSES DITOLAK", "ID sudah terkunci di HP lain.");
@@ -438,8 +443,8 @@
                         await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'agents', u), { deviceId: thisDevice });
                     }
                     currentUser = data; isAdmin = data.role === 'admin'; loginSuccess();
-                } else { showAlert("GAGAL MASUK", "ID atau Password salah."); }
-            } catch (e) { showAlert("DATABASE ERROR", "Gagal menyambung. Cek Config Firebase."); }
+                } else { showAlert("GAGAL", "ID atau Password salah."); }
+            } catch (e) { showAlert("DATABASE ERROR", "Gagal konek ke Firebase. Cek Config Baris 265."); }
             finally { btn.disabled = false; btn.innerText = "MASUK KE SISTEM"; }
         };
 
@@ -447,23 +452,22 @@
             localStorage.setItem('samsat_user_v3', JSON.stringify({u: currentUser.username}));
             document.getElementById('headerName').innerText = (currentUser.username).toUpperCase();
             
-            // SINKRONISASI MASA AKTIF UNTUK USER
             let daysLeft = 0;
             if(currentUser.expiryDate) {
                 const diff = new Date(currentUser.expiryDate) - new Date();
                 daysLeft = Math.ceil(diff / (1000 * 60 * 60 * 24));
             }
             
-            const expiryEl = document.getElementById('headerExpiry');
+            const expEl = document.getElementById('headerExpiry');
             if (currentUser.username === 'bintang') {
-                expiryEl.innerText = "ADMIN";
-                expiryEl.className = "text-[9px] bg-white text-black px-1.5 py-0.5 rounded font-black text-center shadow-sm";
+                expEl.innerText = "ADMIN";
+                expEl.className = "text-[9px] bg-white text-black px-1.5 py-0.5 rounded font-black text-center shadow-sm";
             } else if (daysLeft > 0) {
-                expiryEl.innerText = daysLeft + " HARI";
-                expiryEl.className = "text-[9px] bg-green-500 text-white px-1.5 py-0.5 rounded font-black text-center shadow-sm";
+                expEl.innerText = daysLeft + " HARI";
+                expEl.className = "text-[9px] bg-green-500 text-white px-1.5 py-0.5 rounded font-black text-center shadow-sm";
             } else {
-                expiryEl.innerText = "HABIS";
-                expiryEl.className = "text-[9px] bg-red-600 text-white px-1.5 py-0.5 rounded font-black text-center shadow-sm";
+                expEl.innerText = "HABIS";
+                expEl.className = "text-[9px] bg-red-600 text-white px-1.5 py-0.5 rounded font-black text-center shadow-sm";
             }
 
             document.getElementById('nav-admin').classList.toggle('hidden', !isAdmin);
@@ -482,22 +486,26 @@
         window.adminAddUser = async () => {
             const u = document.getElementById('adminRegUser').value.trim().toLowerCase();
             const p = document.getElementById('adminRegPass').value;
-            if(!u || !p) return showAlert("LENGKAPI", "ID dan Password wajib diisi!");
+            if(!u || !p) return showAlert("LENGKAPI", "ID & Password wajib diisi!");
+            
             const btn = document.getElementById('btnAdminSubmit');
             btn.disabled = true; btn.innerText = "PROSES...";
+
             try {
-                await ensureAuth();
+                const authRes = await ensureAuth();
+                if(!authRes) throw new Error("Database Gagal Terbuka");
+
                 let d = new Date(); d.setDate(d.getDate()+30);
-                const userRef = doc(db, 'artifacts', appId, 'public', 'data', 'agents', u);
-                await setDoc(userRef, {
+                await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'agents', u), {
                     username: u, password: p, status: 'active', role: 'agent', expiryDate: d.toISOString(), createdAt: new Date().toISOString()
                 });
+                
                 document.getElementById('adminRegUser').value = '';
                 document.getElementById('adminRegPass').value = '';
                 closeAddUserModal(); 
                 switchAdminTab('active');
-                showAlert("BERHASIL", `User ${u} Terdaftar & Aktif.`);
-            } catch (e) { showAlert("GAGAL", "Gagal menyimpan. Cek internet."); }
+                showAlert("BERHASIL", `User ${u} telah aktif.`);
+            } catch (e) { showAlert("GAGAL", "Gagal simpan user baru. Cek Internet/Config Firebase."); }
             finally { btn.disabled = false; btn.innerText = "DAFTARKAN"; }
         };
 
@@ -514,7 +522,7 @@
                 const data = await res.json();
                 if(data && data.length > 0) { renderResult(data[0], plate); actionBtns.classList.remove('hidden'); actionBtns.style.display = 'grid'; }
                 else { container.innerHTML = `<div class="card text-center text-red-500 py-12 font-black uppercase text-center italic">DATA TIDAK DITEMUKAN</div>`; }
-            } catch (e) { container.innerHTML = `<div class="card text-center text-red-500 py-12 font-bold uppercase text-center">Server Sibuk</div>`; }
+            } catch (e) { container.innerHTML = `<div class="card text-center text-red-500 py-12 font-bold uppercase text-center">Server Gagal Merespon</div>`; }
         };
 
         const renderResult = (d, plate) => {
