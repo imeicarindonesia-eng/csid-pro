@@ -60,6 +60,7 @@
         .fade-in { animation: fadeIn 0.4s ease-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
+        /* Header UI */
         .header {
             background-color: rgba(0,0,0,0.95);
             backdrop-filter: blur(12px);
@@ -92,6 +93,7 @@
         }
         .input-group input:focus { border-color: var(--accent-primary); background: #050505; }
 
+        /* Plate Input Design */
         .plate-input-container {
             background: #000;
             border: 3px solid #fff;
@@ -134,7 +136,7 @@
         .btn-outline { background: transparent; border: 2px solid #fff; color: #fff; }
         .btn-wa { background: var(--success); color: #fff; }
 
-        /* Hasil Analisa Detail Card */
+        /* Result Display Card */
         .result-card { background-color: #000; border-radius: 28px; overflow: hidden; border: 1px solid #fff; padding-bottom: 25px; }
         .res-banner { background: #fff; color: #000; padding: 22px; font-weight: 900; text-align: center; font-size: 1.15em; text-transform: uppercase; letter-spacing: 1.5px; }
         .res-body { padding: 30px; }
@@ -188,7 +190,7 @@
         <div class="card w-full max-w-xs text-center border-white">
             <h3 id="alertTitle" class="text-white font-black text-lg mb-3 uppercase italic font-bold text-center">Info Sistem</h3>
             <p id="alertMsg" class="text-gray-400 text-sm mb-8 leading-relaxed text-center font-medium"></p>
-            <button class="btn btn-primary" id="alertOkBtn">MENGERTI</button>
+            <button class="btn btn-primary" id="alertOkBtn">SAYA MENGERTI</button>
         </div>
     </div>
 
@@ -199,11 +201,11 @@
                 <h3 class="text-white font-black text-xl uppercase tracking-widest text-center flex-1">User Baru</h3>
                 <i data-lucide="x" class="text-gray-500 cursor-pointer" onclick="closeAddUserModal()"></i>
             </div>
-            <div class="input-group"><label>ID Pengguna</label><input type="text" id="adminRegUser" placeholder="Username Login"></div>
-            <div class="input-group"><label>Password Akun</label><input type="text" id="adminRegPass" placeholder="Password Login"></div>
+            <div class="input-group"><label>Nama / ID Pengguna</label><input type="text" id="adminRegUser" placeholder="ID Login"></div>
+            <div class="input-group"><label>Password</label><input type="text" id="adminRegPass" placeholder="Password Akun"></div>
             <div class="flex gap-4 mt-6">
                 <button id="btnAdminSubmit" class="btn btn-primary flex-1 font-black" onclick="adminAddUser()">DAFTARKAN</button>
-                <button class="btn btn-outline flex-1" onclick="closeAddUserModal()">BATAL</button>
+                <button class="btn btn-outline flex-1" onclick="closeAddUserModal()">KEMBALI</button>
             </div>
         </div>
     </div>
@@ -258,7 +260,7 @@
                     <i data-lucide="zap" class="w-6 h-6 text-bronze fill-bronze"></i> AMBIL DATA TERCEPAT
                 </button>
                 <div class="mt-10 text-center text-gray-800 text-[10px] px-10 uppercase font-black tracking-[2px] opacity-50">
-                    Sistem pemindaian otomatis TNKB pusat versi Turbo-Massal 2026.
+                    Sistem pemindaian otomatis TNKB pusat versi Turbo-7.0.
                 </div>
             </div>
 
@@ -329,17 +331,17 @@
             appId: "1:123456789:web:abcdef"
         };
         
+        // Deteksi Otomatis Lingkungan
         const firebaseConfig = (typeof __firebase_config !== 'undefined' && __firebase_config.length > 50) ? JSON.parse(__firebase_config) : liveConfig;
-        const isDefault = firebaseConfig.apiKey === "AIzaSy...";
 
         let app, auth, db;
         try {
             app = initializeApp(firebaseConfig);
             auth = getAuth(app);
             db = getFirestore(app);
-        } catch (e) { console.error("Firebase connection error"); }
+        } catch (e) { console.error("Firebase System Fail"); }
 
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'csid-pro-ultimate-mass-v10';
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'csid-pro-final-mega-edition';
         const ADMIN_PIN = "280189";
         const WA_ADMIN = "628136900872"; 
         const API_KEY = "9611bbce88d6dbd96cdfd83619233efb";
@@ -353,10 +355,10 @@
 
         // 1 HP 1 ID - Device Binding Engine
         const getDeviceId = () => {
-            let id = localStorage.getItem('csid_v30_device_key');
+            let id = localStorage.getItem('csid_v50_device_key');
             if(!id) {
                 id = 'HP-' + Math.random().toString(36).substring(2, 12).toUpperCase();
-                localStorage.setItem('csid_v30_device_key', id);
+                localStorage.setItem('csid_v50_device_key', id);
             }
             return id;
         };
@@ -379,6 +381,7 @@
                         }
                     } catch (e) { resolve(null); }
                 })();
+                setTimeout(() => resolve(null), 3000); // Timeout pencegah macet
             });
         };
 
@@ -386,7 +389,7 @@
             document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
             const target = document.getElementById(id);
             if(target) { target.classList.remove('hidden'); target.classList.add('fade-in'); }
-            const isAuth = !['loginPage', 'regPage'].includes(id);
+            const isAuth = !['loginPage'].includes(id);
             document.getElementById('appHeader').classList.toggle('hidden', !isAuth);
             document.getElementById('footerNav').classList.toggle('hidden', !isAuth);
             lucide.createIcons();
@@ -409,7 +412,6 @@
             }
 
             if(!u || !p) return showAlert("KOSONG", "Username & Password wajib diisi.");
-            if(isDefault) return showAlert("DATABASE ERROR", "Lengkapi baris 265 Config Firebase.");
 
             const btn = document.getElementById('btnLogin');
             btn.disabled = true; btn.innerText = "MENYAMBUNG...";
@@ -480,7 +482,7 @@
             finally { btn.disabled = false; btn.innerText = "DAFTARKAN"; }
         };
 
-        // TURBO DATA FETCH ENGINE
+        // TURBO SEARCH ENGINE
         window.fetchSamsat = async () => {
             const plate = document.getElementById('plateInput').value.trim().toUpperCase();
             if(!plate) return showAlert("INFO", "Masukkan plat kendaraan.");
@@ -497,7 +499,6 @@
             } catch (e) { container.innerHTML = `<div class="card text-center text-red-500 py-12 font-bold uppercase text-center">Server Sibuk</div>`; }
         };
 
-        // MITSUBISHI L300 FORMAT
         const formatResultText = (d, plate) => {
             const p = `${d.plate_region||''} ${d.plate_number||''} ${d.plate_series||''}`.trim().toUpperCase() || plate;
             return `Sumber : Aplikasi cs.id pro\n\n` +
@@ -604,7 +605,7 @@
                 const pCount = currentAgents.filter(a => a.status === 'pending').length;
                 const b = document.getElementById('adminBadge');
                 if(b){ b.innerText = pCount; b.classList.toggle('hidden', pCount === 0); }
-            }, (err) => { console.log("Listener Ready."); });
+            }, (error) => { console.log("Listener Ready."); });
         };
 
         window.switchAdminTab = (tab) => {
