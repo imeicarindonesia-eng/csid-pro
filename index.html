@@ -56,8 +56,9 @@
         const ADMIN_WA = "628136900872";
         const APP_ID = 'csid-intelligence-pro';
         
-        // API KEY UTAMA SAMSAT
+        // DOUBLE API KEY SAMSAT NASIONAL
         const API_UTAMA_1 = "http://202.155.143.156/backend/search?q=";
+        const API_UTAMA_2 = "http://36.93.152.242/main/.h_api_tnkb.php?q=";
 
         const OFFLINE_SAMSAT_DATABASE = {
             "B1011NOC": {
@@ -379,6 +380,7 @@
                 
                 if (!parsed) return null;
                 
+                // Bongkar pembungkus AllOrigins Proxy secara rekursif
                 if (parsed.contents) {
                     let inner = null;
                     if (typeof parsed.contents === 'string') {
@@ -393,6 +395,7 @@
                     if (inner) parsed = inner;
                 }
                 
+                // Menelusuri semua tingkatan struktur properti secara mendalam
                 const findVehicleObject = (obj) => {
                     if (!obj) return null;
                     if (typeof obj !== 'object') return null;
@@ -410,6 +413,7 @@
                         if (found) return found;
                     }
 
+                    // Pengecekan kata kunci samsat yang representatif
                     const vehicleKeys = [
                         'nopol', 'nama', 'NamaPemilik', 'NoRangka', 'no_rangka', 
                         'NoMesin', 'no_mesin', 'NoSTNK', 'no_stnk', 'NoBPKB', 'no_bpkb',
@@ -447,6 +451,7 @@
 
                 const cleanQuery = rawPlate.replace(/\s+/g, '').toLowerCase();
 
+                // JALUR 1: DETEKSI MEMORI OFFLINE (Respon Instan 0ms Tanpa Delay!)
                 const offlineMatch = rawPlate.replace(/\s+/g, '').toUpperCase();
                 if (OFFLINE_SAMSAT_DATABASE[offlineMatch]) {
                     setSearchResult(OFFLINE_SAMSAT_DATABASE[offlineMatch]);
@@ -455,6 +460,7 @@
                     return;
                 }
 
+                // JALUR 2: Cek sessionStorage Caching Instan (0ms Tanpa Delay!)
                 try {
                     const cached = sessionStorage.getItem(cleanQuery);
                     if (cached) {
@@ -467,6 +473,7 @@
                     console.warn("sessionStorage error:", e);
                 }
 
+                // JALUR 3: PENETRASI AKTIF JALUR LANGSUNG (APK NATIVE) & RACING PROXY (BROWSER)
                 const isHttps = window.location.protocol === 'https:';
                 const requestPool = [];
 
@@ -476,7 +483,10 @@
                 ];
 
                 baseUrls.forEach(baseUrl => {
+                    // JALUR UTAMA: Penembakan Langsung (Direct Fetch) - Sempurna untuk APK Android tanpa terhambat CORS!
                     requestPool.push({ url: baseUrl, type: 'Direct APK Connection' });
+
+                    // JALUR CADANGAN: CORS Proxy Bypass Enkapsulator untuk browser biasa
                     requestPool.push({ url: `https://api.allorigins.win/raw?url=${encodeURIComponent(baseUrl)}`, type: 'AllOrigins Raw' });
                     requestPool.push({ url: `https://corsproxy.io/?${encodeURIComponent(baseUrl)}`, type: 'CORSProxy.io' });
                     requestPool.push({ url: `https://allorigins.hexschool.workers.dev/raw?url=${encodeURIComponent(baseUrl)}`, type: 'Hexschool Cloudflare' });
@@ -513,6 +523,7 @@
                     }
                 };
 
+                // Jalankan balapan request dengan timeout ketat 6 detik (Turbo Speed)
                 requestPool.forEach((targetObj) => {
                     const ctrl = new AbortController();
                     controllers.push(ctrl);
@@ -649,8 +660,8 @@
                         <div className="flex-1 flex flex-col items-center justify-between py-12 px-8 h-full relative overflow-y-auto scrollbar-hide">
                             <div className="absolute top-[-10%] left-[-10%] w-[80%] h-[40%] bg-orange-600/10 blur-[150px] rounded-full" />
                             <div className="text-center z-10 mt-6 space-y-1.5">
-                                <p className="text-[15px] font-black uppercase tracking-tight text-orange-500 leading-tight">APLIKASI</p>
-                                <p className="text-[15px] font-black uppercase tracking-tight leading-tight text-white">SAMSAT CSID.PRO NASIONAL</p>
+                                <p className="text-[15px] font-black uppercase tracking-tight text-orange-500 leading-tight">SELAMAT DATANG APLIKASI DI</p>
+                                <p className="text-[15px] font-black uppercase tracking-tight leading-tight text-white">CSID.PRO NASIONAL</p>
                             </div>
                             <div className="flex flex-col items-center z-10">
                                 <h1 onClick={() => { setAdminTapCount(c => c + 1); if(adminTapCount === 4) setShowPinModal(true); }} className="text-[72px] font-black text-white text-glow cursor-pointer tracking-tighter">CSID.PRO</h1>
@@ -690,7 +701,8 @@
                                         inputMode="none" 
                                         value={plate} 
                                         onChange={(e) => setPlate(e.target.value.toUpperCase())} 
-                                        className={`bg-transparent w-full text-center font-black uppercase ${plate.length > 10 ? 'text-2xl' : 'text-5xl'} text-white tracking-tighter outline-none border-none`}
+                                        placeholder="AKSES PREMIUM UNLIMITED" 
+                                        className={`bg-transparent w-full text-center font-black uppercase placeholder:text-white placeholder:tracking-widest placeholder:text-lg xs:placeholder:text-xl sm:placeholder:text-2xl ${plate.length > 10 ? 'text-2xl' : 'text-5xl'} text-white tracking-tighter outline-none border-none`}
                                         onKeyDown={(e) => {
                                             if (e.key === 'Enter') {
                                                 e.preventDefault();
@@ -703,10 +715,10 @@
                                 {/* Banner Restricted Access Asli */}
                                 <div className="w-full text-center py-2.5 px-4 mb-2 border border-red-900/30 rounded-2xl bg-red-950/10">
                                     <p className="text-orange-500 font-black text-xs tracking-widest flex items-center justify-center gap-1.5">
-                                        🔓UNLIMITED AKSES DATA
+                                        📶 DATABASE UNLIMITED
                                     </p>
                                     <p className="text-[9px] font-black text-slate-400 tracking-wider mt-0.5">
-                                        DILARANG KERAS MENYALAHGUNAKAN SISTEM INI
+                                        DILARANG KERAS MENYALAH GUNAKAN SISTEM INI
                                     </p>
                                     <p className="text-[8px] font-bold text-slate-600 tracking-wider">
                                         HAK CIPTA CSID.PRO INTELLIGENCE SECURITY
@@ -714,12 +726,11 @@
                                 </div>
 
                                 <div className="mt-auto space-y-1">
-                                    {/* Action & Control Buttons Row (Pitch Black Style) */}
                                     <div className={`grid ${userRole === 'master' ? 'grid-cols-7' : 'grid-cols-6'} gap-[2px]`}>
-                                        <button type="button" onClick={() => setKbHeight(h => Math.max(15, h-2))} className="bg-black h-14 rounded-none key-press-effect flex items-center justify-center text-slate-400 border border-white/5 font-black text-xl outline-none"><Icons.Minus /></button>
-                                        <button type="button" onClick={() => setKbHeight(h => Math.min(35, h+2))} className="bg-black h-14 rounded-none key-press-effect flex items-center justify-center text-slate-400 border border-white/5 font-black text-xl outline-none"><Icons.Plus /></button>
-                                        <button type="button" onClick={startCamera} className="bg-black h-14 rounded-none key-press-effect flex items-center justify-center text-slate-400 border border-white/5 outline-none"><Icons.Camera /></button>
-                                        <button type="button" onClick={async () => { try { const t = await navigator.clipboard.readText(); setPlate(t.toUpperCase().replace(/\s/g, '')); } catch(e){} }} className="bg-black h-14 rounded-none key-press-effect flex items-center justify-center text-slate-400 border border-white/5 outline-none"><Icons.Paste /></button>
+                                        <button type="button" onClick={() => setKbHeight(h => Math.max(15, h-2))} className="bg-slate-900 h-14 rounded-none key-press-effect flex items-center justify-center text-slate-400 border border-white/5 font-black text-xl outline-none"><Icons.Minus /></button>
+                                        <button type="button" onClick={() => setKbHeight(h => Math.min(35, h+2))} className="bg-slate-900 h-14 rounded-none key-press-effect flex items-center justify-center text-slate-400 border border-white/5 font-black text-xl outline-none"><Icons.Plus /></button>
+                                        <button type="button" onClick={startCamera} className="bg-slate-900 h-14 rounded-none key-press-effect flex items-center justify-center text-slate-400 border border-white/5 outline-none"><Icons.Camera /></button>
+                                        <button type="button" onClick={async () => { try { const t = await navigator.clipboard.readText(); setPlate(t.toUpperCase().replace(/\s/g, '')); } catch(e){} }} className="bg-slate-900 h-14 rounded-none key-press-effect flex items-center justify-center text-slate-400 border border-white/5 outline-none"><Icons.Paste /></button>
                                         {userRole === 'master' && <button type="button" onClick={() => setCurrentPage('admin')} className="bg-orange-600/20 h-14 rounded-none key-press-effect flex items-center justify-center text-orange-500 border border-white/5 outline-none"><Icons.Shield /></button>}
                                         <button type="button" onClick={() => window.location.reload()} className="bg-red-600/20 h-14 rounded-none key-press-effect flex items-center justify-center text-red-500 border border-white/5 outline-none"><Icons.Power /></button>
                                         
@@ -731,23 +742,21 @@
                                             <Icons.Search />
                                         </button>
                                     </div>
-                                    
-                                    {/* Numeric and Alphanumeric Keyboard (Pitch Black Style) */}
                                     <div className="flex flex-col gap-[2px]">
                                         <div className="grid grid-cols-5 gap-[2px]">
-                                            {['1','2','3'].map(n => <button type="button" key={n} onClick={() => setPlate(p => p+n)} style={{height: `${kbHeight * 2.8}px`}} className="bg-black text-white rounded-none border border-white/5 text-4xl font-black key-press-effect font-mono-custom outline-none">{n}</button>)}
-                                            <button type="button" onClick={() => setPlate(p => p.slice(0,-1))} style={{height: `${kbHeight * 2.8}px`}} className="bg-red-600 text-white rounded-none font-black text-sm key-press-effect border border-white/5 outline-none">DEL</button>
-                                            <button type="button" onClick={() => setPlate('')} style={{height: `${kbHeight * 2.8}px`}} className="bg-red-600 text-white rounded-none font-black text-sm key-press-effect border border-white/5 outline-none">CLR</button>
+                                            {['1','2','3'].map(n => <button type="button" key={n} onClick={() => setPlate(p => p+n)} style={{height: `${kbHeight * 2.8}px`}} className="bg-slate-900/60 text-white rounded-none border border-white/5 text-4xl font-black key-press-effect font-mono-custom outline-none">{n}</button>)}
+                                            <button type="button" onClick={() => setPlate(p => p.slice(0,-1))} style={{height: `${kbHeight * 2.8}px`}} className="bg-slate-800 text-white rounded-none font-black text-sm key-press-effect border border-white/5 outline-none">DEL</button>
+                                            <button type="button" onClick={() => setPlate('')} style={{height: `${kbHeight * 2.8}px`}} className="bg-slate-800 text-white rounded-none font-black text-sm key-press-effect border border-white/5 outline-none">CLR</button>
                                         </div>
                                         <div className="grid grid-cols-4 gap-[2px]">
-                                            {['4','5','6','0'].map(n => <button type="button" key={n} onClick={() => setPlate(p => p+n)} style={{height: `${kbHeight * 2.8}px`}} className="bg-black text-white rounded-none border border-white/5 text-4xl font-black key-press-effect font-mono-custom outline-none">{n}</button>)}
+                                            {['4','5','6','0'].map(n => <button type="button" key={n} onClick={() => setPlate(p => p+n)} style={{height: `${kbHeight * 2.8}px`}} className="bg-slate-900/60 text-white rounded-none border border-white/5 text-4xl font-black key-press-effect font-mono-custom outline-none">{n}</button>)}
                                         </div>
                                         <div className="grid grid-cols-3 gap-[2px]">
-                                            {['7','8','9'].map(n => <button type="button" key={n} onClick={() => setPlate(p => p+n)} style={{height: `${kbHeight * 2.8}px`}} className="bg-black text-white rounded-none border border-white/5 text-4xl font-black key-press-effect font-mono-custom outline-none">{n}</button>)}
+                                            {['7','8','9'].map(n => <button type="button" key={n} onClick={() => setPlate(p => p+n)} style={{height: `${kbHeight * 2.8}px`}} className="bg-slate-900/60 text-white rounded-none border border-white/5 text-4xl font-black key-press-effect font-mono-custom outline-none">{n}</button>)}
                                         </div>
                                         <div className="flex flex-col gap-[2px] pt-1">
                                             {[ ['Q','W','E','R','T','Y','U','I','O','P'], ['A','S','D','F','G','H','J','K','L'], ['Z','X','C','V','B','N','M'] ].map((row, i) => (
-                                                <div key={i} className="flex gap-[2px] justify-center">{row.map(char => ( <button type="button" key={char} onClick={() => setPlate(p => p+char)} style={{height: `${kbHeight * 3.2}px`}} className="flex-1 bg-black text-white rounded-none border border-white/5 text-xl font-black key-press-effect outline-none">{char}</button> ))}</div>
+                                                <div key={i} className="flex gap-[2px] justify-center">{row.map(char => ( <button type="button" key={char} onClick={() => setPlate(p => p+char)} style={{height: `${kbHeight * 3.2}px`}} className="flex-1 bg-slate-950 text-white rounded-none border border-white/5 text-xl font-black key-press-effect outline-none">{char}</button> ))}</div>
                                             ))}
                                         </div>
                                     </div>
@@ -850,7 +859,7 @@
                     {notification && <div className="fixed top-16 left-1/2 -translate-x-1/2 z-[9999] bg-orange-600 text-white px-12 py-5 rounded-[2rem] font-black text-[11px] shadow-[0_0_40px_rgba(249, 115, 22, 0.4)] animate-bounce uppercase border-2 border-white/20 whitespace-nowrap tracking-widest">{notification}</div>}
                     
                     {/* Loader */}
-                    {loading && <div className="fixed inset-0 bg-black/90 backdrop-blur-2xl z-[9000] flex items-center justify-center"><div className="flex flex-col items-center"><div className="w-20 h-20 border-[6px] border-white/5 border-t-orange-600 rounded-full turbo-spin mb-8 shadow-lg" /><p className="text-white font-black uppercase text-[10px] tracking-[0.6em] animate-pulse text-glow">Sedang Memuat Data</p></div></div>}
+                    {loading && <div className="fixed inset-0 bg-black/90 backdrop-blur-2xl z-[9000] flex items-center justify-center"><div className="flex flex-col items-center"><div className="w-20 h-20 border-[6px] border-white/5 border-t-orange-600 rounded-full turbo-spin mb-8 shadow-lg" /><p className="text-white font-black uppercase text-[10px] tracking-[0.6em] animate-pulse text-glow">Sedang Membuat Data</p></div></div>}
                 </div>
             );
         };
