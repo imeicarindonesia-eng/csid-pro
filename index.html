@@ -517,7 +517,7 @@
                 requestPool.forEach((targetObj) => {
                     const ctrl = new AbortController();
                     controllers.push(ctrl);
-                    const id = setTimeout(() => ctrl.abort(), 6000); 
+                    const id = setTimeout(() => ctrl.abort(), 25000); 
 
                     try {
                         fetch(targetObj.url, { signal: ctrl.signal })
