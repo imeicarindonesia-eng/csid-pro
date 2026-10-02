@@ -450,6 +450,21 @@
                 const cleanQuery = rawPlate.replace(/\s+/g, '').toLowerCase();
 
                 const offlineMatch = rawPlate.replace(/\s+/g, '').toUpperCase();
+                
+                // --- CEK DARI FIREBASE DULU ---
+                try {
+                const docSnap = await db.collection('pencarian').doc(cleanQuery.toUpperCase()).get();
+                if (docSnap.exists) {
+                setSearchResult(docSnap.data());
+                setCurrentPage('result');
+                setLoading(false);
+                showMsg("DATA DI TEMUKAN");
+                return;
+               }
+               } catch (e) {
+               console.log("⚠️ Tidak bisa baca Firebase:", e);
+               }
+                
                 if (OFFLINE_SAMSAT_DATABASE[offlineMatch]) {
                     setSearchResult(OFFLINE_SAMSAT_DATABASE[offlineMatch]);
                     setCurrentPage('result');
