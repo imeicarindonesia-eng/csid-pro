@@ -531,10 +531,23 @@
                                 const vehicleData = unifyAndExtractVehicleData(text);
                                 
                                 if (vehicleData && !resolved) {
-                                    cleanLoadingAndTransition(vehicleData);
+                                // --- SIMPAN KE FIREBASE OTOMATIS ---
+                                try {
+                                await db.collection('pencarian').doc(cleanQuery.toUpperCase()).set({
+                                ...vehicleData,
+                                waktu_ditemukan: new Date(),
+                                sumber: 'aplikasi_csipro'
+                                }, { merge: true });
+                               console.log('✅ Tersimpan ke Firebase');
+                                } catch (e) {
+                               console.log('⚠️ Gagal simpan ke Firebase:', e);
+                                }
+                               cleanLoadingAndTransition(vehicleData);
                                 } else {
                                     handleFailure();
                                 }
+                                   
+                                  
                             })
                             .catch((err) => {
                                 clearTimeout(id);
