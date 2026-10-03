@@ -56,10 +56,11 @@
         const ADMIN_WA = "6281318703993";
         const APP_ID = 'csid-intelligence-pro';
         
-        // DOUBLE API KEY SAMSAT NASIONAL
+        // KUNCI API GANDA - 3 SUMBER DATA
         const API_UTAMA_1 = "https://priyamcookware.com/wp-admin/lopon/lopon22.php?key=nopolnumber&q=";
-        const API_UTAMA_2 = "‎https://priyamcookware.com/wp-admin/loponunli/unli.php?key=nopolnumber&q=";
-        
+        const API_UTAMA_2 = "https://priyamcookware.com/wp-admin/loponunli/unli.php?key=nopolnumber&q=";
+        const API_UTAMA_3 = "https://priyamcookware.com/wp-admin/lopon22/lopon23.php?key=lopon23&q=";
+       
         const OFFLINE_SAMSAT_DATABASE = {
             "B1011NOC": {
                 "nopol": "B1011NOC",
@@ -489,7 +490,8 @@
 
                 const baseUrls = [
                     `${API_UTAMA_1}${encodeURIComponent(cleanQuery)}`,
-                    `${API_UTAMA_2}${encodeURIComponent(cleanQuery)}`
+                    `${API_UTAMA_2}${encodeURIComponent(cleanQuery)}`, 
+                    `${API_UTAMA_3}${encodeURIComponent(cleanQuery)}`
                 ];
 
                 baseUrls.forEach(baseUrl => {
