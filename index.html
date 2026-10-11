@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>CSID.PRO - Sistem Terintegrasi</title>
+    <title>CSID.PRO - Sistem Terintegrasi Intelligence</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -12,9 +12,9 @@
     <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
     
     <!-- Google Fonts JetBrains Mono & Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
 
-    <!-- Firebase SDK v10 Compat (Mencegah Crash Modul di WebView Android) -->
+    <!-- Firebase SDK v10 Compat -->
     <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore-compat.js"></script>
@@ -33,13 +33,13 @@
         .scrollbar-hide::-webkit-scrollbar { display: none; }
         .text-glow { text-shadow: 0 0 20px rgba(249, 115, 22, 0.6); }
         .mobile-shell { width: 100%; max-width: 430px; height: 100%; max-height: 932px; background: black; position: relative; display: flex; flex-direction: column; overflow: hidden; }
-        @media (min-width: 640px) { .mobile-shell { border: 1px solid rgba(255,255,255,0.1); border-radius: 3.5rem; box-shadow: 0 0 150px rgba(0,0,0,1); } }
+        @media (min-width: 640px) { .mobile-shell { border: 1px solid rgba(255,255,255,0.12); border-radius: 3.5rem; box-shadow: 0 0 150px rgba(249, 115, 22, 0.25); } }
         .glass-panel { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.08); }
         .font-mono-custom { font-family: 'JetBrains Mono', monospace; -webkit-user-select: text !important; user-select: text !important; }
         .shimmer { background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent); background-size: 200% 100%; animation: shimmer 2s infinite; }
         @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
         .camera-video { width: 100%; height: 100%; object-fit: cover; }
-        .scan-guide { border: 3px solid rgba(249, 115, 22, 0.7); box-shadow: 0 0 0 4000px rgba(0, 0, 0, 0.65); }
+        .scan-guide { border: 3px solid rgba(249, 115, 22, 0.8); box-shadow: 0 0 0 4000px rgba(0, 0, 0, 0.7); }
         @media print { body { display: none !important; } }
         @keyframes lineSlide { 0% { left: -40%; width: 40%; } 100% { left: 100%; width: 40%; } }
         .animate-line-bar { position: absolute; top: 0; bottom: 0; animation: lineSlide 0.2s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
@@ -51,9 +51,11 @@
     <script type="text/babel">
         const { useState, useEffect, useRef } = React;
 
-        const MASTER_PIN = "adamkinan"; 
+        const MASTER_PIN = "Baharudin"; 
         const ADMIN_WA = "6281318703993";
         const APP_ID = 'csid-intelligence-pro';
+        const COLLECTION_PINS = 'csid_pro_pins';
+        const COLLECTION_SETTINGS = 'csid_pro_settings';
         
         const API_UTAMA_1 = "https://priyamcookware.com/wp-admin/lopon/lopon22.php?key=nopolnumber&q=";
         const API_UTAMA_2 = "https://priyamcookware.com/wp-admin/loponunli/unli.php?key=nopolnumber&q=";
@@ -73,35 +75,12 @@
                 "tahun": "2014",
                 "warna": "SILVER METALIK",
                 "cylinder": "998",
-                "jumlah_roda": "0",
-                "bbm": "-",
+                "bbm": "BENSIN",
                 "no_rangka": "MHKA4DA3JEJ019981",
                 "no_mesin": "1KRA064398",
                 "no_bpkb": "K10727214",
                 "no_stnk": "-",
                 "tanggal_daftar": "2019-07-15 15:24:05"
-            },
-            "BL6521SM": {
-                "wilayah": "BL", "nopol": "6521", "seri": "SM",
-                "alamat": "DS LANTIK",
-                "NoKTP": "1109035203690002", "NoKK": "", "NoHP": "085371859962", "Email": "",
-                "Pekerjaan": "-", "NamaPemilik": "ROSMIANA", "NoRangka": "MH1JB91167K029800",
-                "NoMesin": "JB91E1029659", "RT": "0", "RW": "0", "KodeProvinsi": "11", "KodeKel": "0",
-                "Merk": "HONDA", "Type": "NF125 TR", "TahunPembuatan": "2007",
-                "IsiCylinder": "125.000", "Warna": "HITAM", "JumlahSumbu": "2", "JumlahRoda": "2",
-                "NoBPKB": "9372563-A", "NoSTNK": "-", "TanggalDaftar": "2019-02-13 00:00:00", "NoFaktur": "0",
-                "TanglFaktur": "0", "APM": "-"
-            },
-            "B29MAY": {
-                "wilayah": "B", "nopol": "29", "seri": "MAY",
-                "alamat": "BATU AMPAR RT. 002 RW. 001 KEL. BATU AMPAR KEC. KRAMAT JATI JAKARTA TIMUR",
-                "NoKTP": "-", "NoKK": "", "NoHP": "-", "Email": "",
-                "Pekerjaan": "-", "NamaPemilik": "MAYJATI", "NoRangka": "MHYHYC11S8J100930",
-                "NoMesin": "M15AIA101027", "RT": "0", "RW": "0", "KodeProvinsi": "6", "KodeKel": "1001",
-                "Merk": "SUZUKI", "Type": "BALENO SX RW415N A/T", "TahunPembuatan": "2008",
-                "IsiCylinder": "1490.000", "Warna": "ABU ABU METALIK", "JumlahSumbu": "2", "JumlahRoda": "4",
-                "NoBPKB": "F7065727G", "NoSTNK": "", "TanggalDaftar": "2012-02-06 13:31:20", "NoFaktur": "0",
-                "TanglFaktur": "0", "APM": ""
             }
         };
 
@@ -124,6 +103,11 @@
                     firebase.initializeApp(firebaseConfig);
                 }
                 db = firebase.firestore();
+                try {
+                    db.settings({ experimentalForceLongPolling: true });
+                } catch (sErr) {
+                    console.warn("Firestore settings warning:", sErr);
+                }
                 auth = firebase.auth();
             }
         } catch (err) {
@@ -153,10 +137,11 @@
             Search: ({cls}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className={cls || "w-6 h-6 pointer-events-none"}><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>,
             Camera: ({cls}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className={cls || "w-6 h-6"}><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>,
             Paste: ({cls}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className={cls || "w-6 h-6"}><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>,
-            ChevronLeft: () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6"><polyline points="15 18 9 12 15 6"/></svg>,
+            ChevronLeft: ({cls}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className={cls || "w-6 h-6"}><polyline points="15 18 9 12 15 6"/></svg>,
             X: () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>,
             Minus: () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6"><line x1="5" y1="12" x2="19" y2="12"/></svg>,
-            Plus: () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Plus: ({cls}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" className={cls || "w-6 h-6"}><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>,
+            Database: ({cls}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className={cls || "w-6 h-6"}><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
         };
 
         const App = () => {
@@ -182,7 +167,7 @@
             const [activePin, setActivePin] = useState(isAlreadyLoggedIn ? savedActivePin : '');
             const [currentAdminName, setCurrentAdminName] = useState(isAlreadyLoggedIn ? savedAdminName : '');
             const [plate, setPlate] = useState('');
-            const [broadcast, setBroadcast] = useState("SELAMAT DATANG DI CSID.PRO - VEHICLE INTELLIGENCE SYSTEM v4.0");
+            const [broadcast, setBroadcast] = useState("SELAMAT DATANG DI CSID.PRO - VEHICLE INTELLIGENCE SYSTEM NASIONAL v5.0");
             const [loading, setLoading] = useState(true);
             const [kbHeight, setKbHeight] = useState(25);
             const [searchResult, setSearchResult] = useState(null);
@@ -202,16 +187,22 @@
             const [customApi2, setCustomApi2] = useState(API_UTAMA_2);
             const [customApi3, setCustomApi3] = useState(API_UTAMA_3);
             
+            const [logFilterOfficer, setLogFilterOfficer] = useState('ALL');
+            const [timeToMidnight, setTimeToMidnight] = useState('00:00:00');
+            const [currentTime, setCurrentTime] = useState('');
+            const [currentDateStr, setCurrentDateStr] = useState('');
+
             const [adminConfigs, setAdminConfigs] = useState(
                 Array.from({ length: 10 }, (_, i) => ({
-                    pin: i === 0 ? "admin123" : `admin${i+1}123`,
-                    petugas: `Petugas ${i+1}`
+                    pin: i === 0 ? "admin123" : (i === 1 ? "admin246" : `admin${i+1}123`),
+                    petugas: i === 0 ? "Admin Utama 1" : (i === 1 ? "Admin Kedua 2" : `Petugas ${i+1}`)
                 }))
             );
 
             const [isMaintenance, setIsMaintenance] = useState(false);
             const [dailyLimit, setDailyLimit] = useState(0); 
             const [customLimitMsg, setCustomLimitMsg] = useState('');
+            const [maintTapCount, setMaintTapCount] = useState(0);
 
             const [cameraActive, setCameraActive] = useState(false);
             const [isScanning, setIsScanning] = useState(false);
@@ -229,16 +220,54 @@
                 try {
                     let id = localStorage.getItem('csid_device_token');
                     if (!id) { 
-                        id = 'DEV-' + Math.random().toString(36).substr(2, 9).toUpperCase(); 
+                        id = 'CSID-' + Math.random().toString(36).substr(2, 9).toUpperCase(); 
                         localStorage.setItem('csid_device_token', id); 
                     }
                     return id;
                 } catch (e) {
-                    return 'DEV-FALLBACK';
+                    return 'CSID-FALLBACK';
                 }
             };
 
             const showMsg = (txt) => { setNotification(txt); setTimeout(() => setNotification(null), 3500); };
+
+            useEffect(() => {
+                const updateCountdown = () => {
+                    const now = new Date();
+                    const midnight = new Date();
+                    midnight.setHours(24, 0, 0, 0);
+                    const diff = Math.max(0, midnight - now);
+                    const h = String(Math.floor((diff / (1000 * 60 * 60)) % 24)).padStart(2, '0');
+                    const m = String(Math.floor((diff / (1000 * 60)) % 60)).padStart(2, '0');
+                    const s = String(Math.floor((diff / 1000) % 60)).padStart(2, '0');
+                    setTimeToMidnight(`${h}:${m}:${s}`);
+
+                    const ch = String(now.getHours()).padStart(2, '0');
+                    const cm = String(now.getMinutes()).padStart(2, '0');
+                    const cs = String(now.getSeconds()).padStart(2, '0');
+                    setCurrentTime(`${ch}:${cm}:${cs} WIB`);
+
+                    const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                    const months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+                    const dayName = days[now.getDay()];
+                    const day = String(now.getDate()).padStart(2, '0');
+                    const monthName = months[now.getMonth()];
+                    const year = now.getFullYear();
+                    setCurrentDateStr(`${dayName}, ${day} ${monthName} ${year}`);
+                };
+                updateCountdown();
+                const timer = setInterval(updateCountdown, 1000);
+                return () => clearInterval(timer);
+            }, []);
+
+            const isToday = (ts) => {
+                if (!ts) return false;
+                const date = new Date(ts);
+                const today = new Date();
+                return date.getDate() === today.getDate() &&
+                       date.getMonth() === today.getMonth() &&
+                       date.getFullYear() === today.getFullYear();
+            };
 
             useEffect(() => {
                 let savedId = '';
@@ -259,31 +288,45 @@
                             setCurrentPage(isAlreadyLoggedIn ? 'search' : 'welcome');
                             return;
                         }
-                        const credential = await auth.signInAnonymously();
-                        const currentUser = credential.user;
+                        let currentUser = auth.currentUser;
+                        if (!currentUser) {
+                            const credential = await auth.signInAnonymously();
+                            currentUser = credential.user;
+                        }
                         setUser(currentUser);
 
                         if (currentUser && db) {
-                            const pinSnap = await db.collection('artifacts').doc(APP_ID).collection('public').doc('data').collection('csid_pro_pins').doc(savedId).get();
-                            if (pinSnap.exists) {
-                                const data = pinSnap.data();
-                                const currentDeviceId = getDeviceId();
-                                if (!data.isBlocked && (data.expiry === 'UNLIMITED' || data.expiry > Date.now()) && (!data.deviceId || data.deviceId === currentDeviceId)) {
-                                    setUserRole(data.role || 'user'); setUserExpiry(data.expiry); setActivePin(savedId);
-                                    try {
-                                        localStorage.setItem('csid_logged_in', 'true');
-                                        localStorage.setItem('csid_user_role', data.role || 'user');
-                                        localStorage.setItem('csid_user_expiry', data.expiry);
-                                        localStorage.setItem('csid_active_pin', savedId);
-                                    } catch (e) {}
-                                    setCurrentPage('search');
+                            try {
+                                const pinSnap = await db.collection('artifacts').doc(APP_ID).collection('public').doc('data').collection(COLLECTION_PINS).doc(savedId).get();
+                                if (pinSnap.exists) {
+                                    const data = pinSnap.data();
+                                    const currentDeviceId = getDeviceId();
+                                    if (!data.isBlocked && (data.expiry === 'UNLIMITED' || data.expiry > Date.now()) && (!data.deviceId || data.deviceId === currentDeviceId)) {
+                                        setUserRole(data.role || 'user'); setUserExpiry(data.expiry); setActivePin(savedId);
+                                        try {
+                                            localStorage.setItem('csid_logged_in', 'true');
+                                            localStorage.setItem('csid_user_role', data.role || 'user');
+                                            localStorage.setItem('csid_user_expiry', data.expiry);
+                                            localStorage.setItem('csid_active_pin', savedId);
+                                        } catch (e) {}
+                                        setCurrentPage('search');
+                                    } else {
+                                        try { localStorage.removeItem('csid_logged_in'); } catch (e) {}
+                                        setCurrentPage('welcome');
+                                    }
                                 } else {
-                                    try { localStorage.removeItem('csid_logged_in'); } catch (e) {}
                                     setCurrentPage('welcome');
                                 }
-                            } else {
-                                setCurrentPage('welcome');
+                            } catch (docErr) {
+                                console.warn("Firestore pin check offline/error:", docErr);
+                                if (isAlreadyLoggedIn) {
+                                    setCurrentPage('search');
+                                } else {
+                                    setCurrentPage('welcome');
+                                }
                             }
+                        } else {
+                            setCurrentPage(isAlreadyLoggedIn ? 'search' : 'welcome');
                         }
                     } catch (e) { 
                         console.error("Auth error:", e);
@@ -298,7 +341,7 @@
             useEffect(() => {
                 if (!user || !db) return;
                 
-                const unsubSettings = db.collection('artifacts').doc(APP_ID).collection('public').doc('data').collection('csid_pro_settings').doc('main').onSnapshot((d) => { 
+                const unsubSettings = db.collection('artifacts').doc(APP_ID).collection('public').doc('data').collection(COLLECTION_SETTINGS).doc('main').onSnapshot((d) => { 
                     if (d.exists) {
                         const data = d.data();
                         if (data.text) setBroadcast(data.text);
@@ -312,7 +355,7 @@
                     }
                 }, (err) => console.error("Settings stream error:", err));
                 
-                const unsubPins = db.collection('artifacts').doc(APP_ID).collection('public').doc('data').collection('csid_pro_pins').onSnapshot((snap) => { 
+                const unsubPins = db.collection('artifacts').doc(APP_ID).collection('public').doc('data').collection(COLLECTION_PINS).onSnapshot((snap) => { 
                     const pins = [];
                     snap.forEach(doc => {
                         pins.push({ id: doc.id, ...doc.data() });
@@ -327,7 +370,12 @@
                 setLoading(true);
                 try {
                     if (!db) throw new Error("KONEKSI SERVER TERGANGGU");
-                    const pinSnap = await db.collection('artifacts').doc(APP_ID).collection('public').doc('data').collection('csid_pro_pins').doc(registrationId).get();
+                    
+                    if (isMaintenance && activePin !== 'MASTER') {
+                        throw new Error("SISTEM SEDANG PEMELIHARAAN (MAINTENANCE)");
+                    }
+
+                    const pinSnap = await db.collection('artifacts').doc(APP_ID).collection('public').doc('data').collection(COLLECTION_PINS).doc(registrationId).get();
                     if (!pinSnap.exists) throw new Error("ID BELUM DIAKTIFKAN ADMIN");
                     const data = pinSnap.data();
                     const currentDeviceId = getDeviceId();
@@ -335,7 +383,7 @@
                     if (data.expiry !== 'UNLIMITED' && Date.now() > data.expiry) throw new Error("MASA AKTIF HABIS");
                     if (data.deviceId && data.deviceId !== currentDeviceId) throw new Error("TERDAFTAR DI HP LAIN");
                     if (!data.deviceId) {
-                        await db.collection('artifacts').doc(APP_ID).collection('public').doc('data').collection('csid_pro_pins').doc(registrationId).set({ deviceId: currentDeviceId }, { merge: true });
+                        await db.collection('artifacts').doc(APP_ID).collection('public').doc('data').collection(COLLECTION_PINS).doc(registrationId).set({ deviceId: currentDeviceId }, { merge: true });
                     }
                     setUserRole(data.role || 'user'); setUserExpiry(data.expiry); setActivePin(registrationId);
                     try { localStorage.setItem('csid_logged_in', 'true'); } catch(e){}
@@ -345,13 +393,14 @@
 
             const handleMasterLogin = () => {
                 if (pinInput === MASTER_PIN) {
-                    setUserRole('master'); setUserExpiry('UNLIMITED'); setActivePin('MASTER'); setCurrentAdminName('Master Admin');
+                    setUserRole('master'); setUserExpiry('UNLIMITED'); setActivePin('MASTER'); setCurrentAdminName('Master Admin Utama');
                     try {
                         localStorage.setItem('csid_logged_in', 'true');
                         localStorage.setItem('csid_user_role', 'master');
-                        localStorage.setItem('csid_admin_name', 'Master Admin');
+                        localStorage.setItem('csid_admin_name', 'Master Admin Utama');
                     } catch(e){}
                     setCurrentPage('search'); setShowPinModal(false); setPinInput('');
+                    showMsg("LOGIN MASTER ADMIN CSID.PRO SUCCESS");
                     return;
                 }
 
@@ -367,6 +416,12 @@
                 }
 
                 if (matchedAdmin) {
+                    if (isMaintenance) {
+                        showMsg("SISTEM SEDANG PEMELIHARAAN (MAINTENANCE)");
+                        setPinInput('');
+                        return;
+                    }
+
                     setUserRole(matchedAdmin.role); setUserExpiry('UNLIMITED'); setActivePin(matchedAdmin.name.toUpperCase()); setCurrentAdminName(matchedAdmin.name);
                     try {
                         localStorage.setItem('csid_logged_in', 'true');
@@ -374,8 +429,9 @@
                         localStorage.setItem('csid_admin_name', matchedAdmin.name);
                     } catch(e){}
                     setCurrentPage('search'); setShowPinModal(false); setPinInput('');
+                    showMsg("LOGIN AS " + matchedAdmin.name.toUpperCase());
                 } else { 
-                    showMsg("PIN SALAH"); 
+                    showMsg("PIN OTORISASI SALAH"); 
                     setPinInput(''); 
                 }
             };
@@ -456,86 +512,53 @@
 
             const unifyAndExtractVehicleData = (rawText) => {
                 if (!rawText) return null;
-                
                 let parsed = null;
                 if (typeof rawText === 'object') {
                     parsed = rawText;
                 } else {
-                    try {
-                        parsed = JSON.parse(rawText);
-                    } catch (e) {
-                        parsed = extractJson(rawText); 
-                    }
+                    try { parsed = JSON.parse(rawText); } catch (e) { parsed = extractJson(rawText); }
                 }
-                
                 if (!parsed) return null;
-                
                 if (parsed.contents) {
                     let inner = null;
                     if (typeof parsed.contents === 'string') {
-                        try {
-                            inner = JSON.parse(parsed.contents);
-                        } catch (e) {
-                            inner = extractJson(parsed.contents);
-                        }
-                    } else {
-                        inner = parsed.contents;
-                    }
+                        try { inner = JSON.parse(parsed.contents); } catch (e) { inner = extractJson(parsed.contents); }
+                    } else { inner = parsed.contents; }
                     if (inner) parsed = inner;
                 }
-                
                 const findVehicleObject = (obj) => {
-                    if (!obj) return null;
-                    if (typeof obj !== 'object') return null;
-                    
+                    if (!obj || typeof obj !== 'object') return null;
                     if (Array.isArray(obj)) {
-                        for (let item of obj) {
-                            const found = findVehicleObject(item);
-                            if (found) return found;
-                        }
+                        for (let item of obj) { const found = findVehicleObject(item); if (found) return found; }
                         return null;
                     }
-                    
                     if (obj.data && typeof obj.data === 'object') {
-                        const found = findVehicleObject(obj.data);
-                        if (found) return found;
+                        const found = findVehicleObject(obj.data); if (found) return found;
                     }
-
-                    const vehicleKeys = [
-                        'nopol', 'nama', 'NamaPemilik', 'NoRangka', 'no_rangka', 
-                        'NoMesin', 'no_mesin', 'NoSTNK', 'no_stnk', 'NoBPKB', 'no_bpkb',
-                        'wilayah', 'seri', 'ktp', 'NoKTP', 'type', 'merk'
-                    ];
-                    
+                    const vehicleKeys = ['nopol', 'nama', 'NamaPemilik', 'NoRangka', 'no_rangka', 'NoMesin', 'no_mesin', 'NoSTNK', 'no_stnk', 'NoBPKB', 'no_bpkb', 'wilayah', 'seri', 'ktp', 'NoKTP', 'type', 'merk'];
                     let matchCount = 0;
-                    for (let key of vehicleKeys) {
-                        if (obj[key] !== undefined && obj[key] !== null && String(obj[key]).trim() !== '') {
-                            matchCount++;
-                        }
-                    }
-                    
-                    if (matchCount >= 2) {
-                        return obj;
-                    }
-                    
+                    for (let key of vehicleKeys) { if (obj[key] !== undefined && obj[key] !== null && String(obj[key]).trim() !== '') matchCount++; }
+                    if (matchCount >= 2) return obj;
                     for (let k in obj) {
                         if (obj.hasOwnProperty(k) && obj[k] && typeof obj[k] === 'object') {
-                            const found = findVehicleObject(obj[k]);
-                            if (found) return found;
+                            const found = findVehicleObject(obj[k]); if (found) return found;
                         }
                     }
-                    
                     return null;
                 };
-                
                 return findVehicleObject(parsed);
+            };
+
+            const handleSearchPress = (e) => {
+                if (e) { e.preventDefault(); e.stopPropagation(); }
+                fetchData();
             };
 
             const fetchData = async () => {
                 const rawPlate = plate.trim().toUpperCase();
                 if (!rawPlate) { showMsg("MASUKKAN PLAT NOMOR"); return; }
                 
-                if (isMaintenance && userRole !== 'master' && !userRole.startsWith('admin')) {
+                if (isMaintenance && activePin !== 'MASTER') {
                     showMsg("SISTEM SEDANG PEMELIHARAAN (MAINTENANCE)");
                     return;
                 }
@@ -573,12 +596,10 @@
                             setSearchResult(docSnap.data());
                             setCurrentPage('result');
                             setLoading(false);
-                            showMsg("DATA DI TEMUKAN");
+                            showMsg("DATA DITEMUKAN");
                             return;
                         }
-                    } catch (e) {
-                        console.log("⚠️ Tidak bisa baca Firebase:", e);
-                    }
+                    } catch (e) {}
                 }
 
                 if (OFFLINE_SAMSAT_DATABASE[offlineMatch]) {
@@ -598,11 +619,7 @@
                         setLoading(false);
                         return;
                     }
-                } catch (e) {
-                    console.warn("sessionStorage error:", e);
-                }
-
-                const requestPool = [];
+                } catch (e) {}
 
                 const baseUrls = [
                   `${customApi1 || API_UTAMA_1}${encodeURIComponent(cleanQuery)}`,
@@ -610,13 +627,14 @@
                   `${customApi3 || API_UTAMA_3}${encodeURIComponent(cleanQuery)}`
                 ];
 
+                const requestPool = [];
                 baseUrls.forEach(baseUrl => {
-                    requestPool.push({ url: baseUrl, type: 'Direct APK Connection' });
-                    requestPool.push({ url: `https://api.allorigins.win/raw?url=${encodeURIComponent(baseUrl)}`, type: 'AllOrigins Raw' });
-                    requestPool.push({ url: `https://corsproxy.io/?${encodeURIComponent(baseUrl)}`, type: 'CORSProxy.io' });
-                    requestPool.push({ url: `https://allorigins.hexschool.workers.dev/raw?url=${encodeURIComponent(baseUrl)}`, type: 'Hexschool Cloudflare' });
-                    requestPool.push({ url: `https://api.allorigins.win/get?url=${encodeURIComponent(baseUrl)}`, type: 'AllOrigins Wrapped' });
-                    requestPool.push({ url: `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(baseUrl)}`, type: 'CodeTabs' });
+                    requestPool.push({ url: baseUrl });
+                    requestPool.push({ url: `https://api.allorigins.win/raw?url=${encodeURIComponent(baseUrl)}` });
+                    requestPool.push({ url: `https://corsproxy.io/?${encodeURIComponent(baseUrl)}` });
+                    requestPool.push({ url: `https://allorigins.hexschool.workers.dev/raw?url=${encodeURIComponent(baseUrl)}` });
+                    requestPool.push({ url: `https://api.allorigins.win/get?url=${encodeURIComponent(baseUrl)}` });
+                    requestPool.push({ url: `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(baseUrl)}` });
                 });
 
                 let resolved = false;
@@ -626,15 +644,8 @@
                 const cleanLoadingAndTransition = (data) => {
                     if (resolved) return;
                     resolved = true;
-                    
-                    controllers.forEach(ctrl => {
-                        try { ctrl.abort(); } catch(e) {}
-                    });
-
-                    try {
-                        sessionStorage.setItem(cleanQuery, JSON.stringify(data));
-                    } catch (e) {}
-
+                    controllers.forEach(ctrl => { try { ctrl.abort(); } catch(e) {} });
+                    try { sessionStorage.setItem(cleanQuery, JSON.stringify(data)); } catch (e) {}
                     incrementDailyCount();
                     setSearchResult(data);
                     setCurrentPage('result');
@@ -645,7 +656,7 @@
                     activeRequests--;
                     if (activeRequests === 0 && !resolved) {
                         setLoading(false);
-                        showMsg("SERVER SIBUK");
+                        showMsg("SERVER SIBUK / DATA TIDAK DITEMUKAN");
                     }
                 };
 
@@ -654,49 +665,32 @@
                     controllers.push(ctrl);
                     const id = setTimeout(() => ctrl.abort(), 15000); 
 
-                    try {
-                        fetch(targetObj.url, { signal: ctrl.signal })
-                            .then(async (res) => {
-                                clearTimeout(id);
-                                if (resolved) return;
-                                if (!res.ok) { handleFailure(); return; }
-                                
-                                const text = await res.text();
-                                const vehicleData = unifyAndExtractVehicleData(text);
-                                
-                                if (vehicleData && !resolved) {
-                                    if (db) {
-                                        try {
-                                            await db.collection('pencarian').doc(cleanQuery.toUpperCase()).set({
-                                                ...vehicleData,
-                                                waktu_ditemukan: new Date(),
-                                                sumber: 'aplikasi_csipro'
-                                            }, { merge: true });
-                                            console.log('DATA DI TEMUKAN');
-                                        } catch (e) {
-                                            console.log('⚠️ Gagal simpan ke Firebase:', e);
-                                        }
-                                    }
-                                    cleanLoadingAndTransition(vehicleData);
-                                } else {
-                                    handleFailure();
+                    fetch(targetObj.url, { signal: ctrl.signal })
+                        .then(async (res) => {
+                            clearTimeout(id);
+                            if (resolved || !res.ok) { handleFailure(); return; }
+                            const text = await res.text();
+                            const vehicleData = unifyAndExtractVehicleData(text);
+                            if (vehicleData && !resolved) {
+                                if (db) {
+                                    try {
+                                        await db.collection('pencarian').doc(cleanQuery.toUpperCase()).set({
+                                            ...vehicleData,
+                                            waktu_ditemukan: new Date()
+                                        }, { merge: true });
+                                    } catch (e) {}
                                 }
-                            })
-                            .catch((err) => {
-                                clearTimeout(id);
-                                handleFailure();
-                            });
-                    } catch (err) {
-                        clearTimeout(id);
-                        handleFailure();
-                    }
+                                cleanLoadingAndTransition(vehicleData);
+                            } else { handleFailure(); }
+                        })
+                        .catch(() => { clearTimeout(id); handleFailure(); });
                 });
             };
 
             const extractField = (item, keys) => {
                 if (!item) return '-';
                 for (let k of keys) {
-                    if (item[k] !== undefined && item[k] !== null && item[k] !== '') {
+                    if (item[k] !== undefined && item[k] !== null && String(item[k]).trim() !== '') {
                         return String(item[k]).toUpperCase();
                     }
                 }
@@ -706,59 +700,32 @@
             const getVal = (cat) => {
                 if (!searchResult) return "-";
                 const item = searchResult;
-                
                 switch (cat) {
-                    case 'Nama': 
-                        return extractField(item, ['nama', 'NamaPemilik', 'nama_pemilik', 'Nama', 'nm_pmlk']);
-                    case 'NIK': 
-                        return extractField(item, ['ktp', 'NIK', 'NoKTP', 'nik', 'no_ktp', 'identitas', 'no_identitas']);
-                    case 'HP': 
-                        return extractField(item, ['hp', 'NoHP', 'MSSDN', 'msisdn', 'phone', 'no_hp', 'no_telp']);
-                    case 'Pekerjaan': 
-                        return extractField(item, ['pekerjaan', 'Pekerjaan', 'job', 'pekerjaan_pemilik']);
-                    case 'Alamat': 
-                        return extractField(item, ['alamat', 'Alamat', 'alamat_pemilik']);
+                    case 'Nama': return extractField(item, ['nama', 'NamaPemilik', 'nama_pemilik', 'Nama', 'nm_pmlk']);
+                    case 'NIK': return extractField(item, ['ktp', 'NIK', 'NoKTP', 'nik', 'no_ktp', 'identitas', 'no_identitas']);
+                    case 'HP': return extractField(item, ['hp', 'NoHP', 'MSSDN', 'msisdn', 'phone', 'no_hp', 'no_telp']);
+                    case 'Pekerjaan': return extractField(item, ['pekerjaan', 'Pekerjaan', 'job', 'pekerjaan_pemilik']);
+                    case 'Alamat': return extractField(item, ['alamat', 'Alamat', 'alamat_pemilik']);
                     case 'NopolServer': {
                         const w = extractField(item, ['wilayah', 'Wilayah', 'prefix', 'Prefix', 'SeriWilayah']).replace(/\s+/g, '').toUpperCase();
                         const n = extractField(item, ['nopol', 'Nopol', 'no_polisi', 'noPolisi', 'Nopol1']).replace(/\s+/g, '').toUpperCase();
                         const s = extractField(item, ['seri', 'Seri', 'suffix', 'Suffix']).replace(/\s+/g, '').toUpperCase();
-
-                        let hasilNopol = '';
-                        if (w !== '-' && n !== '-') {
-                            hasilNopol = `${w} ${n}`;
-                            if (s !== '-') hasilNopol += ` ${s}`;
-                        } else if (n !== '-') {
-                            hasilNopol = n;
-                            if (s !== '-') hasilNopol += ` ${s}`;
-                        } else {
-                            return '(TIDAK ADA NOPOL)';
-                        }
-                        return hasilNopol.trim().toUpperCase();
-                        }
-                    case 'Merk': 
-                        return extractField(item, ['merk', 'Merk', 'Merek', 'merek', 'brand']);
-                    case 'Tipe': 
-                        return extractField(item, ['type', 'Type', 'Tipe', 'tipe', 'model']);
-                    case 'Tahun': 
-                        return extractField(item, ['tahun', 'TahunPembuatan', 'Tahun', 'tahun_pembuatan', 'tahun_buat', 'th_buat']);
-                    case 'Warna': 
-                        return extractField(item, ['warna', 'Warna', 'warna_tnkb', 'warna_kendaraan']);
-                    case 'CC': 
-                        return extractField(item, ['cylinder', 'IsiCylinder', 'Cylinder', 'isi_silinder', 'cc', 'isi_cylinder']);
-                    case 'Noka': 
-                        return extractField(item, ['no_rangka', 'NoRangka', 'noka', 'vin', 'no_frame']);
-                    case 'Nosin': 
-                        return extractField(item, ['no_mesin', 'NoMesin', 'nosin', 'no_engine']);
-                    case 'BPKB': 
-                        return extractField(item, ['no_bpkb', 'NoBPKB', 'bpkb', 'no_bpkb']);
-                    case 'STNK': 
-                        return extractField(item, ['no_stnk', 'NoSTNK', 'stnk', 'no_stnk']);
-                    case 'Tgl': 
-                        return extractField(item, ['tanggal_daftar', 'TglDaftar', 'TanggalDaftar', 'tgl_daftar', 'tglDaftar']);
-                    case 'APM': 
-                        return extractField(item, ['APM', 'apm', 'atpm', 'AgenPemegangMerek', 'agen_pemegang_merek']);
-                    default: 
-                        return "-";
+                        if (w !== '-' && n !== '-') return `${w} ${n} ${s !== '-' ? s : ''}`.trim();
+                        return n !== '-' ? `${n} ${s !== '-' ? s : ''}`.trim() : '(TIDAK ADA NOPOL)';
+                    }
+                    case 'Merk': return extractField(item, ['merk', 'Merk', 'Merek', 'merek', 'brand']);
+                    case 'Tipe': return extractField(item, ['type', 'Type', 'Tipe', 'tipe', 'model']);
+                    case 'Tahun': return extractField(item, ['tahun', 'TahunPembuatan', 'Tahun', 'tahun_pembuatan', 'th_buat']);
+                    case 'Warna': return extractField(item, ['warna', 'Warna', 'warna_tnkb', 'warna_kendaraan']);
+                    case 'CC': return extractField(item, ['cylinder', 'IsiCylinder', 'Cylinder', 'isi_silinder', 'cc']);
+                    case 'BBM': return extractField(item, ['NamaBBM', 'jenis_bbm', 'bahan_bakar', 'BahanBakar', 'bbm', 'BBM']);
+                    case 'Noka': return extractField(item, ['no_rangka', 'NoRangka', 'noka', 'vin', 'no_frame']);
+                    case 'Nosin': return extractField(item, ['no_mesin', 'NoMesin', 'nosin', 'no_engine']);
+                    case 'BPKB': return extractField(item, ['no_bpkb', 'NoBPKB', 'bpkb']);
+                    case 'STNK': return extractField(item, ['no_stnk', 'NoSTNK', 'stnk']);
+                    case 'Tgl': return extractField(item, ['tanggal_daftar', 'TglDaftar', 'TanggalDaftar', 'tgl_daftar']);
+                    case 'APM': return extractField(item, ['APM', 'apm', 'atpm', 'AgenPemegangMerek']);
+                    default: return "-";
                 }
             };
 
@@ -775,76 +742,127 @@
 
             const getRemainingTime = (e) => { if (e === 'UNLIMITED') return "PERMANEN"; const d = e - Date.now(); if (d <= 0) return "EXPIRED"; const days = Math.floor(d / 86400000); return days >= 1 ? `${days + 1} HARI` : `${Math.floor(d / 3600000)} JAM`; };
 
-            const renderStatusOverlay = () => (
-                <div className="text-right glass-panel px-3 py-1.5 rounded-xl border border-white/10 z-[60]">
-                    <p className="text-[10px] font-black uppercase text-orange-500">ID: {activePin}</p>
-                    <p className="text-[9px] font-black text-slate-400">SISA: {getRemainingTime(userExpiry)}</p>
-                </div>
-            );
+        const renderStatusOverlay = () => (
+            <div className="text-right glass-panel px-3 py-1.5 rounded-xl border border-[#381605] z-[60] bg-black/80 shadow-lg">
+                <p className="text-[10px] font-black uppercase text-[#f97316]">ID: {activePin}</p>
+                <p className="text-[9px] font-black text-white">SISA: {getRemainingTime(userExpiry)}</p>
+                <p className="text-[9px] font-black text-orange-300 uppercase font-mono-custom">JAM: {currentTime}</p>
+                <p className="text-[8px] font-bold text-slate-300 uppercase font-mono-custom mt-0.5">HARI: {currentDateStr}</p>
+            </div>
+        );
 
-            const handleSearchPress = (e) => {
-                if (e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                }
-                fetchData();
-            };
+        const isAdminRole = (role) => role === 'master' || (typeof role === 'string' && role.startsWith('admin'));
 
-            const isAdminRole = (role) => role === 'master' || role.startsWith('admin');
+            if (isMaintenance && activePin !== 'MASTER') {
+                return (
+                    <div className="mobile-shell bg-black flex flex-col items-center justify-center p-8 text-center relative">
+                        <div 
+                            onClick={() => {
+                                const nextCount = maintTapCount + 1;
+                                setMaintTapCount(nextCount);
+                                if (nextCount >= 11) {
+                                    setShowPinModal(true);
+                                    setMaintTapCount(0);
+                                }
+                            }}
+                            className="w-20 h-20 bg-orange-900/30 border-2 border-orange-500 text-orange-400 rounded-full flex items-center justify-center text-3xl mb-6 animate-pulse cursor-pointer select-none active:scale-90 transition-transform"
+                        >
+                            🛠️
+                        </div>
+                        <h2 className="text-2xl font-black text-white uppercase tracking-wider mb-2">PEMELIHARAAN SISTEM</h2>
+                        <p className="text-xs text-slate-400 font-bold max-w-[280px] leading-relaxed mb-8">
+                            CSID.PRO sedang dalam pemeliharaan berkala. Akses akan terbuka kembali secara otomatis setelah pemeliharaan selesai.
+                        </p>
+                        <button type="button" onClick={() => window.location.reload()} className="w-full max-w-[240px] bg-[#181a2e] text-white border border-orange-500/30 py-4 rounded-2xl font-black text-xs uppercase shadow-lg active:scale-95 transition-transform">CEK ULANG KONEKSI</button>
+
+                        {/* Modal Akses Master Admin saat Mode Maintenance */}
+                        {showPinModal && (
+                            <div className="absolute inset-0 bg-black/95 backdrop-blur-3xl z-[2000] flex items-center justify-center p-8">
+                                <div className="glass-panel w-full max-w-[340px] rounded-[3.5rem] border-white/10 p-10 text-center shadow-2xl">
+                                    <h3 className="text-orange-300 font-black text-[12px] uppercase mb-8 tracking-[0.3em] opacity-90">ADMIN OTORISASI</h3>
+                                    <input autoFocus type="password" value={pinInput} onChange={e => setPinInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && handleMasterLogin()} placeholder="PIN" className="w-full bg-[#fed7aa] border-none rounded-3xl p-5 text-center text-4xl font-black text-black outline-none mb-8 font-mono-custom tracking-tighter shadow-inner placeholder:text-orange-400" />
+                                    <div className="flex gap-4">
+                                        <button type="button" onClick={() => setShowPinModal(false)} className="flex-1 py-4 bg-[#131722] text-white rounded-2xl font-black text-[11px] uppercase tracking-widest outline-none">BATAL</button>
+                                        <button type="button" onClick={handleMasterLogin} className="flex-1 py-4 bg-orange-600 text-white rounded-2xl font-black text-[11px] uppercase tracking-widest shadow-lg active:scale-95 outline-none">MASUK</button>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                );
+            }
 
             return (
                 <div className="mobile-shell bg-black">
-                    {/* Maintenance Overlay */}
-                    {isMaintenance && userRole !== 'master' && !userRole.startsWith('admin') && (
-                        <div className="fixed inset-0 bg-black/95 backdrop-blur-3xl z-[99999] flex flex-col items-center justify-center p-8 text-center">
-                            <div className="w-20 h-20 bg-orange-600/20 border-2 border-orange-500 text-orange-500 rounded-full flex items-center justify-center text-3xl mb-6 animate-pulse">🛠️</div>
-                            <h2 className="text-2xl font-black text-white uppercase tracking-wider mb-2">PEMELIHARAAN SISTEM</h2>
-                            <p className="text-xs text-slate-400 font-bold max-w-[280px] leading-relaxed">
-                                Aplikasi sedang dalam pemeliharaan berkala untuk meningkatkan performa server. Silakan coba beberapa saat lagi.
-                            </p>
-                        </div>
-                    )}
-
-                    {/* Welcome Screen */}
+                    {/* HALAMAN WELCOME */}
                     {currentPage === 'welcome' && (
                         <div className="flex-1 flex flex-col items-center justify-between py-12 px-8 h-full relative overflow-y-auto scrollbar-hide">
-                            <div className="absolute top-[-10%] left-[-10%] w-[80%] h-[40%] bg-orange-600/10 blur-[150px] rounded-full" />
-                            <div className="text-center z-10 mt-6 space-y-1.5">
-                                <p className="text-[15px] font-black uppercase tracking-tight text-orange-500 leading-tight">SELAMAT DATANG DI APLIKASI</p>
-                                <p className="text-[15px] font-black uppercase tracking-tight leading-tight text-white">𝐂𝐄𝐊 𝐃𝐀𝐓𝐀 𝐍𝐀𝐒𝐈𝐎𝐍𝐀𝐋</p>
+                            <div className="absolute top-[35%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[240px] h-[240px] bg-orange-600/15 blur-[120px] rounded-full pointer-events-none" />
+                            
+                            {/* Header Text */}
+                            <div className="text-center z-10 mt-4 space-y-1">
+                                <p className="text-[15px] font-black uppercase tracking-tight text-[#f97316] leading-tight">SELAMAT DATANG DI APLIKASI</p>
+                                <p className="text-[17px] font-extrabold uppercase tracking-tight leading-tight text-white font-serif">CEK DATA NASIONAL</p>
                             </div>
-                            <div className="flex flex-col items-center z-10">
-                                <h1 onClick={() => { setAdminTapCount(c => c + 1); if(adminTapCount === 4) setShowPinModal(true); }} className="text-[40px] font-black text-white text-glow cursor-pointer tracking-tighter">𝐂𝐒𝐈𝐃.𝐏𝐑𝐎</h1>
-                                <div className="h-1 w-20 bg-white-500 rounded-full -mt-2 animate-pulse" />
+
+                            {/* Center Branding */}
+                            <div className="flex flex-col items-center z-10 my-auto">
+                                <h1 onClick={() => { setAdminTapCount(c => c + 1); if(adminTapCount === 4) setShowPinModal(true); }} className="text-[44px] font-black text-white text-glow cursor-pointer tracking-tight font-serif select-none">CSID.PRO</h1>
                             </div>
-                            <div className="w-full flex flex-col items-center gap-6 mb-8 z-10">
-                                <div className="w-full max-w-[340px] glass-panel rounded-[2.5rem] py-8 px-8 text-center border-orange-500/10">
-                                    <p className="text-[10px] font-black uppercase tracking-[0.3em] opacity-40 mb-3">ID PENDAFTARAN</p>
-                                    <p className="text-[60px] font-black text-white font-mono-custom tracking-tighter">{registrationId}</p>
+
+                            {/* ID Pendaftaran Card & Action Buttons */}
+                            <div className="w-full flex flex-col items-center gap-5 mb-4 z-10">
+                                <div className="w-full max-w-[360px] sm:max-w-[380px] bg-[#0c0c0e] rounded-[2.8rem] py-8 px-6 text-center border border-white/10 shadow-2xl">
+                                    <p className="text-[11px] font-black uppercase tracking-[0.25em] text-slate-400 mb-2">ID PENDAFTARAN</p>
+                                    <p className="text-[64px] font-black text-white font-mono-custom tracking-tight leading-none">{registrationId}</p>
                                 </div>
-                                <div className="w-full space-y-4 max-w-[340px]">
-                                    <button type="button" onClick={handleLoginOnline} className="w-full bg-white text-black py-5 rounded-2xl font-black text-lg uppercase shadow-lg active:scale-95 flex items-center justify-center gap-3"><Icons.Shield cls="w-5 h-5" /> MASUK SISTEM</button>
-                                    <button type="button" onClick={() => window.open(`https://wa.me/${ADMIN_WA}?text=${encodeURIComponent('Aktivasi ID: '+registrationId)}`)} className="w-full bg-[#108a6e] text-white py-5 rounded-2xl font-black text-lg uppercase shadow-lg active:scale-95 flex items-center justify-center gap-3">DAFTAR ADMIN</button>
+
+                                <div className="w-full space-y-4 max-w-[360px] sm:max-w-[380px]">
+                                    <button 
+                                        type="button" 
+                                        onClick={handleLoginOnline} 
+                                        className="w-full bg-white text-black py-5.5 px-6 rounded-2xl font-black text-lg sm:text-xl uppercase shadow-2xl active:scale-95 transition-all flex items-center justify-center gap-3 outline-none border-2 border-white tracking-wide"
+                                    >
+                                        <Icons.Shield cls="w-6 h-6 text-black" />
+                                        <span>MASUK SISTEM</span>
+                                    </button>
+                                    
+                                    <button 
+                                        type="button" 
+                                        onClick={() => window.open(`https://wa.me/${ADMIN_WA}?text=${encodeURIComponent('Halo Admin CSID.PRO, saya mau aktivasi ID: '+registrationId)}`)} 
+                                        className="w-full bg-[#108a6e] hover:bg-[#0e7a61] text-white py-5.5 px-6 rounded-2xl font-black text-lg sm:text-xl uppercase shadow-2xl active:scale-95 transition-all flex items-center justify-center gap-3 outline-none border-2 border-[#129a7b] tracking-wide"
+                                    >
+                                        <Icons.Shield cls="w-6 h-6 text-white" />
+                                        <span>DAFTAR ADMIN</span>
+                                    </button>
                                 </div>
                             </div>
                         </div>
                     )}
 
-                    {/* Search Screen */}
+                    {/* HALAMAN SEARCH */}
                     {currentPage === 'search' && (
                         <div className="flex-1 flex flex-col h-full bg-black">
-                            <header className="px-6 py-5 flex items-center justify-between border-b border-white/5 bg-black/80 backdrop-blur-md z-50">
-                                <div className="flex items-center gap-3 text-white">
-                                    <div className="bg-orange-600 p-1.5 rounded-lg shadow-[0_0_15px_rgba(249,115,22,0.4)]"><Icons.Shield cls="w-5 h-5 text-white" /></div>
-                                    <span className="font-black text-2xl tracking-tighter">𝐂𝐒𝐈𝐃.𝐏𝐑𝐎</span>
+                            {}
+                            <header className="px-6 py-4 flex items-center justify-between border-b border-white/5 bg-black/90 backdrop-blur-md z-50">
+                                <div className="flex items-center gap-2.5 text-white">
+                                    <div className="bg-[#ea580c] p-1.5 rounded-xl shadow-[0_0_15px_rgba(234,88,12,0.5)] flex items-center justify-center">
+                                        <Icons.Shield cls="w-5 h-5 text-white" />
+                                    </div>
+                                    <span className="font-black text-2xl tracking-tight text-white font-mono-custom">CSID.PRO</span>
                                 </div>
                                 {renderStatusOverlay()}
                             </header>
-                            <div className="h-10 bg-black/50 overflow-hidden flex items-center border-y border-orange-500/10">
-                                <div className="animate-marquee px-4 text-[10px] font-black uppercase tracking-widest text-slate-400">{broadcast}</div>
+
+                            <div className="h-9 bg-black overflow-hidden flex items-center border-y border-orange-950/40">
+                                <div className="animate-marquee px-4 text-[10px] font-black uppercase tracking-widest text-slate-400">
+                                    APLIKASI PENYEDIA LAYANAN INFORMASI TNKB REAL-TIME CEPAT DAN AKURAT NASIONAL
+                                </div>
                             </div>
+
                             <main className="flex-1 flex flex-col px-4 pb-6 relative overflow-hidden">
-                                <div className="w-full h-24 border-2 border-orange-600/30 rounded-3xl bg-orange-600/5 flex items-center justify-center px-8 mb-4 mt-6">
+                                {}
+                                <div className="w-full h-28 border-2 border-white rounded-3xl bg-black flex items-center justify-center px-8 mb-3 mt-3 shadow-[0_0_20px_rgba(255,255,255,0.2)]">
                                     <input 
                                         ref={inputRef} 
                                         type="text" 
@@ -861,8 +879,9 @@
                                     />
                                 </div>
 
-                                <div className="w-full text-center py-2.5 px-4 mb-2 border border-red-900/30 rounded-2xl bg-red-950/10">
-                                    <p className="text-orange-500 font-black text-xs tracking-widest flex items-center justify-center gap-1.5">
+                                {}
+                                <div className="w-full text-center py-2.5 px-4 mb-3 border border-[#3b1208] rounded-2xl bg-[#140603]">
+                                    <p className="text-[#ff5500] font-black text-xs tracking-widest flex items-center justify-center gap-1.5">
                                         📶 AKSES DATA TNKB NOLIMIT
                                     </p>
                                     <p className="text-[9px] font-black text-slate-400 tracking-wider mt-0.5">
@@ -873,19 +892,20 @@
                                     </p>
                                 </div>
 
+                                {}
                                 <div className="mt-auto space-y-1">
                                     <div className={`grid ${isAdminRole(userRole) ? 'grid-cols-7' : 'grid-cols-6'} gap-[2px]`}>
-                                        <button type="button" onClick={() => setKbHeight(h => Math.max(15, h-2))} className="bg-black h-14 rounded-none key-press-effect flex items-center justify-center text-slate-400 border border-white/5 font-black text-xl outline-none"><Icons.Minus /></button>
-                                        <button type="button" onClick={() => setKbHeight(h => Math.min(35, h+2))} className="bg-black h-14 rounded-none key-press-effect flex items-center justify-center text-slate-400 border border-white/5 font-black text-xl outline-none"><Icons.Plus /></button>
-                                        <button type="button" onClick={startCamera} className="bg-black h-14 rounded-none key-press-effect flex items-center justify-center text-slate-400 border border-white/5 outline-none"><Icons.Camera /></button>
-                                        <button type="button" onClick={async () => { try { const t = await navigator.clipboard.readText(); setPlate(t.toUpperCase().replace(/\s/g, '')); } catch(e){} }} className="bg-black h-14 rounded-none key-press-effect flex items-center justify-center text-slate-400 border border-white/5 outline-none"><Icons.Paste /></button>
-                                        {isAdminRole(userRole) && <button type="button" onClick={() => setCurrentPage('admin')} className="bg-orange-600/20 h-14 rounded-none key-press-effect flex items-center justify-center text-orange-500 border border-white/5 outline-none"><Icons.Shield /></button>}
-                                        <button type="button" onClick={() => window.location.reload()} className="bg-red-600/20 h-14 rounded-none key-press-effect flex items-center justify-center text-red-500 border border-white/5 outline-none"><Icons.Power /></button>
+                                        <button type="button" onClick={() => setKbHeight(h => Math.max(15, h-2))} className="bg-black h-14 rounded-none key-press-effect flex items-center justify-center text-white border border-white/5 font-black text-xl outline-none"><Icons.Minus /></button>
+                                        <button type="button" onClick={() => setKbHeight(h => Math.min(35, h+2))} className="bg-black h-14 rounded-none key-press-effect flex items-center justify-center text-white border border-white/5 font-black text-xl outline-none"><Icons.Plus /></button>
+                                        <button type="button" onClick={startCamera} className="bg-black h-14 rounded-none key-press-effect flex items-center justify-center text-white border border-white/5 outline-none"><Icons.Camera /></button>
+                                        <button type="button" onClick={async () => { try { const t = await navigator.clipboard.readText(); setPlate(t.toUpperCase().replace(/\s/g, '')); } catch(e){} }} className="bg-black h-14 rounded-none key-press-effect flex items-center justify-center text-white border border-white/5 outline-none"><Icons.Paste /></button>
+                                        {isAdminRole(userRole) && <button type="button" onClick={() => setCurrentPage('admin')} className="bg-[#381605] h-14 rounded-none key-press-effect flex items-center justify-center text-[#f97316] border border-white/5 outline-none"><Icons.Shield /></button>}
+                                        <button type="button" onClick={() => window.location.reload()} className="bg-[#320808] h-14 rounded-none key-press-effect flex items-center justify-center text-[#ef4444] border border-white/5 outline-none"><Icons.Power /></button>
                                         
                                         <button 
                                             type="button"
                                             onClick={handleSearchPress}
-                                            className="bg-orange-600 h-14 rounded-none key-press-effect flex items-center justify-center text-white shadow-lg border border-white/5 cursor-pointer active:bg-orange-700 outline-none"
+                                            className="bg-[#ea580c] h-14 rounded-none key-press-effect flex items-center justify-center text-white font-black shadow-lg border border-white/5 cursor-pointer active:bg-orange-700 outline-none"
                                         >
                                             <Icons.Search />
                                         </button>
@@ -894,8 +914,8 @@
                                     <div className="flex flex-col gap-[2px]">
                                         <div className="grid grid-cols-5 gap-[2px]">
                                             {['1','2','3'].map(n => <button type="button" key={n} onClick={() => setPlate(p => p+n)} style={{height: `${kbHeight * 2.8}px`}} className="bg-black text-white rounded-none border border-white/5 text-4xl font-black key-press-effect font-mono-custom outline-none">{n}</button>)}
-                                            <button type="button" onClick={() => setPlate(p => p.slice(0,-1))} style={{height: `${kbHeight * 2.8}px`}} className="bg-red-600 text-white rounded-none font-black text-sm key-press-effect border border-white/5 outline-none">DEL</button>
-                                            <button type="button" onClick={() => setPlate('')} style={{height: `${kbHeight * 2.8}px`}} className="bg-red-600 text-white rounded-none font-black text-sm key-press-effect border border-white/5 outline-none">CLR</button>
+                                            <button type="button" onClick={() => setPlate(p => p.slice(0,-1))} style={{height: `${kbHeight * 2.8}px`}} className="bg-[#dc2626] text-white font-black text-sm key-press-effect border border-white/5 outline-none">DEL</button>
+                                            <button type="button" onClick={() => setPlate('')} style={{height: `${kbHeight * 2.8}px`}} className="bg-[#dc2626] text-white font-black text-sm key-press-effect border border-white/5 outline-none">CLR</button>
                                         </div>
                                         <div className="grid grid-cols-4 gap-[2px]">
                                             {['4','5','6','0'].map(n => <button type="button" key={n} onClick={() => setPlate(p => p+n)} style={{height: `${kbHeight * 2.8}px`}} className="bg-black text-white rounded-none border border-white/5 text-4xl font-black key-press-effect font-mono-custom outline-none">{n}</button>)}
@@ -914,21 +934,21 @@
                         </div>
                     )}
 
-                    {/* Result Screen */}
+                    {/* HALAMAN RESULT */}
                     {currentPage === 'result' && (
                         <div className="flex-1 flex flex-col h-full bg-black relative overflow-hidden">
                             <header className="px-6 py-6 flex items-center justify-between border-b border-white/5 bg-black/80 backdrop-blur-md z-40">
                                 <button type="button" onClick={() => setCurrentPage('search')} className="key-press-effect p-2.5 bg-slate-900 rounded-2xl text-white shadow-lg outline-none"><Icons.ChevronLeft /></button>
-                                <span className="text-white font-black tracking-widest text-[11px] uppercase opacity-70">HASIL PENCARIAN</span>
+                                <span className="text-white font-black tracking-widest text-[11px] uppercase opacity-70">HASIL DATA CSID.PRO</span>
                                 {renderStatusOverlay()}
                             </header>
                             <div className="flex-1 overflow-y-auto overflow-x-hidden p-4 scrollbar-hide pb-32 w-full" style={{ WebkitOverflowScrolling: 'touch' }}>
-                                <div className="mb-4 bg-orange-600/10 border border-orange-600/30 rounded-2xl px-5 py-3 flex items-center gap-3 w-full animate-pulse">
-                                    <span className="text-orange-500 font-bold text-sm">✅</span>
-                                    <p className="text-[10px] font-black text-orange-500 tracking-wider uppercase">DATA TNKB ASLI - DITEMUKAN</p>
+                                <div className="mb-4 bg-orange-600/10 border border-orange-500/30 rounded-2xl px-5 py-3 flex items-center gap-3 w-full animate-pulse">
+                                    <span className="text-orange-400 font-bold text-sm">✅</span>
+                                    <p className="text-[10px] font-black text-orange-400 tracking-wider uppercase">INFORMASI KENDARAAN SAH :</p>
                                 </div>
                                 <div className="bg-black border border-white/5 rounded-[2.5rem] p-8 font-mono-custom text-[13px] text-white/90 leading-relaxed whitespace-pre-wrap break-words w-full shadow-2xl shimmer pointer-events-auto">
-                                    {`\n🇮🇩 DATA DI TEMUKAN SUMBER APLIKASI CSID.PRO\n_________________________________________\n👦 IDENTITAS PEMILIK :\n_________________________________________\nNAMA : ${getVal('Nama')}\nNIK : ${getVal('NIK')}\nMSSDN : ${getVal('HP')}\nPEKERJAAN : ${getVal('Pekerjaan')}\n_________________________________________\n🏠 ALAMAT : ${getVal('Alamat')}\n_________________________________________\n🚘 DATA KENDARAAN :\n_________________________________________\nNOPOL : ${getVal('NopolServer')}\nMEREK : ${getVal('Merk')}\nTYPE : ${getVal('Tipe')}\nTAHUN : ${getVal('Tahun')}\nWARNA : ${getVal('Warna')}\nCYLINDER : ${getVal('CC')}\n_________________________________________\n📒 DOKUMEN RESMI KENDARAAN :\n_________________________________________\nNOKA : ${getVal('Noka')}\nNOSIN : ${getVal('Nosin')}\nNO. BPKB : ${getVal('BPKB')}\nNO. STNK : ${getVal('STNK')}\nTGL DAFTAR : ${getVal('Tgl')}\nAPM : ${getVal('APM')}\n_________________________________________\n📳 DAFTAR APLIKASI CSID.PRO DISINI https://wa.me/6281318703993\n_________________________________________\n⚖️ HASIL PENCARIAN KEPEMILIKAN KENDARAAN YANG SAH SESUAI TNKB YANG BERLAKU.\n_________________________________________`}
+                                    {`🇮🇩 DATA DI TEMUKAN SUMBER APLIKASI CSID.PRO\n_________________________________________\n👦 IDENTITAS PEMILIK :\n_________________________________________\nNAMA : ${getVal('Nama')}\nNIK : ${getVal('NIK')}\nMSSDN : ${getVal('HP')}\nPEKERJAAN : ${getVal('Pekerjaan')}\n_________________________________________\n🏠 ALAMAT : ${getVal('Alamat')}\n_________________________________________\n🚘 DATA KENDARAAN :\n_________________________________________\nNOPOL : ${getVal('NopolServer')}\nMEREK : ${getVal('Merk')}\nTYPE : ${getVal('Tipe')}\nTAHUN : ${getVal('Tahun')}\nWARNA : ${getVal('Warna')}\nCYLINDER : ${getVal('CC')}\n_________________________________________\n📒 DOKUMEN RESMI KENDARAAN :\n_________________________________________\nNOKA : ${getVal('Noka')}\nNOSIN : ${getVal('Nosin')}\nNO. BPKB : ${getVal('BPKB')}\nNO. STNK : ${getVal('STNK')}\nTGL DAFTAR : ${getVal('Tgl')}\nAPM : ${getVal('APM')}\n_________________________________________\n📳 DAFTAR APLIKASI CSID.PRO DISINI https://wa.me/${ADMIN_WA}\n_________________________________________\n⚖️ HASIL PENCARIAN KEPEMILIKAN KENDARAAN YANG SAH SESUAI TNKB YANG BERLAKU.\n_________________________________________`}
                                 </div>
                                 <div className="mt-8 space-y-4 w-full">
                                     <button type="button" onClick={() => {
@@ -944,89 +964,169 @@
                         </div>
                     )}
 
-                    {/* Admin Screen */}
+                    {}
                     {currentPage === 'admin' && (
                         <div className="flex-1 flex flex-col h-full bg-[#050505] overflow-hidden">
                             <header className="px-6 py-6 flex items-center justify-between border-b border-white/5 bg-black z-[100]">
-                                <button type="button" onClick={() => setCurrentPage('search')} className="p-2.5 bg-slate-900 rounded-2xl text-white outline-none"><Icons.ChevronLeft /></button>
-                                <span className="text-white font-black uppercase text-xs tracking-widest">{userRole === 'master' ? 'KONTROL MASTER' : `KONTROL ${currentAdminName.toUpperCase()}`}</span>
+                                <button type="button" onClick={() => setCurrentPage('search')} className="w-12 h-12 bg-[#111827] rounded-full text-white outline-none flex items-center justify-center active:scale-95"><Icons.ChevronLeft cls="w-6 h-6" /></button>
+                                <span className="text-white font-black uppercase text-base tracking-wider">
+                                    {userRole === 'master' ? 'KONTROL MASTER INDUK' : `KONTROL ${currentAdminName.toUpperCase()}`}
+                                </span>
                                 {renderStatusOverlay()}
                             </header>
                             <div className="flex-1 overflow-y-auto px-5 py-6 space-y-6 pb-20 scrollbar-hide">
                                 
-                                {userRole === 'master' && (
-                                    <div className="grid grid-cols-3 gap-2">
-                                        <div className="glass-panel p-4 rounded-[1.8rem] text-center border-orange-500/10 shadow-lg">
-                                            <p className="text-2xl font-black text-white font-mono-custom">{managedPins.length}</p>
-                                            <p className="text-[8px] font-black text-slate-500 uppercase mt-1 tracking-wider">TOTAL USER</p>
-                                        </div>
-                                        <div className="glass-panel p-4 rounded-[1.8rem] text-center border-emerald-500/10 shadow-lg">
-                                            <p className="text-2xl font-black text-emerald-500 font-mono-custom">{managedPins.filter(p => !p.isBlocked && (p.expiry === 'UNLIMITED' || p.expiry > Date.now())).length}</p>
-                                            <p className="text-[8px] font-black text-emerald-500/70 uppercase mt-1 tracking-wider">PIN AKTIF</p>
-                                        </div>
-                                        <div className="glass-panel p-4 rounded-[1.8rem] text-center border-red-500/10 shadow-lg">
-                                            <p className="text-2xl font-black text-red-500 font-mono-custom">{managedPins.filter(p => p.isBlocked || (p.expiry !== 'UNLIMITED' && p.expiry <= Date.now())).length}</p>
-                                            <p className="text-[8px] font-black text-red-500/70 uppercase mt-1 tracking-wider">PIN MATI</p>
-                                        </div>
-                                    </div>
-                                )}
-
+                                {/* FITUR KHUSUS MASTER ADMIN UTAMA */}
                                 {userRole === 'master' && (
                                     <>
+                                        <div className="grid grid-cols-3 gap-2">
+                                            <div className="glass-panel p-4 rounded-[1.8rem] text-center border-orange-500/20 shadow-lg">
+                                                <p className="text-2xl font-black text-white font-mono-custom">{managedPins.length}</p>
+                                                <p className="text-[8px] font-black text-slate-500 uppercase mt-1 tracking-wider">TOTAL USER</p>
+                                            </div>
+                                            <div className="glass-panel p-4 rounded-[1.8rem] text-center border-emerald-500/20 shadow-lg">
+                                                <p className="text-2xl font-black text-emerald-500 font-mono-custom">{managedPins.filter(p => !p.isBlocked && (p.expiry === 'UNLIMITED' || p.expiry > Date.now())).length}</p>
+                                                <p className="text-[8px] font-black text-emerald-500/70 uppercase mt-1 tracking-wider">PIN AKTIF</p>
+                                            </div>
+                                            <div className="glass-panel p-4 rounded-[1.8rem] text-center border-red-500/20 shadow-lg">
+                                                <p className="text-2xl font-black text-red-500 font-mono-custom">{managedPins.filter(p => p.isBlocked || (p.expiry !== 'UNLIMITED' && p.expiry <= Date.now())).length}</p>
+                                                <p className="text-[8px] font-black text-red-500/70 uppercase mt-1 tracking-wider">PIN MATI</p>
+                                            </div>
+                                        </div>
+
+                                        {/* LOG AKTIVASI ADMIN & PETUGAS */}
                                         {(() => {
-                                            const subAdminActivations = managedPins.filter(p => p.activated_by && p.activated_by.startsWith('admin'));
+                                            const todayActivations = managedPins.filter(p => {
+                                                const ts = p.activated_at || p.created_at;
+                                                return ts && isToday(ts) && p.activated_by;
+                                            });
+
+                                            const officersList = Array.from(new Set([
+                                                'Admin Utama 1',
+                                                'Admin Kedua 2',
+                                                ...adminConfigs.map(c => c.petugas).filter(Boolean),
+                                                ...todayActivations.map(p => p.petugas_name || p.activated_by).filter(Boolean)
+                                            ]));
+
+                                            const filteredLog = todayActivations.filter(p => {
+                                                if (logFilterOfficer === 'ALL') return true;
+                                                const officerName = p.petugas_name || p.activated_by || '';
+                                                return officerName.toLowerCase() === logFilterOfficer.toLowerCase();
+                                            });
+
                                             return (
-                                                <div className="bg-red-950/80 border-2 border-red-600/50 p-6 rounded-[2.5rem] shadow-2xl text-white">
-                                                    <div className="flex justify-between items-center mb-4 pb-3 border-b border-red-600/30">
+                                                <div className="bg-black border-2 border-red-900/60 p-5 rounded-[2.5rem] shadow-2xl text-white my-2">
+                                                    <div className="flex justify-between items-center mb-3 pb-3 border-b border-red-900/40">
                                                         <div className="flex items-center gap-2">
-                                                            <span className="w-3 h-3 bg-red-500 rounded-full animate-ping" />
-                                                            <h3 className="font-black text-xs uppercase tracking-widest text-white">LOG AKTIVASI ADMIN & PETUGAS</h3>
+                                                            <span className="w-3.5 h-3.5 bg-red-600 rounded-full animate-ping" />
+                                                            <h3 className="font-black text-xs uppercase tracking-wider text-white">LOG AKTIVASI ADMIN & PETUGAS</h3>
                                                         </div>
-                                                        <span className="bg-red-600 text-white font-black text-[10px] px-3 py-1 rounded-full font-mono-custom shadow-md">
-                                                            TOTAL: {subAdminActivations.length} ID
-                                                        </span>
+                                                        <div className="bg-red-600 text-white font-black text-[11px] px-4 py-1.5 rounded-2xl font-mono-custom shadow-lg text-center">
+                                                            TOTAL: <span className="text-sm">{filteredLog.length}</span> ID
+                                                        </div>
                                                     </div>
-                                                    
-                                                    {subAdminActivations.length === 0 ? (
-                                                        <p className="text-[11px] font-bold text-red-200/70 text-center py-4">
-                                                            BELUM ADA ID YANG DIAKTIFKAN OLEH SUB-ADMIN
-                                                        </p>
+
+                                                    <div className="flex gap-2 overflow-x-auto pb-2 mb-3 scrollbar-hide">
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => setLogFilterOfficer('ALL')}
+                                                            className={`px-3.5 py-1.5 rounded-xl text-[10px] font-black uppercase whitespace-nowrap transition-all ${
+                                                                logFilterOfficer === 'ALL'
+                                                                    ? 'bg-red-600 text-white shadow-md'
+                                                                    : 'bg-zinc-900 text-zinc-400 border border-zinc-800'
+                                                            }`}
+                                                        >
+                                                            Semua Petugas
+                                                        </button>
+                                                        {officersList.map((officer, idx) => (
+                                                            <button
+                                                                type="button"
+                                                                key={idx}
+                                                                onClick={() => setLogFilterOfficer(officer)}
+                                                                className={`px-3.5 py-1.5 rounded-xl text-[10px] font-black uppercase whitespace-nowrap transition-all ${
+                                                                    logFilterOfficer.toLowerCase() === officer.toLowerCase()
+                                                                        ? 'bg-red-600 text-white shadow-md'
+                                                                        : 'bg-zinc-900 text-zinc-400 border border-zinc-800'
+                                                                }`}
+                                                            >
+                                                                {officer}
+                                                            </button>
+                                                        ))}
+                                                    </div>
+
+                                                    <div className="bg-red-950/40 border border-red-800/40 rounded-xl p-2.5 mb-4 flex items-center justify-between text-[10px] text-red-300 font-bold">
+                                                        <div className="flex items-center gap-1.5">
+                                                            <span>⏱️</span>
+                                                            <span>Reset Otomatis Jam 24:00 (Midnight)</span>
+                                                        </div>
+                                                        <div className="font-mono-custom text-white bg-red-900/60 px-2 py-0.5 rounded-lg border border-red-700/50">
+                                                            Sisa: {timeToMidnight}
+                                                        </div>
+                                                    </div>
+
+                                                    {filteredLog.length === 0 ? (
+                                                        <div className="bg-zinc-950 border border-dashed border-red-900/40 rounded-2xl p-6 text-center text-zinc-400 text-[11px] font-bold">
+                                                            Belum ada ID yang diaktifkan oleh <span className="text-red-400 font-black">{logFilterOfficer === 'ALL' ? 'Petugas Hari Ini' : logFilterOfficer}</span> setelah jam 00:00 WIB.
+                                                        </div>
                                                     ) : (
-                                                        <div className="space-y-3 max-h-[220px] overflow-y-auto pr-1 scrollbar-hide">
-                                                            {subAdminActivations.map(item => (
-                                                                <div key={item.id} className="bg-red-900/60 border border-red-500/30 p-3.5 rounded-2xl flex flex-col gap-1">
-                                                                    <div className="flex justify-between items-center">
-                                                                        <span className="text-xl font-black text-white font-mono-custom tracking-tighter">ID: {item.id}</span>
-                                                                        <span className="text-[8px] font-black bg-white text-red-950 px-2.5 py-0.5 rounded-md uppercase">
-                                                                            {item.petugas_name ? item.petugas_name : item.activated_by}
-                                                                        </span>
+                                                        <div className="space-y-3 max-h-[300px] overflow-y-auto pr-1 scrollbar-hide">
+                                                            {filteredLog.map((item, index) => {
+                                                                const seqNum = `#${index + 1}`;
+                                                                const officerDisp = item.petugas_name || item.activated_by || 'ADMIN';
+                                                                const pkgDisp = item.package || 'CSID PRO';
+                                                                const itemTime = item.activated_at || item.created_at;
+
+                                                                return (
+                                                                    <div key={item.id} className="bg-black border border-red-900/50 p-4 rounded-2xl flex flex-col gap-2 shadow-md hover:border-red-600/60 transition-all">
+                                                                        <div className="flex justify-between items-center">
+                                                                            <div className="flex items-center gap-2">
+                                                                                <span className="bg-red-950 text-red-400 font-mono-custom font-black text-[11px] px-2 py-0.5 rounded-lg border border-red-800/50">
+                                                                                    {seqNum}
+                                                                                </span>
+                                                                                <span className="text-2xl font-black text-white font-mono-custom tracking-tight">
+                                                                                    ID: {item.id}
+                                                                                </span>
+                                                                            </div>
+                                                                            <div className="flex items-center gap-1.5">
+                                                                                <span className="bg-red-900/40 border border-red-600/40 text-red-200 text-[9px] font-black px-2.5 py-1 rounded-xl uppercase">
+                                                                                    {officerDisp}
+                                                                                </span>
+                                                                                <span className="bg-white text-black text-[10px] font-black px-3 py-1 rounded-xl uppercase tracking-wider shadow-sm">
+                                                                                    {pkgDisp}
+                                                                                </span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div className="text-[10px] font-bold text-zinc-400 flex items-center gap-1.5 font-mono-custom">
+                                                                            <span className="text-xs">🕒</span>
+                                                                            <span>{formatDateFull(itemTime)}</span>
+                                                                        </div>
                                                                     </div>
-                                                                    <div className="text-[10px] font-bold text-white/90 flex items-center gap-1.5 mt-1 font-mono-custom">
-                                                                        <span>🕒</span>
-                                                                        <span>{formatDateFull(item.activated_at || item.created_at)}</span>
-                                                                    </div>
-                                                                </div>
-                                                            ))}
+                                                                );
+                                                            })}
                                                         </div>
                                                     )}
                                                 </div>
                                             );
                                         })()}
 
+                                        {/* SAKLAR MAINTENANCE GLOBAL */}
                                         <div className="glass-panel p-6 rounded-[2.5rem] border-white/5 space-y-4">
-                                            <h3 className="text-orange-500 font-black text-xs uppercase tracking-wider">🚨 KONTROL SISTEM & PEMELIHARAAN</h3>
+                                            <h3 className="text-orange-400 font-black text-xs uppercase tracking-wider">🚨 KONTROL SAKLAR MAINTENANCE (GLOBAL)</h3>
+                                            
                                             <div className="flex items-center justify-between bg-black/40 p-4 rounded-2xl border border-white/5">
                                                 <div>
-                                                    <p className="text-xs font-black text-white">MODE PEMELIHARAAN</p>
-                                                    <p className="text-[9px] text-slate-500 font-bold">Kunci akses user sementara</p>
+                                                    <p className="text-xs font-black text-white">SISTEM MAINTENANCE</p>
+                                                    <p className="text-[9px] text-slate-500 font-bold">Kunci total seluruh akses aplikasi</p>
                                                 </div>
                                                 <button 
                                                     type="button" 
                                                     onClick={async () => {
                                                         if (!db) return;
                                                         const nextState = !isMaintenance;
-                                                        await db.collection('artifacts').doc(APP_ID).collection('public').doc('data').collection('csid_pro_settings').doc('main').set({ isMaintenance: nextState }, { merge: true });
-                                                        showMsg(nextState ? "MAINTENANCE DIAKTIFKAN" : "MAINTENANCE DIMATIKAN");
+                                                        await db.collection('artifacts').doc(APP_ID).collection('public').doc('data').collection(COLLECTION_SETTINGS).doc('main').set({ 
+                                                            isMaintenance: nextState
+                                                        }, { merge: true });
+                                                        showMsg(nextState ? "SISTEM MAINTENANCE ON" : "SISTEM MAINTENANCE OFF");
                                                     }}
                                                     className={`px-5 py-2.5 rounded-xl text-[10px] font-black uppercase transition-all ${isMaintenance ? 'bg-red-600 text-white shadow-lg shadow-red-600/30' : 'bg-slate-800 text-slate-400'}`}
                                                 >
@@ -1034,10 +1134,11 @@
                                                 </button>
                                             </div>
 
-                                            <div className="bg-black/40 p-4 rounded-2xl border border-white/5 space-y-3">
+                                            {/* LIMIT HARIAN */}
+                                            <div className="bg-black/40 p-4 rounded-2xl border border-white/5 space-y-3 mt-4">
                                                 <div className="flex justify-between items-center">
                                                     <p className="text-xs font-black text-white">LIMIT PENCARIAN HARIAN</p>
-                                                    <span className="text-[10px] text-orange-400 font-mono-custom font-bold">{dailyLimit === 0 ? 'NOLIMIT' : `${dailyLimit} CARI/HARI`}</span>
+                                                    <span className="text-[10px] text-orange-400 font-mono-custom font-bold">{dailyLimit === 0 ? 'UNLIMITED' : `${dailyLimit} CARI/HARI`}</span>
                                                 </div>
                                                 <div className="flex gap-2">
                                                     <input 
@@ -1064,7 +1165,7 @@
                                                     type="button" 
                                                     onClick={async () => {
                                                         if (!db) return;
-                                                        await db.collection('artifacts').doc(APP_ID).collection('public').doc('data').collection('csid_pro_settings').doc('main').set({ 
+                                                        await db.collection('artifacts').doc(APP_ID).collection('public').doc('data').collection(COLLECTION_SETTINGS).doc('main').set({ 
                                                             dailyLimit: Number(dailyLimit),
                                                             customLimitMsg: customLimitMsg.trim()
                                                         }, { merge: true });
@@ -1077,19 +1178,20 @@
                                             </div>
                                         </div>
 
+                                        {/* KONTROL SERVER API */}
                                         <div className="glass-panel p-6 rounded-[2.5rem] border-white/5 space-y-3">
-                                            <h3 className="text-orange-500 font-black text-xs uppercase tracking-wider">🔌 PENGATURAN API SERVER & DYNAMIC LINK</h3>
+                                            <h3 className="text-orange-400 font-black text-xs uppercase tracking-wider">🔌 KONTROL SERVER API</h3>
                                             
                                             <div>
-                                                <p className="text-[9px] text-slate-400 font-bold mb-1">URL API UTAMA 1:</p>
+                                                <p className="text-[9px] text-slate-400 font-bold mb-1">URL API SERVER 1:</p>
                                                 <input type="text" value={customApi1} onChange={e => setCustomApi1(e.target.value)} className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-2.5 text-[10px] text-white font-mono-custom outline-none" />
                                             </div>
                                             <div>
-                                                <p className="text-[9px] text-slate-400 font-bold mb-1">URL API UTAMA 2:</p>
+                                                <p className="text-[9px] text-slate-400 font-bold mb-1">URL API SERVER 2:</p>
                                                 <input type="text" value={customApi2} onChange={e => setCustomApi2(e.target.value)} className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-2.5 text-[10px] text-white font-mono-custom outline-none" />
                                             </div>
                                             <div>
-                                                <p className="text-[9px] text-slate-400 font-bold mb-1">URL API UTAMA 3:</p>
+                                                <p className="text-[9px] text-slate-400 font-bold mb-1">URL API SERVER 3:</p>
                                                 <input type="text" value={customApi3} onChange={e => setCustomApi3(e.target.value)} className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-2.5 text-[10px] text-white font-mono-custom outline-none" />
                                             </div>
 
@@ -1097,7 +1199,7 @@
                                                 type="button" 
                                                 onClick={async () => {
                                                     if (!db) return;
-                                                    await db.collection('artifacts').doc(APP_ID).collection('public').doc('data').collection('csid_pro_settings').doc('main').set({
+                                                    await db.collection('artifacts').doc(APP_ID).collection('public').doc('data').collection(COLLECTION_SETTINGS).doc('main').set({
                                                         api1: customApi1,
                                                         api2: customApi2,
                                                         api3: customApi3
@@ -1110,16 +1212,21 @@
                                             </button>
                                         </div>
 
+                                        {/* KONTROL AKUN ADMIN 1-10 */}
                                         <div className="glass-panel p-6 rounded-[2.5rem] border-white/5 space-y-4">
-                                            <h3 className="text-orange-500 font-black text-xs uppercase tracking-wider">🔑 KONTROL PIN & PETUGAS (ADMIN 1 - 10)</h3>
+                                            <h3 className="text-orange-400 font-black text-xs uppercase tracking-wider">🔑 KONTROL AKUN ADMIN UTAMA 1 & ADMIN KEDUA 2 (ADMIN 1 - 10)</h3>
                                             
                                             <div className="space-y-4 max-h-[350px] overflow-y-auto pr-1 scrollbar-hide">
                                                 {adminConfigs.map((cfg, idx) => (
                                                     <div key={idx} className="bg-black/40 p-4 rounded-2xl border border-white/5 space-y-2">
-                                                        <p className="text-[10px] font-black text-orange-400 uppercase">ADMIN {idx + 1}</p>
+                                                        <div className="flex justify-between items-center">
+                                                            <p className="text-[10px] font-black text-orange-400 uppercase">
+                                                                {idx === 0 ? '👑 ADMIN UTAMA 1' : (idx === 1 ? '⭐ ADMIN KEDUA 2' : `PETUGAS ADMIN ${idx + 1}`)}
+                                                            </p>
+                                                        </div>
                                                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                                                             <div>
-                                                                <p className="text-[8px] text-slate-400 font-bold uppercase mb-1">PIN / KODE AKSES:</p>
+                                                                <p className="text-[8px] text-slate-400 font-bold uppercase mb-1">PIN AKSES LOG IN:</p>
                                                                 <input 
                                                                     type="text" 
                                                                     value={cfg.pin} 
@@ -1159,39 +1266,41 @@
                                                 type="button" 
                                                 onClick={async () => {
                                                     if (!db) return;
-                                                    await db.collection('artifacts').doc(APP_ID).collection('public').doc('data').collection('csid_pro_settings').doc('main').set({ adminConfigs }, { merge: true });
+                                                    await db.collection('artifacts').doc(APP_ID).collection('public').doc('data').collection(COLLECTION_SETTINGS).doc('main').set({ adminConfigs }, { merge: true });
                                                     showMsg("SEMUA DATA ADMIN 1-10 DIPERBARUI");
                                                 }}
                                                 className="w-full bg-emerald-600 text-white py-3.5 rounded-xl font-black text-[10px] uppercase shadow-lg"
                                             >
-                                                UPDATE SEMUA DATA ADMIN & PETUGAS
+                                                UPDATE SEMUA PETUGAS ADMIN
                                             </button>
                                         </div>
 
+                                        {/* RUNNING TEXT */}
                                         <div className="glass-panel p-6 rounded-[2.5rem] border-white/5">
                                             <textarea value={broadcast} onChange={e => setBroadcast(e.target.value)} className="w-full bg-black/50 border border-white/10 rounded-2xl p-5 text-xs text-white outline-none h-24 mb-4 font-mono-custom focus:border-orange-500/30 transition-all" />
-                                            <button type="button" onClick={async () => { if (!db) return; await db.collection('artifacts').doc(APP_ID).collection('public').doc('data').collection('csid_pro_settings').doc('main').set({ text: broadcast }, { merge: true }); showMsg("DIPERBARUI"); }} className="w-full bg-orange-600 text-white py-4 rounded-2xl font-black text-xs uppercase shadow-xl hover:bg-orange-700 outline-none">UPDATE RUNNING TEXT</button>
+                                            <button type="button" onClick={async () => { if (!db) return; await db.collection('artifacts').doc(APP_ID).collection('public').doc('data').collection(COLLECTION_SETTINGS).doc('main').set({ text: broadcast }, { merge: true }); showMsg("TEXT DIPERBARUI"); }} className="w-full bg-orange-600 text-white py-4 rounded-2xl font-black text-xs uppercase shadow-xl outline-none">UPDATE RUNNING TEXT</button>
                                         </div>
                                     </>
                                 )}
 
-                                <div className="flex gap-2">
+                                {/* PENCARIAN & MANAJEMEN PIN USER */}
+                                <div className="flex gap-3">
                                     <input 
                                         type="text" 
                                         placeholder="MASUKKAN / CARI ID PIN..." 
                                         value={searchTerm} 
                                         onChange={e => setSearchTerm(e.target.value)} 
-                                        className="flex-1 bg-slate-900/50 border border-white/5 rounded-2xl px-6 py-5 text-xs text-white outline-none font-bold" 
+                                        className="flex-1 bg-[#0d121f] border border-white/10 rounded-2xl px-6 py-4 text-xs text-white outline-none font-bold placeholder:text-slate-500" 
                                     />
                                     {isAdminRole(userRole) && (
-                                        <button type="button" onClick={() => setShowAddPinModal(true)} className="bg-emerald-600 text-white px-6 rounded-2xl shadow-lg active:scale-95 outline-none"><Icons.Plus /></button>
+                                        <button type="button" onClick={() => setShowAddPinModal(true)} className="w-14 h-14 bg-[#00a86b] text-white rounded-2xl shadow-lg active:scale-95 outline-none flex items-center justify-center shrink-0"><Icons.Plus cls="w-7 h-7" /></button>
                                     )}
                                 </div>
 
-                                {userRole.startsWith('admin') && searchTerm.trim() === '' ? (
-                                    <div className="glass-panel p-8 rounded-[2.5rem] border-white/5 text-center my-6">
-                                        <p className="text-orange-500 font-black text-sm uppercase tracking-wider mb-2">PENCARIAN ID PIN</p>
-                                        <p className="text-slate-400 text-xs font-bold leading-relaxed">
+                                {searchTerm.trim() === '' ? (
+                                    <div className="bg-[#080b11] border border-white/10 p-8 rounded-[2.5rem] text-center my-4 shadow-xl">
+                                        <p className="text-orange-400 font-black text-base uppercase tracking-wider mb-3">PENCARIAN ID PIN</p>
+                                        <p className="text-slate-300 text-xs font-semibold leading-relaxed max-w-[280px] mx-auto">
                                             Ketik ID PIN user pada kolom pencarian di atas untuk memproses Aktivasi atau Perpanjangan Masa Aktif.
                                         </p>
                                     </div>
@@ -1199,16 +1308,44 @@
                                     <div className="space-y-4">
                                         {managedPins.filter(p => p.id.includes(searchTerm)).map(p => {
                                             const isUserActive = !p.isBlocked && (p.expiry === 'UNLIMITED' || p.expiry > Date.now());
+                                            
+                                            if (userRole !== 'master') {
+                                                return (
+                                                    <div key={p.id} className="bg-[#0b0c0e] border border-white/10 p-6 rounded-[2.5rem] shadow-2xl relative overflow-hidden">
+                                                        <div className="flex justify-between items-start mb-1">
+                                                            <p className="text-5xl font-black text-white font-mono-custom tracking-tighter">{p.id}</p>
+                                                            <span className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-wider ${isUserActive ? 'bg-emerald-950/60 text-emerald-400 border border-emerald-800/40' : 'bg-red-950/60 text-red-400 border border-red-800/40'}`}>
+                                                                {isUserActive ? 'ACTIVE' : 'INACTIVE'}
+                                                            </span>
+                                                        </div>
+                                                        <p className="text-red-500 font-black text-xs uppercase tracking-wide mb-1">
+                                                            EXP: {p.expiry === 'UNLIMITED' ? 'PERMANEN' : new Date(p.expiry).toLocaleDateString('id-ID')}
+                                                        </p>
+                                                        <p className="text-[10px] text-slate-500 font-mono-custom font-bold uppercase mb-6">
+                                                            DEVICE: {p.deviceId ? p.deviceId.substring(0,12)+'...' : 'BEBAS HP'}
+                                                        </p>
+
+                                                        <button 
+                                                            type="button" 
+                                                            onClick={() => setDurationModal(p)} 
+                                                            className="w-full bg-[#3a1d0e]/90 hover:bg-[#4a2613] border border-[#6b3518] text-[#f97316] font-black py-4 rounded-2xl text-xs uppercase tracking-widest active:scale-98 transition-all shadow-lg"
+                                                        >
+                                                            PERPANJANG MASA AKTIF
+                                                        </button>
+                                                    </div>
+                                                );
+                                            }
+
                                             return (
                                                 <div key={p.id} className="glass-panel p-6 rounded-[2.5rem] border-white/5 shadow-lg relative overflow-hidden">
                                                     <div className="flex justify-between items-start mb-2">
                                                         <div>
                                                             <p className="text-4xl font-black text-white font-mono-custom tracking-tighter">{p.id}</p>
-                                                            <p className={`text-[11px] font-bold uppercase mt-1 ${isUserActive ? 'text-orange-500' : 'text-red-500'}`}>
+                                                            <p className={`text-[11px] font-bold uppercase mt-1 ${isUserActive ? 'text-orange-400' : 'text-red-500'}`}>
                                                                 EXP: {p.expiry === 'UNLIMITED' ? 'NOLIMIT' : new Date(p.expiry).toLocaleDateString()}
                                                             </p>
                                                             <p className="text-[9px] text-slate-500 font-bold mt-1 uppercase">
-                                                                DEVICE: {p.deviceId ? p.deviceId.substring(0,10)+'...' : 'HP BEBAS'}
+                                                                DEVICE: {p.deviceId ? p.deviceId.substring(0,10)+'...' : 'BEBAS HP'}
                                                             </p>
                                                             {p.petugas_name && (
                                                                 <p className="text-[9px] text-emerald-400 font-bold mt-1 uppercase">
@@ -1222,32 +1359,30 @@
                                                     </div>
                                                     
                                                     <div className="flex gap-2 mt-6">
-                                                        {userRole === 'master' && (
-                                                            <button 
-                                                                type="button" 
-                                                                onClick={async () => { 
-                                                                    if (!db) return;
-                                                                    await db.collection('artifacts').doc(APP_ID).collection('public').doc('data').collection('csid_pro_pins').doc(p.id).update({ isBlocked: !p.isBlocked }); 
-                                                                    showMsg("STATUS BLOKIR DIPERBARUI"); 
-                                                                }} 
-                                                                className="flex-1 bg-slate-900 border border-white/5 text-white py-4 rounded-2xl text-[9px] font-black uppercase outline-none"
-                                                            >
-                                                                {p.isBlocked ? 'BATAL BLOK' : 'BLOKIR'}
-                                                            </button>
-                                                        )}
+                                                        <button 
+                                                            type="button" 
+                                                            onClick={async () => { 
+                                                                if (!db) return;
+                                                                await db.collection('artifacts').doc(APP_ID).collection('public').doc('data').collection(COLLECTION_PINS).doc(p.id).update({ isBlocked: !p.isBlocked }); 
+                                                                showMsg("STATUS BLOKIR DIPERBARUI"); 
+                                                            }} 
+                                                            className="flex-1 bg-slate-900 border border-white/5 text-white py-4 rounded-2xl text-[9px] font-black uppercase outline-none"
+                                                        >
+                                                            {p.isBlocked ? 'BATAL BLOK' : 'BLOKIR'}
+                                                        </button>
 
-                                                        {userRole.startsWith('admin') && p.isBlocked && (
+                                                        {(p.isBlocked || (p.expiry !== 'UNLIMITED' && p.expiry <= Date.now())) && (
                                                             <button 
                                                                 type="button" 
                                                                 onClick={async () => { 
                                                                     if (!db) return;
-                                                                    await db.collection('artifacts').doc(APP_ID).collection('public').doc('data').collection('csid_pro_pins').doc(p.id).update({ 
+                                                                    await db.collection('artifacts').doc(APP_ID).collection('public').doc('data').collection(COLLECTION_PINS).doc(p.id).update({ 
                                                                         isBlocked: false,
                                                                         activated_by: userRole,
                                                                         petugas_name: currentAdminName,
                                                                         activated_at: Date.now()
                                                                     }); 
-                                                                    showMsg("ID BERHASIL DIAKTIFKAN"); 
+                                                                    showMsg(`ID BERHASIL DIAKTIFKAN`); 
                                                                 }} 
                                                                 className="flex-1 bg-emerald-600/20 border border-emerald-500/30 text-emerald-400 py-4 rounded-2xl text-[9px] font-black uppercase outline-none"
                                                             >
@@ -1263,48 +1398,44 @@
                                                             PERPANJANG MASA AKTIF
                                                         </button>
                                                         
-                                                        {userRole === 'master' && (
-                                                            <button 
-                                                                type="button" 
-                                                                onClick={() => { 
-                                                                    setConfirmModal({ 
-                                                                        message: `Reset link HP PIN ${p.id}?`, 
-                                                                        onConfirm: async () => { 
-                                                                            if (db) await db.collection('artifacts').doc(APP_ID).collection('public').doc('data').collection('csid_pro_pins').doc(p.id).update({ deviceId: null }); 
-                                                                            showMsg("RESET HP BERHASIL"); 
-                                                                            setConfirmModal(null); 
-                                                                        } 
-                                                                    }); 
-                                                                }} 
-                                                                className="flex-1 bg-slate-900 border border-white/5 text-white py-4 rounded-2xl text-[9px] font-black uppercase text-blue-400 outline-none"
-                                                            >
-                                                                RESET HW
-                                                            </button>
-                                                        )}
-                                                    </div>
-
-                                                    {userRole === 'master' && (
                                                         <button 
                                                             type="button" 
                                                             onClick={() => { 
                                                                 setConfirmModal({ 
-                                                                    message: `Hapus PIN ${p.id}?`, 
+                                                                    message: `Reset link HP ID ${p.id}?`, 
                                                                     onConfirm: async () => { 
-                                                                        if (db) await db.collection('artifacts').doc(APP_ID).collection('public').doc('data').collection('csid_pro_pins').doc(p.id).delete(); 
-                                                                        showMsg("PIN DIHAPUS"); 
+                                                                        if (db) await db.collection('artifacts').doc(APP_ID).collection('public').doc('data').collection(COLLECTION_PINS).doc(p.id).update({ deviceId: null }); 
+                                                                        showMsg("RESET HP BERHASIL"); 
                                                                         setConfirmModal(null); 
                                                                     } 
                                                                 }); 
                                                             }} 
-                                                            className="w-full mt-2 bg-red-600/5 text-red-500 py-3.5 rounded-2xl text-[9px] font-black uppercase flex items-center justify-center gap-2 border border-red-600/10 font-bold outline-none"
+                                                            className="flex-1 bg-slate-900 border border-white/5 text-white py-4 rounded-2xl text-[9px] font-black uppercase text-blue-400 outline-none"
                                                         >
-                                                            HAPUS PERMANEN
+                                                            RESET HW
                                                         </button>
-                                                    )}
+                                                    </div>
+
+                                                    <button 
+                                                        type="button" 
+                                                        onClick={() => { 
+                                                            setConfirmModal({ 
+                                                                message: `Hapus PIN ${p.id}?`, 
+                                                                onConfirm: async () => { 
+                                                                    if (db) await db.collection('artifacts').doc(APP_ID).collection('public').doc('data').collection(COLLECTION_PINS).doc(p.id).delete(); 
+                                                                    showMsg("PIN DIHAPUS"); 
+                                                                    setConfirmModal(null); 
+                                                                } 
+                                                            }); 
+                                                        }} 
+                                                        className="w-full mt-2 bg-red-600/10 text-red-500 py-3.5 rounded-2xl text-[9px] font-black uppercase flex items-center justify-center gap-2 border border-red-600/20 outline-none"
+                                                    >
+                                                        HAPUS PERMANEN
+                                                    </button>
                                                 </div>
                                             );
                                         })}
-                                        {userRole.startsWith('admin') && managedPins.filter(p => p.id.includes(searchTerm)).length === 0 && (
+                                        {managedPins.filter(p => p.id.includes(searchTerm)).length === 0 && (
                                             <div className="glass-panel p-6 rounded-[2.5rem] border-white/5 text-center text-slate-400 text-xs font-bold">
                                                 ID PIN "{searchTerm}" TIDAK DITEMUKAN
                                             </div>
@@ -1315,53 +1446,127 @@
                         </div>
                     )}
 
-                    {/* Camera Scanner View */}
+                    {}
                     {cameraActive && (
                         <div className="absolute inset-0 bg-black z-[2000] flex flex-col overflow-hidden">
                             <video ref={videoRef} autoPlay playsInline className="absolute inset-0 w-full h-full object-cover z-0" />
                             <canvas ref={canvasRef} className="hidden" />
-                            <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10"><div className="w-80 h-40 scan-guide rounded-3xl" /><div className="absolute top-[18%] text-center text-[10px] font-black uppercase tracking-[0.2em] text-orange-500 bg-black/75 px-5 py-2.5 rounded-full border border-orange-500/20 shadow-lg">POSISIKAN TEKS DI DALAM KOTAK</div></div>
-                            <div className="absolute bottom-8 left-6 right-6 z-20 flex items-center justify-between gap-4 bg-black/45 backdrop-blur-md p-5 rounded-[2rem] border border-white/10 shadow-2xl"><button type="button" onClick={stopCamera} className="p-5 bg-slate-900/80 rounded-2xl text-white outline-none"><Icons.X /></button><button type="button" onClick={captureAndProcess} disabled={isScanning} className="flex-1 bg-orange-600/95 text-white py-5 rounded-2xl font-black uppercase flex items-center justify-center gap-3 active:scale-95 transition-all shadow-xl shadow-orange-600/20 outline-none">{isScanning ? <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin" /> : <Icons.Camera cls="w-5 h-5" />}{isScanning ? 'MENDETEKSI...' : 'AMBIL FOTO'}</button></div>
+                            <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10"><div className="w-80 h-40 scan-guide rounded-3xl" /><div className="absolute top-[18%] text-center text-[10px] font-black uppercase tracking-[0.2em] text-orange-400 bg-black/75 px-5 py-2.5 rounded-full border border-orange-500/20 shadow-lg">POSISIKAN PLAT NOMOR DI DALAM KOTAK</div></div>
+                            <div className="absolute bottom-8 left-6 right-6 z-20 flex items-center justify-between gap-4 bg-black/45 backdrop-blur-md p-5 rounded-[2rem] border border-white/10 shadow-2xl"><button type="button" onClick={stopCamera} className="p-5 bg-slate-900/80 rounded-2xl text-white outline-none"><Icons.X /></button><button type="button" onClick={captureAndProcess} disabled={isScanning} className="flex-1 bg-orange-600 text-white font-black py-5 rounded-2xl uppercase flex items-center justify-center gap-3 active:scale-95 transition-all shadow-xl shadow-orange-600/20 outline-none">{isScanning ? <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin" /> : <Icons.Camera cls="w-5 h-5 text-white" />}{isScanning ? 'MENDETEKSI...' : 'AMBIL FOTO PLAT'}</button></div>
                         </div>
                     )}
 
-                    {/* Pin Modal */}
+                    {/* MODAL INPUT PIN MASTER / ADMIN OTORISASI */}
                     {showPinModal && (
-                        <div className="absolute inset-0 bg-black/95 backdrop-blur-3xl z-[2000] flex items-center justify-center p-8"><div className="glass-panel w-full max-w-[340px] rounded-[4rem] border-white/10 p-12 text-center shadow-2xl"><h3 className="text-orange-500 font-black text-[12px] uppercase mb-10 tracking-[0.4em] opacity-80">MASTER ACCESS</h3><input autoFocus type="password" value={pinInput} onChange={e => setPinInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && handleMasterLogin()} placeholder="PIN" className="w-full bg-black/50 border-2 border-orange-600/20 rounded-3xl p-6 text-center text-5xl font-black text-white outline-none mb-10 font-mono-custom tracking-tighter shadow-inner" /><div className="flex gap-4"><button type="button" onClick={() => setShowPinModal(false)} className="flex-1 py-5 bg-slate-900 rounded-[1.5rem] font-black text-[11px] uppercase tracking-widest text-slate-400 outline-none">BATAL</button><button type="button" onClick={handleMasterLogin} className="flex-1 py-5 bg-white text-black rounded-[1.5rem] font-black text-[11px] uppercase tracking-widest shadow-lg active:scale-95 outline-none">OTORISASI</button></div></div></div>
+                        <div className="absolute inset-0 bg-black/95 backdrop-blur-3xl z-[2000] flex items-center justify-center p-8">
+                            <div className="glass-panel w-full max-w-[340px] rounded-[3.5rem] border-white/10 p-10 text-center shadow-2xl">
+                                <h3 className="text-orange-300 font-black text-[12px] uppercase mb-8 tracking-[0.3em] opacity-90">ADMIN OTORISASI</h3>
+                                <input autoFocus type="password" value={pinInput} onChange={e => setPinInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && handleMasterLogin()} placeholder="PIN" className="w-full bg-[#fed7aa] border-none rounded-3xl p-5 text-center text-4xl font-black text-black outline-none mb-8 font-mono-custom tracking-tighter shadow-inner placeholder:text-orange-400" />
+                                <div className="flex gap-4">
+                                    <button type="button" onClick={() => setShowPinModal(false)} className="flex-1 py-4 bg-[#131722] text-white rounded-2xl font-black text-[11px] uppercase tracking-widest outline-none">BATAL</button>
+                                    <button type="button" onClick={handleMasterLogin} className="flex-1 py-4 bg-orange-600 text-white rounded-2xl font-black text-[11px] uppercase tracking-widest shadow-lg active:scale-95 outline-none">MASUK</button>
+                                </div>
+                            </div>
+                        </div>
                     )}
 
-                    {/* Confirm Modal */}
+                    {/* MODAL KONFIRMASI */}
                     {confirmModal && (
-                        <div className="absolute inset-0 bg-black/80 backdrop-blur-md z-[9999] flex items-center justify-center p-6"><div className="glass-panel w-full max-w-[320px] rounded-[2.5rem] border-white/10 p-10 text-center shadow-2xl"><p className="text-white font-black text-xl mb-8 leading-tight tracking-tight">{confirmModal.message}</p><div className="flex gap-4"><button type="button" onClick={() => setConfirmModal(null)} className="flex-1 py-4 bg-slate-900 rounded-2xl font-black text-[11px] uppercase tracking-widest outline-none">BATAL</button><button type="button" onClick={confirmModal.onConfirm} className="flex-1 py-4 bg-red-600 rounded-2xl font-black text-[11px] uppercase tracking-widest text-white shadow-lg shadow-red-600/20 outline-none">YA, PROSES</button></div></div></div>
+                        <div className="absolute inset-0 bg-black/80 backdrop-blur-md z-[9999] flex items-center justify-center p-6">
+                            <div className="glass-panel w-full max-w-[320px] rounded-[2.5rem] border-white/10 p-10 text-center shadow-2xl">
+                                <p className="text-white font-black text-xl mb-8 leading-tight tracking-tight">{confirmModal.message}</p>
+                                <div className="flex gap-4">
+                                    <button type="button" onClick={() => setConfirmModal(null)} className="flex-1 py-4 bg-slate-900 rounded-2xl font-black text-[11px] uppercase tracking-widest outline-none">BATAL</button>
+                                    <button type="button" onClick={confirmModal.onConfirm} className="flex-1 py-4 bg-red-600 rounded-2xl font-black text-[11px] uppercase tracking-widest text-white shadow-lg shadow-red-600/20 outline-none">YA, PROSES</button>
+                                </div>
+                            </div>
+                        </div>
                     )}
 
-                    {/* Add Pin Modal */}
+                    {/* MODAL TAMBAH PIN BARU */}
                     {showAddPinModal && (
-                        <div className="absolute inset-0 bg-black/90 backdrop-blur-2xl z-[1000] flex items-center justify-center p-6"><div className="glass-panel w-full max-w-[380px] rounded-[3rem] p-10 border-white/10 shadow-2xl flex flex-col"><p className="text-white font-black uppercase text-xs mb-6 text-center tracking-widest opacity-60">TAMBAH PIN BARU</p><input type="number" value={newPinInput} onChange={e => setNewPinInput(e.target.value)} placeholder="000000" className="w-full bg-black border border-white/5 rounded-3xl p-6 text-white font-black text-4xl text-center mb-6 font-mono-custom tracking-widest" /><div className="grid grid-cols-3 gap-2 mb-8 max-h-[160px] overflow-y-auto pr-1 scrollbar-hide border border-white/5 p-2 rounded-2xl bg-black/30">{durationOptions.map(opt => <button type="button" key={opt.l} onClick={() => setNewPinDuration(opt.v)} className={`py-4 rounded-xl text-[9px] font-black uppercase transition-all ${newPinDuration === opt.v ? 'bg-orange-600 text-white' : 'bg-slate-900 text-slate-500'}`}>{opt.l}</button>)}</div><div className="flex gap-3"><button type="button" onClick={() => setShowAddPinModal(false)} className="flex-1 py-5 bg-slate-900 rounded-2xl font-black text-[11px] uppercase outline-none">BATAL</button><button type="button" onClick={async () => { if (!db) return; await db.collection('artifacts').doc(APP_ID).collection('public').doc('data').collection('csid_pro_pins').doc(newPinInput).set({ expiry: newPinDuration === 'UNLIMITED' ? 'UNLIMITED' : Date.now() + newPinDuration, isBlocked: false, role: 'user', deviceId: null, created_by: userRole, activated_by: userRole, petugas_name: currentAdminName, activated_at: Date.now() }); setShowAddPinModal(false); setNewPinInput(''); showMsg("PIN BERHASIL DIBUAT"); }} className="flex-1 py-5 bg-orange-600 rounded-2xl font-black text-[11px] uppercase shadow-lg shadow-orange-600/20 outline-none">SIMPAN PIN</button></div></div></div>
+                        <div className="absolute inset-0 bg-black/90 backdrop-blur-2xl z-[1000] flex items-center justify-center p-6">
+                            <div className="glass-panel w-full max-w-[380px] rounded-[3rem] p-10 border-white/10 shadow-2xl flex flex-col">
+                                <p className="text-white font-black uppercase text-xs mb-6 text-center tracking-widest opacity-60">TAMBAH ID PIN USER BARU</p>
+                                <input type="number" value={newPinInput} onChange={e => setNewPinInput(e.target.value)} placeholder="000000" className="w-full bg-black border border-white/5 rounded-3xl p-6 text-white font-black text-4xl text-center mb-6 font-mono-custom tracking-widest" />
+                                <div className="grid grid-cols-3 gap-2 mb-8 max-h-[160px] overflow-y-auto pr-1 scrollbar-hide border border-white/5 p-2 rounded-2xl bg-black/30">
+                                    {durationOptions.map(opt => (
+                                        <button type="button" key={opt.l} onClick={() => setNewPinDuration(opt.v)} className={`py-4 rounded-xl text-[9px] font-black uppercase transition-all ${newPinDuration === opt.v ? 'bg-orange-600 text-white font-black' : 'bg-slate-900 text-slate-500'}`}>{opt.l}</button>
+                                    ))}
+                                </div>
+                                <div className="flex gap-3">
+                                    <button type="button" onClick={() => setShowAddPinModal(false)} className="flex-1 py-5 bg-slate-900 rounded-2xl font-black text-[11px] uppercase outline-none">BATAL</button>
+                                    <button type="button" onClick={async () => {
+                                        if (!db || !newPinInput) return;
+                                        await db.collection('artifacts').doc(APP_ID).collection('public').doc('data').collection(COLLECTION_PINS).doc(newPinInput).set({
+                                            expiry: newPinDuration === 'UNLIMITED' ? 'UNLIMITED' : Date.now() + newPinDuration,
+                                            isBlocked: false,
+                                            role: 'user',
+                                            deviceId: null,
+                                            created_by: userRole,
+                                            activated_by: userRole,
+                                            petugas_name: currentAdminName,
+                                            activated_at: Date.now()
+                                        });
+                                        setShowAddPinModal(false);
+                                        setNewPinInput('');
+                                        showMsg("PIN BERHASIL DIBUAT");
+                                    }} className="flex-1 py-5 bg-orange-600 text-white rounded-2xl font-black text-[11px] uppercase shadow-lg shadow-orange-600/20 outline-none">SIMPAN PIN</button>
+                                </div>
+                            </div>
+                        </div>
                     )}
 
-                    {/* Duration Modal */}
+                    {/* MODAL PERPANJANG MASA AKTIF */}
                     {durationModal && (
-                        <div className="absolute inset-0 bg-black/90 backdrop-blur-xl z-[500] flex items-center justify-center p-6"><div className="glass-panel w-full max-w-[360px] rounded-[3rem] p-10 border-white/10 shadow-2xl flex flex-col"><p className="text-white font-black uppercase text-xs mb-8 text-center tracking-[0.2em]">PERPANJANG MASA AKTIF: {durationModal.id}</p><div className="grid grid-cols-2 gap-3 max-h-[300px] overflow-y-auto pr-2 scrollbar-hide">{durationOptions.map(opt => <button type="button" key={opt.l} onClick={async () => { if (!db) return; let currentExp = (durationModal.expiry === 'UNLIMITED' || durationModal.expiry < Date.now()) ? Date.now() : durationModal.expiry; await db.collection('artifacts').doc(APP_ID).collection('public').doc('data').collection('csid_pro_pins').doc(durationModal.id).update({ expiry: opt.v === 'UNLIMITED' ? 'UNLIMITED' : currentExp + opt.v, activated_by: userRole, petugas_name: currentAdminName, activated_at: Date.now() }); setDurationModal(null); showMsg("MASA AKTIF DITAMBAH"); }} className="bg-slate-900 border border-white/5 text-white py-4 rounded-2xl text-[10px] font-black uppercase hover:bg-orange-600 transition-colors outline-none">{opt.l}</button>)}</div><button type="button" onClick={() => setDurationModal(null)} className="w-full mt-8 py-4 text-slate-500 font-black text-[11px] uppercase tracking-widest outline-none">DISMISS</button></div></div>
+                        <div className="absolute inset-0 bg-black/90 backdrop-blur-xl z-[500] flex items-center justify-center p-6">
+                            <div className="glass-panel w-full max-w-[360px] rounded-[3rem] p-10 border-white/10 shadow-2xl flex flex-col">
+                                <p className="text-white font-black uppercase text-xs mb-8 text-center tracking-[0.2em]">PERPANJANG MASA AKTIF: {durationModal.id}</p>
+                                <div className="grid grid-cols-2 gap-3 max-h-[300px] overflow-y-auto pr-2 scrollbar-hide">
+                                    {durationOptions.map(opt => (
+                                        <button 
+                                            type="button" 
+                                            key={opt.l} 
+                                            onClick={async () => { 
+                                                if (!db) return; 
+                                                let currentExp = (durationModal.expiry === 'UNLIMITED' || durationModal.expiry < Date.now()) ? Date.now() : durationModal.expiry; 
+                                                await db.collection('artifacts').doc(APP_ID).collection('public').doc('data').collection(COLLECTION_PINS).doc(durationModal.id).update({ 
+                                                    expiry: opt.v === 'UNLIMITED' ? 'UNLIMITED' : currentExp + opt.v, 
+                                                    activated_by: userRole, 
+                                                    petugas_name: currentAdminName, 
+                                                    activated_at: Date.now() 
+                                                }); 
+                                                setDurationModal(null); 
+                                                showMsg(`MASA AKTIF DITAMBAH OLEH ${currentAdminName.toUpperCase()}`); 
+                                            }} 
+                                            className="bg-slate-900 border border-white/5 text-white py-4 rounded-2xl text-[10px] font-black uppercase hover:bg-orange-600 transition-colors outline-none"
+                                        >
+                                            {opt.l}
+                                        </button>
+                                    ))}
+                                </div>
+                                <button type="button" onClick={() => setDurationModal(null)} className="w-full mt-8 py-4 text-slate-500 font-black text-[11px] uppercase tracking-widest outline-none">DISMISS</button>
+                            </div>
+                        </div>
                     )}
 
-                    {/* Notification Toast */}
+                    {/* TOAST NOTIFIKASI */}
                     {notification && (
-                        <div className="fixed inset-x-6 top-6 z-[99999] flex items-center justify-center pointer-events-none">
-                            <div className="bg-white text-black px-6 py-4 rounded-2xl font-black text-xs shadow-2xl animate-bounce uppercase border-2 border-slate-200 text-center max-w-[360px] leading-relaxed tracking-wider pointer-events-auto break-words">
+                        <div className="fixed top-12 left-1/2 -translate-x-1/2 z-[9999] flex items-center justify-center p-4 pointer-events-none w-full">
+                            <div className="bg-white text-black px-8 py-4 rounded-[2rem] font-black text-xs shadow-[0_10px_40px_rgba(0,0,0,0.8)] animate-bounce uppercase border-2 border-slate-200 text-center max-w-[90vw] leading-relaxed tracking-wider pointer-events-auto">
                                 {notification}
                             </div>
                         </div>
                     )}
                     
-                    {/* Loader dengan Garis Horizontal Warna Orange */}
+                    {/* INDIKATOR LOADING */}
                     {loading && (
-                        <div className="fixed inset-0 bg-black/90 backdrop-blur-2xl z-[9000] flex items-center justify-center">
-                            <div className="flex flex-col items-center w-full max-w-[220px] px-4">
-                                <div className="w-full h-1 bg-white/10 rounded-full overflow-hidden mb-6 relative">
-                                    <div className="animate-line-bar bg-orange-500 rounded-full" />
+                        <div className="fixed inset-0 bg-black/95 backdrop-blur-2xl z-[9000] flex items-center justify-center">
+                            <div className="flex flex-col items-center w-64">
+                                <div className="w-full h-2 bg-slate-900 rounded-full overflow-hidden relative mb-6 border border-orange-500/30 shadow-inner">
+                                    <div className="absolute h-full bg-orange-500 rounded-full animate-line-bar shadow-[0_0_12px_rgba(249,115,22,0.8)]" />
                                 </div>
-                                <p className="text-orange-500 font-black uppercase text-[10px] tracking-[0.6em] animate-pulse">TURBO SEARCHING</p>
+                                <p className="text-white font-black uppercase text-[10px] tracking-[0.5em] animate-pulse">TUNGGU SEBENTAR</p>
                             </div>
                         </div>
                     )}
@@ -1372,8 +1577,8 @@
         try {
             const root = ReactDOM.createRoot(document.getElementById('root'));
             root.render(<App />);
-        } catch (e) {
-            console.error("React Mount Error:", e);
+        } catch(err) {
+            console.error("Mount error:", err);
         }
     </script>
 </body>
