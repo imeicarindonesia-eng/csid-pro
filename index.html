@@ -1073,7 +1073,6 @@
                                                             {filteredLog.map((item, index) => {
                                                                 const seqNum = `#${index + 1}`;
                                                                 const officerDisp = item.petugas_name || item.activated_by || 'ADMIN';
-                                                                const pkgDisp = item.package || 'CSID PRO';
                                                                 const itemTime = item.activated_at || item.created_at;
 
                                                                 return (
@@ -1091,8 +1090,8 @@
                                                                                 <span className="bg-red-900/40 border border-red-600/40 text-red-200 text-[9px] font-black px-2.5 py-1 rounded-xl uppercase">
                                                                                     {officerDisp}
                                                                                 </span>
-                                                                                <span className="bg-white text-black text-[10px] font-black px-3 py-1 rounded-xl uppercase tracking-wider shadow-sm">
-                                                                                    {pkgDisp}
+                                                                                <span className="bg-emerald-600 text-white text-[9px] font-black px-2.5 py-1 rounded-xl uppercase tracking-wider shadow-sm border border-emerald-400/30">
+                                                                                    TELAH DIAKTIFKAN
                                                                                 </span>
                                                                             </div>
                                                                         </div>
